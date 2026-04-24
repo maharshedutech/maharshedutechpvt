@@ -298,7 +298,7 @@ export default function Contact() {
           <section className="ct-hero">
             <img
               className="ct-hero-img"
-              src="public/src/assets/reception.png"
+              src="/reception.png"
               alt="Maharsh Edutech Office Reception"
             />
             <div className="ct-hero-overlay" />

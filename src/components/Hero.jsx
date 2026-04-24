@@ -188,7 +188,7 @@ export default function Hero() {
         loop
         playsInline
         style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', zIndex: 0 }}
-        src="public/src/assets/bgvideo.mp4"
+        src="/bgvideo.mp4"
       />
 
       {/* Dark overlay */}

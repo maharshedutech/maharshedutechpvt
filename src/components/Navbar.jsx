@@ -137,7 +137,7 @@ export default function Navbar() {
         <div className="mhdr-top">
           <a href="/" className="mhdr-brand">
             <div className="mhdr-logo-wrap">
-              <img src="/public/src/assets/FinalRoundlogo.png" alt="Maharsh Edutech" />
+              <img src="/FinalRoundlogo.png" alt="Maharsh Edutech" />
             </div>
             <div>
               <div className="mhdr-logo-name">Maharsh <span>Edutech</span></div>
