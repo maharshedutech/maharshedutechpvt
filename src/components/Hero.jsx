@@ -2,7 +2,7 @@
 import React, { useEffect, useState, useRef } from "react";
 
 export default function Hero() {
-  const [muted, setMuted] = useState(true);
+  const [muted, setMuted] = useState(false); // start unmuted (with audio)
   const videoRef = useRef(null);
 
   const stats = [
@@ -13,19 +13,41 @@ export default function Hero() {
   ];
 
   const tags = [
-    { label: 'After 10th', gold: true },
-    { label: 'After 12th', gold: true },
-    { label: 'After Graduation', gold: true },
-    { label: 'India Admissions', gold: false },
+    { label: 'After 10th',        gold: true  },
+    { label: 'After 12th',        gold: true  },
+    { label: 'After Graduation',  gold: true  },
+    { label: 'India Admissions',  gold: false },
     { label: 'Abroad Admissions', gold: false },
-    { label: 'Education Loan', gold: false },
+    { label: 'Education Loan',    gold: false },
   ];
 
-  const toggleMute = () => {
-    if (videoRef.current) {
-      videoRef.current.muted = !muted;
-      setMuted(!muted);
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    // Attempt autoplay WITH audio; browsers may block it.
+    // If blocked, fall back to muted autoplay and sync state.
+    video.muted = false;
+    const playPromise = video.play();
+
+    if (playPromise !== undefined) {
+      playPromise.catch(() => {
+        // Browser blocked unmuted autoplay — fall back to muted
+        video.muted = true;
+        setMuted(true);
+        video.play().catch(() => {
+          // If even muted autoplay fails, do nothing
+        });
+      });
     }
+  }, []);
+
+  const toggleMute = () => {
+    const video = videoRef.current;
+    if (!video) return;
+    const next = !muted;
+    video.muted = next;
+    setMuted(next);
   };
 
   return (
@@ -214,11 +236,10 @@ export default function Hero() {
         }
       `}</style>
 
-      {/* Background video — autoplay, muted (required by browsers), loops */}
+      {/* Background video — autoplay with audio, loops */}
       <video
         ref={videoRef}
         autoPlay
-        muted
         loop
         playsInline
         style={{
@@ -295,7 +316,7 @@ export default function Hero() {
         <span className="hero-scroll-text">Scroll</span>
       </div>
 
-      {/* Audio toggle */}
+      {/* Audio toggle — shows MUTE icon when audio is ON, UNMUTE icon when OFF */}
       <button
         className="hero-audio-btn"
         onClick={toggleMute}
@@ -303,12 +324,14 @@ export default function Hero() {
         title={muted ? 'Unmute' : 'Mute'}
       >
         {muted ? (
+          /* Muted state → show crossed-out speaker (click to unmute) */
           <svg viewBox="0 0 24 24">
             <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
             <line x1="23" y1="9" x2="17" y2="15" />
             <line x1="17" y1="9" x2="23" y2="15" />
           </svg>
         ) : (
+          /* Unmuted state → show speaker with sound waves (click to mute) */
           <svg viewBox="0 0 24 24">
             <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
             <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
