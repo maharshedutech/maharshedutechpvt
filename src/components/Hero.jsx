@@ -33,6 +33,9 @@ export default function Hero() {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,700;1,600&family=Outfit:wght@400;500;600;700&display=swap');
 
+        *, *::before, *::after { box-sizing: border-box; }
+
+        /* ── Eyebrow ── */
         .hero-eyebrow {
           display: inline-flex; align-items: center; gap: 10px; margin-bottom: 20px;
           animation: fadeUp 0.7s ease both;
@@ -43,22 +46,25 @@ export default function Hero() {
           text-transform: uppercase; color: #c9a227; font-family: 'Outfit', sans-serif;
         }
 
+        /* ── Heading ── */
         .hero-h1 {
           font-family: 'Cormorant Garamond', Georgia, serif;
-          font-size: clamp(34px, 5.5vw, 68px);
+          font-size: clamp(30px, 5.5vw, 68px);
           font-weight: 700; color: white; line-height: 1.07;
-          margin-bottom: 22px;
+          margin: 0 0 22px;
           animation: fadeUp 0.7s 0.1s ease both;
         }
         .hero-h1 em { font-style: italic; color: #c9a227; }
 
+        /* ── Sub ── */
         .hero-sub {
-          font-family: 'Outfit', sans-serif; font-size: 15.5px;
+          font-family: 'Outfit', sans-serif; font-size: clamp(13px, 1.6vw, 15.5px);
           color: rgba(255,255,255,0.68); line-height: 1.7;
-          max-width: 520px; margin-bottom: 32px;
+          max-width: 520px; margin: 0 0 32px;
           animation: fadeUp 0.7s 0.18s ease both;
         }
 
+        /* ── Tags ── */
         .hero-tags {
           display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 38px;
           animation: fadeUp 0.7s 0.26s ease both;
@@ -67,7 +73,7 @@ export default function Hero() {
           font-family: 'Outfit', sans-serif; font-size: 11.5px; font-weight: 500;
           color: rgba(255,255,255,0.65); background: rgba(255,255,255,0.06);
           border: 1px solid rgba(255,255,255,0.1); padding: 5px 13px; border-radius: 4px;
-          transition: all 0.2s;
+          transition: all 0.2s; cursor: default;
         }
         .hero-tag:hover { background: rgba(255,255,255,0.1); color: white; }
         .hero-tag.gold {
@@ -76,6 +82,7 @@ export default function Hero() {
         }
         .hero-tag.gold:hover { background: rgba(201,162,39,0.18); }
 
+        /* ── Buttons ── */
         .hero-btns {
           display: flex; gap: 12px; flex-wrap: wrap; align-items: center;
           animation: fadeUp 0.7s 0.34s ease both;
@@ -86,7 +93,7 @@ export default function Hero() {
           background: #c9a227; color: #111111; border: none;
           padding: 13px 30px; border-radius: 6px; cursor: pointer;
           transition: background 0.2s, transform 0.15s; text-decoration: none;
-          display: inline-block;
+          display: inline-block; white-space: nowrap;
         }
         .hero-btn-primary:hover { background: #e0b93a; transform: translateY(-1px); }
         .hero-btn-outline {
@@ -96,54 +103,62 @@ export default function Hero() {
           border: 1.5px solid rgba(255,255,255,0.3);
           padding: 12px 26px; border-radius: 6px; cursor: pointer;
           transition: border-color 0.2s, color 0.2s, transform 0.15s; text-decoration: none;
-          display: inline-block;
+          display: inline-block; white-space: nowrap;
         }
         .hero-btn-outline:hover { border-color: #c9a227; color: #c9a227; transform: translateY(-1px); }
 
+        /* ── Trust strip ── */
         .hero-trust {
-          margin-top: 20px; display: flex; align-items: center; gap: 10px;
+          margin-top: 20px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
           font-family: 'Outfit', sans-serif; font-size: 12px; color: rgba(255,255,255,0.4);
           letter-spacing: 0.06em; animation: fadeUp 0.7s 0.42s ease both;
-          flex-wrap: wrap;
         }
-        .hero-trust-dot { width: 4px; height: 4px; border-radius: 50%; background: #c9a227; opacity: 0.6; }
+        .hero-trust-dot { width: 4px; height: 4px; border-radius: 50%; background: #c9a227; opacity: 0.6; flex-shrink: 0; }
 
+        /* ── Stats bar ── */
         .hero-stats-bar {
           position: absolute; bottom: 0; left: 0; right: 0;
           display: flex; border-top: 1px solid rgba(201,162,39,0.25);
           background: rgba(17,17,17,0.82);
           backdrop-filter: blur(12px);
+          -webkit-backdrop-filter: blur(12px);
           animation: fadeUp 0.7s 0.5s ease both;
+          z-index: 3;
         }
         .hero-stat {
-          flex: 1; padding: 18px 0; text-align: center;
+          flex: 1; padding: 18px 8px; text-align: center;
           border-right: 1px solid rgba(201,162,39,0.12);
-          transition: background 0.2s;
+          transition: background 0.2s; min-width: 0;
         }
         .hero-stat:last-child { border-right: none; }
         .hero-stat:hover { background: rgba(201,162,39,0.05); }
         .hero-stat-num {
           font-family: 'Cormorant Garamond', Georgia, serif;
-          font-size: 28px; font-weight: 700; color: #c9a227; line-height: 1; margin-bottom: 4px;
+          font-size: clamp(20px, 3vw, 28px); font-weight: 700; color: #c9a227;
+          line-height: 1; margin-bottom: 4px;
         }
         .hero-stat-label {
-          font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 500;
+          font-family: 'Outfit', sans-serif; font-size: clamp(8px, 1vw, 10px); font-weight: 500;
           letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.45);
         }
 
-        /* Audio toggle */
+        /* ── Audio toggle ── */
         .hero-audio-btn {
           position: absolute; bottom: 90px; right: 32px; z-index: 4;
           width: 40px; height: 40px; border-radius: 50%;
           background: rgba(17,17,17,0.7); border: 1px solid rgba(201,162,39,0.4);
           color: white; cursor: pointer; display: flex; align-items: center; justify-content: center;
-          backdrop-filter: blur(8px); transition: border-color 0.2s, background 0.2s;
+          backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+          transition: border-color 0.2s, background 0.2s;
           animation: fadeUp 0.7s 0.55s ease both;
         }
         .hero-audio-btn:hover { background: rgba(201,162,39,0.15); border-color: #c9a227; }
-        .hero-audio-btn svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+        .hero-audio-btn svg {
+          width: 16px; height: 16px; fill: none; stroke: currentColor;
+          stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
+        }
 
-        /* Scroll hint — shifted left to make room for audio btn */
+        /* ── Scroll hint ── */
         .hero-scroll {
           position: absolute; bottom: 90px; right: 84px; z-index: 2;
           display: flex; flex-direction: column; align-items: center; gap: 6px; opacity: 0.35;
@@ -161,33 +176,56 @@ export default function Hero() {
           writing-mode: vertical-lr;
         }
 
+        /* ── Animations ── */
         @keyframes fadeUp {
           from { opacity: 0; transform: translateY(22px); }
           to   { opacity: 1; transform: translateY(0); }
         }
 
+        /* ── Responsive: Tablet ── */
+        @media (max-width: 900px) {
+          .hero-content { padding: 70px 48px 110px !important; }
+        }
+
+        /* ── Responsive: Mobile ── */
         @media (max-width: 768px) {
-          .hero-content { padding: 60px 24px 100px !important; }
+          .hero-content { padding: 60px 20px 100px !important; max-width: 100% !important; }
           .hero-scroll { display: none; }
           .hero-audio-btn { bottom: 86px; right: 16px; }
-          .hero-stat-num { font-size: 22px; }
-          .hero-stat { padding: 14px 8px; }
-          .hero-stat-label { font-size: 9px; }
+          .hero-stat { padding: 14px 6px; }
         }
+
+        /* ── Responsive: Small mobile ── */
         @media (max-width: 480px) {
-          .hero-btns { flex-direction: column; align-items: flex-start; }
-          .hero-btn-primary, .hero-btn-outline { width: 100%; text-align: center; }
+          .hero-eyebrow-text { font-size: 9.5px; letter-spacing: 0.16em; }
+          .hero-btns { flex-direction: column; align-items: stretch; }
+          .hero-btn-primary,
+          .hero-btn-outline { width: 100%; text-align: center; }
+          .hero-tags { gap: 6px; }
+          .hero-tag { font-size: 10.5px; padding: 4px 10px; }
+          .hero-trust { gap: 7px; }
+          .hero-trust-dot { display: none; }
+        }
+
+        /* ── Responsive: Very small ── */
+        @media (max-width: 360px) {
+          .hero-content { padding: 50px 16px 96px !important; }
+          .hero-stat-label { letter-spacing: 0.04em; }
         }
       `}</style>
 
-      {/* Video — starts muted (browser requires this for autoplay), user clicks to unmute */}
+      {/* Background video — autoplay, muted (required by browsers), loops */}
       <video
         ref={videoRef}
         autoPlay
         muted
         loop
         playsInline
-        style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', zIndex: 0 }}
+        style={{
+          position: 'absolute', inset: 0,
+          width: '100%', height: '100%',
+          objectFit: 'cover', zIndex: 0,
+        }}
         src="/bgvideo.mp4"
       />
 
@@ -198,8 +236,14 @@ export default function Hero() {
       <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: 4, background: '#c9a227', zIndex: 3 }} />
 
       {/* Main content */}
-      <div className="hero-content" style={{ position: 'relative', zIndex: 2, padding: '80px 72px 100px', width: '100%', maxWidth: '860px' }}>
-
+      <div
+        className="hero-content"
+        style={{
+          position: 'relative', zIndex: 2,
+          padding: '80px 72px 100px',
+          width: '100%', maxWidth: '860px',
+        }}
+      >
         <div className="hero-eyebrow">
           <div className="hero-eyebrow-line" />
           <span className="hero-eyebrow-text">Free Career Counseling — 2026</span>
@@ -210,7 +254,8 @@ export default function Hero() {
         </h1>
 
         <p className="hero-sub">
-          We help students after 10th, 12th, and graduation discover the right opportunities and achieve their goals with expert guidance.
+          We help students after 10th, 12th, and graduation discover the right opportunities
+          and achieve their goals with expert guidance.
         </p>
 
         <div className="hero-tags">
@@ -250,7 +295,7 @@ export default function Hero() {
         <span className="hero-scroll-text">Scroll</span>
       </div>
 
-      {/* Audio toggle button */}
+      {/* Audio toggle */}
       <button
         className="hero-audio-btn"
         onClick={toggleMute}
