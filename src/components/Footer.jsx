@@ -129,34 +129,31 @@ export default function Footer() {
 
         /* ── Address strip ── */
         .ft-address-strip {
-          display: flex; align-items: flex-start; gap: 10px;
+          display: flex; align-items: center; justify-content: center;
           padding: 18px 64px;
-          border-bottom: 1px solid rgba(255,255,255,0.05);
+          border-bottom: 1px solid rgba(255,255,255,0.04);
+          gap: 6px; flex-wrap: wrap;
         }
         .ft-address-icon {
-          width: 28px; height: 28px; flex-shrink: 0;
-          border: 1px solid rgba(201,168,76,0.2);
-          border-radius: 6px;
-          display: flex; align-items: center; justify-content: center;
-          color: #C9A84C; margin-top: 1px;
+          width: 14px; height: 14px; flex-shrink: 0;
+          color: #C9A84C; margin-right: 6px;
         }
-        .ft-address-icon svg { width: 13px; height: 13px; }
-        .ft-address-body {
-          display: flex; flex-wrap: wrap; align-items: baseline;
-          gap: 0 6px; row-gap: 3px;
+        .ft-address-icon svg { width: 14px; height: 14px; }
+        .ft-address-text {
+          font-size: 11px; font-weight: 500;
+          color: rgba(255,255,255,0.55);
+          letter-spacing: 0.04em; line-height: 1.6;
+          text-align: center;
         }
-        .ft-address-name {
-          font-size: 11px; font-weight: 600; letter-spacing: 0.06em;
-          color: rgba(255,255,255,0.55); text-transform: uppercase;
-          white-space: nowrap;
+        .ft-address-text strong {
+          color: rgba(255,255,255,0.82);
+          font-weight: 600;
+          letter-spacing: 0.05em;
         }
         .ft-address-sep {
-          font-size: 10px; color: rgba(201,168,76,0.3);
-        }
-        .ft-address-line {
-          font-size: 10.5px; color: rgba(255,255,255,0.28);
-          letter-spacing: 0.03em; line-height: 1.7;
-          white-space: nowrap;
+          color: rgba(201,168,76,0.35);
+          font-size: 11px; margin: 0 5px;
+          user-select: none;
         }
 
         /* ── Bottom bar ── */
@@ -203,9 +200,8 @@ export default function Footer() {
           .ft-top, .ft-bottom, .ft-address-strip { padding-left: 24px; padding-right: 24px; }
           .ft-bottom { flex-direction: column; align-items: flex-start; gap: 10px; }
           .ft-tagline { display: none; }
-          .ft-address-body { flex-direction: column; gap: 2px; }
           .ft-address-sep { display: none; }
-          .ft-address-line { white-space: normal; }
+          .ft-address-text { text-align: left; }
         }
       `}</style>
 
@@ -246,23 +242,25 @@ export default function Footer() {
 
         {/* ── Address strip ── */}
         <div className="ft-address-strip">
-          <div className="ft-address-icon">
+          <span className="ft-address-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
               <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
               <circle cx="12" cy="9" r="2.5"/>
             </svg>
-          </div>
-          <div className="ft-address-body">
-            <span className="ft-address-name">Maharsh Edutech Pvt Ltd</span>
-            <span className="ft-address-sep">·</span>
-            <span className="ft-address-line">Flat No. 201, Plot No. 34 East</span>
-            <span className="ft-address-sep">·</span>
-            <span className="ft-address-line">Srinivasa Colony, Sanjeev Reddy Nagar</span>
-            <span className="ft-address-sep">·</span>
-            <span className="ft-address-line">Hyderabad – 500038, Telangana</span>
-            <span className="ft-address-sep">·</span>
-            <span className="ft-address-line">Mob: +91 73372 67648</span>
-          </div>
+          </span>
+          <span className="ft-address-text">
+            <strong>Maharsh Edutech Pvt. Ltd.</strong>
+          </span>
+          <span className="ft-address-sep">·</span>
+          <span className="ft-address-text">Flat No. 201, Plot No. 34 East</span>
+          <span className="ft-address-sep">·</span>
+          <span className="ft-address-text">Srinivasa Colony, Sanjeev Reddy Nagar</span>
+          <span className="ft-address-sep">·</span>
+          <span className="ft-address-text"><strong>Hyderabad – 500038</strong>, Telangana</span>
+          <span className="ft-address-sep">·</span>
+          <span className="ft-address-text">
+            <strong>Mob:</strong> +91 73372 67648
+          </span>
         </div>
 
         {/* ── Bottom: copyright · tagline · phone pill ── */}
