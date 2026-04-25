@@ -171,7 +171,7 @@ export default function Navbar() {
             <a href="/services">Services</a>
             
             <a href="/contact">Contact</a>
-            <a href="/counseling" style={{ color: '#c9a227', fontWeight: 600 }}>Free Counseling →</a>
+            <a href="/contact" style={{ color: '#c9a227', fontWeight: 600 }}>Free Counseling →</a>
           </div>
         )}
 

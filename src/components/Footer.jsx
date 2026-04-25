@@ -127,6 +127,38 @@ export default function Footer() {
           background: rgba(201,168,76,0.07);
         }
 
+        /* ── Address strip ── */
+        .ft-address-strip {
+          display: flex; align-items: flex-start; gap: 10px;
+          padding: 18px 64px;
+          border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .ft-address-icon {
+          width: 28px; height: 28px; flex-shrink: 0;
+          border: 1px solid rgba(201,168,76,0.2);
+          border-radius: 6px;
+          display: flex; align-items: center; justify-content: center;
+          color: #C9A84C; margin-top: 1px;
+        }
+        .ft-address-icon svg { width: 13px; height: 13px; }
+        .ft-address-body {
+          display: flex; flex-wrap: wrap; align-items: baseline;
+          gap: 0 6px; row-gap: 3px;
+        }
+        .ft-address-name {
+          font-size: 11px; font-weight: 600; letter-spacing: 0.06em;
+          color: rgba(255,255,255,0.55); text-transform: uppercase;
+          white-space: nowrap;
+        }
+        .ft-address-sep {
+          font-size: 10px; color: rgba(201,168,76,0.3);
+        }
+        .ft-address-line {
+          font-size: 10.5px; color: rgba(255,255,255,0.28);
+          letter-spacing: 0.03em; line-height: 1.7;
+          white-space: nowrap;
+        }
+
         /* ── Bottom bar ── */
         .ft-bottom {
           display: flex; align-items: center; justify-content: space-between;
@@ -164,13 +196,16 @@ export default function Footer() {
         }
 
         @media (max-width: 900px) {
-          .ft-top, .ft-bottom { padding-left: 32px; padding-right: 32px; }
+          .ft-top, .ft-bottom, .ft-address-strip { padding-left: 32px; padding-right: 32px; }
           .ft-nav { display: none; }
         }
         @media (max-width: 560px) {
-          .ft-top, .ft-bottom { padding-left: 24px; padding-right: 24px; }
+          .ft-top, .ft-bottom, .ft-address-strip { padding-left: 24px; padding-right: 24px; }
           .ft-bottom { flex-direction: column; align-items: flex-start; gap: 10px; }
           .ft-tagline { display: none; }
+          .ft-address-body { flex-direction: column; gap: 2px; }
+          .ft-address-sep { display: none; }
+          .ft-address-line { white-space: normal; }
         }
       `}</style>
 
@@ -209,13 +244,34 @@ export default function Footer() {
           </div>
         </div>
 
+        {/* ── Address strip ── */}
+        <div className="ft-address-strip">
+          <div className="ft-address-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+              <circle cx="12" cy="9" r="2.5"/>
+            </svg>
+          </div>
+          <div className="ft-address-body">
+            <span className="ft-address-name">Maharsh Edutech Pvt Ltd</span>
+            <span className="ft-address-sep">·</span>
+            <span className="ft-address-line">Flat No. 201, Plot No. 34 East</span>
+            <span className="ft-address-sep">·</span>
+            <span className="ft-address-line">Srinivasa Colony, Sanjeev Reddy Nagar</span>
+            <span className="ft-address-sep">·</span>
+            <span className="ft-address-line">Hyderabad – 500038, Telangana</span>
+            <span className="ft-address-sep">·</span>
+            <span className="ft-address-line">Mob: +91 73372 67648</span>
+          </div>
+        </div>
+
         {/* ── Bottom: copyright · tagline · phone pill ── */}
         <div className="ft-bottom">
           <p className="ft-copy">
             © 2026 <strong>Maharsh Edutech Pvt. Ltd.</strong>
             &nbsp;·&nbsp;Hyderabad, Telangana&nbsp;·&nbsp;All rights reserved
           </p>
-          <p className="ft-tagline">Guiding futures since 2012</p>
+          
           <a href="tel:+917337267648" className="ft-contact-pill">
             <span className="ft-contact-pill-dot" />
             <span className="ft-contact-pill-text">+91 73372 67648</span>
