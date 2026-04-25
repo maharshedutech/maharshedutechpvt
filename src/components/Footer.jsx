@@ -259,7 +259,7 @@ export default function Footer() {
           <span className="ft-address-text"><strong>Hyderabad – 500038</strong>, Telangana</span>
           <span className="ft-address-sep">·</span>
           <span className="ft-address-text">
-            <strong>Mob:</strong> +91 73372 67648
+            <strong>Mobile Number :</strong> +91 73372 67648
           </span>
         </div>
 
