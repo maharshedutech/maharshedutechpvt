@@ -260,7 +260,7 @@ export default function Hero() {
 
         {/* RIGHT — Student image (remove-bg PNG recommended) */}
         <div className="hero-right">
-          <img src="public\bghero.png" alt="Student" />
+          <img src="/bghero.png" alt="Student" />
         </div>
       </div>
 
