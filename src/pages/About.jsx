@@ -1,4 +1,3 @@
-// src/pages/About.jsx
 import React, { useEffect, useRef, useState } from "react";
 
 function useReveal(threshold = 0.08) {
@@ -22,585 +21,906 @@ function Reveal({ children, delay = 0, className = "", style = {} }) {
   return (
     <div ref={ref} className={className} style={{
       opacity: visible ? 1 : 0,
-      transform: visible ? "translateY(0)" : "translateY(44px)",
-      transition: `opacity 0.9s cubic-bezier(.22,1,.36,1) ${delay}ms, transform 0.9s cubic-bezier(.22,1,.36,1) ${delay}ms`,
+      transform: visible ? "translateY(0)" : "translateY(40px)",
+      transition: `opacity 0.8s cubic-bezier(.22,1,.36,1) ${delay}ms, transform 0.8s cubic-bezier(.22,1,.36,1) ${delay}ms`,
       ...style,
     }}>{children}</div>
   );
 }
 
-const pillars = [
+const Icons = {
+  Check: () => (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+      <polyline points="20 6 9 17 4 12"/>
+    </svg>
+  ),
+  ChevronLeft: () => (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <polyline points="15 18 9 12 15 6"/>
+    </svg>
+  ),
+  ChevronRight: () => (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <polyline points="9 18 15 12 9 6"/>
+    </svg>
+  ),
+  Star: () => (
+    <svg viewBox="0 0 24 24" fill="currentColor" width="13" height="13">
+      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+    </svg>
+  ),
+  Pin: () => (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="16" height="16">
+      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+    </svg>
+  ),
+};
+
+// ── COLLEGE SLIDES (7 featured) ──
+const collegeSlides = [
   {
-    num: "01",
-    title: "Career Counseling & Guidance",
-    caption: "Clarity before commitment",
-    body: [
-      "Before a student can choose the right institution, they must understand themselves — their aptitudes, values, learning style, and long-term ambitions. This is where the Maharsh Edutech process begins. Career counseling is not an advisory formality. It is the intellectual core of everything we do.",
-      "Our certified counselors conduct psychometric assessments validated against industry employment data, measure aptitude across verbal, logical, numerical, and spatial domains, and evaluate personality dimensions through structured frameworks. The output is a written career report — 20 to 30 pages — that maps the student's profile against real-world career trajectories, salary benchmarks, and growth projections across multiple sectors.",
-      "We work with students from Class 10 onwards, helping them navigate stream selection, entrance exam strategy, and the longer-arc question of what profession they are genuinely building towards. Sessions are conducted in Telugu, Tamil, Hindi, Malayalam, Kannada, and Marathi, so every student receives guidance in the language they think most clearly in.",
-    ],
-    metrics: [
-      { val: "90 min", label: "Deep-dive sessions" },
-      { val: "6", label: "Regional languages" },
-      { val: "3", label: "Pathway projections per student" },
-    ],
+    name: "VIT-AP University",
+    location: "Amaravati, Andhra Pradesh",
+    nirf: "41",
+    rating: "4.3/5",
+    tag: "Deemed University",
+    highlight: "World-class research infrastructure & 100% placement assistance",
+    branches: ["CSE", "AI & ML", "ECE", "Mechanical", "Civil", "Data Science"],
+    img: "/VITAP.png",
+    bg: "linear-gradient(135deg, #0a1628 0%, #1a3a6e 60%, #0d2d6e 100%)",
+    accent: "#4a90d9",
   },
   {
-    num: "02",
-    title: "Application Support",
-    caption: "Every word, every document, every deadline",
-    body: [
-      "An exceptional application does not describe a student's academic record — it communicates their intellectual character, their specific ambitions, and the precise reasons why they belong at a particular institution. The difference between a shortlisted and rejected application is often not grades or test scores. It is the quality of the narrative.",
-      "Our application support team includes specialists with direct experience of what Indian and international admissions committees evaluate. We draft and refine Statements of Purpose through four rounds of expert review — substantive challenges to framing, specificity, and authenticity. We build Letter of Recommendation strategies that brief referees on what to emphasise. We coach students through personal essays, supplemental materials, and institution-specific questions.",
-      "For every application in a student's shortlist, we align the materials to that institution's stated values and evaluation rubrics. We handle document verification, authentication, and submission. We track deadlines across all institutions simultaneously and ensure nothing is missed.",
-    ],
-    metrics: [
-      { val: "4×", label: "SOP review rounds" },
-      { val: "250+", label: "Partner institutions" },
-      { val: "100%", label: "Deadline compliance" },
-    ],
+    name: "VR Siddhartha Engineering College",
+    location: "Vijayawada, Andhra Pradesh",
+    nirf: "101-150",
+    rating: "4.2/5",
+    tag: "Autonomous · NAAC A+",
+    highlight: "One of AP's most respected autonomous engineering institutions",
+    branches: ["CSE", "ECE", "EEE", "Mechanical", "Civil", "IT"],
+    img: "/VR.png",
+    bg: "linear-gradient(135deg, #0f0c29 0%, #302b63 60%, #24243e 100%)",
+    accent: "#a78bfa",
   },
   {
-    num: "03",
-    title: "End-to-End Admissions — India & Abroad",
-    caption: "From shortlist to enrollment, we own every step",
-    body: [
-      "The admission process in India is one of the most operationally complex in the world. JEE, NEET, CLAT, NIFT, NATA, CAT, and state-level counseling processes each operate on different calendars, quota structures, and choice-filling logic. A student navigating all of this alone — while managing exam preparation — is at a structural disadvantage. We eliminate that disadvantage entirely.",
-      "For Indian admissions, our counseling teams are present during every critical round — JOSAA, MCC, DASA, state quota rounds, and management quota processes. We maintain real-time access to seat availability data, historical cutoff trends disaggregated by category and state, and institutional scholarship information. Our choice-filling strategies are data-driven, risk-adjusted, and built around the specific student's rank, category, and goals.",
-      "For international admissions, our specialist teams have placed students in universities across 18 countries including the USA, UK, Canada, Australia, Germany, Singapore, Ireland, Netherlands, UAE, and New Zealand. We coordinate university shortlisting, application submission, financial documentation, visa interviews, pre-departure orientation, and post-arrival community connection.",
-    ],
-    metrics: [
-      { val: "18", label: "Countries for abroad" },
-      { val: "250+", label: "Indian partner institutions" },
-      { val: "98%", label: "Top-3 admission rate" },
-    ],
+    name: "Lakki Reddy Bali Reddy College",
+    location: "Mylavaram, Andhra Pradesh",
+    nirf: "—",
+    rating: "4.0/5",
+    tag: "JNTUK Affiliated",
+    highlight: "Strong rural outreach with quality technical education",
+    branches: ["CSE", "ECE", "EEE", "Mechanical", "Civil", "MBA"],
+    img: "/LAKKI REDDY.png",
+    bg: "linear-gradient(135deg, #1a0533 0%, #3d1a6e 60%, #2d1060 100%)",
+    accent: "#c084fc",
   },
   {
-    num: "04",
-    title: "Education Loan Assistance",
-    caption: "The right funding, on the right terms",
-    body: [
-      "The financial dimension of higher education is among the most consequential and least well-understood aspects of the process. Many families make loan decisions under time pressure, without adequate comparative information, and without understanding the long-term implications of interest structures, moratorium terms, or collateral requirements.",
-      "Our financial advisors assess each family's eligibility profile, the institution's existing lender relationships, and the student's likely post-graduation income trajectory. We then build a comprehensive funding plan combining scholarships, institutional fee waivers, and loan structures across 14 banking and NBFC partners — all selected for that specific student's situation. We do not receive referral commissions from any lender.",
-      "Before any loan agreement is signed, our advisors conduct a detailed EMI and repayment counseling session — including the Section 80E income tax benefit available on education loan interest — so families make their decision with complete information.",
-    ],
-    metrics: [
-      { val: "14", label: "Lending partners" },
-      { val: "₹0", label: "Commission from lenders" },
-      { val: "80E", label: "Tax benefit advisory included" },
-    ],
+    name: "Vishnu Institute of Technology",
+    location: "Bhimavaram, Andhra Pradesh",
+    nirf: "101-150",
+    rating: "4.1/5",
+    tag: "Autonomous · NAAC A",
+    highlight: "Industry-aligned curriculum with strong placement record",
+    branches: ["CSE", "IT", "ECE", "EEE", "Mechanical", "Chemical"],
+    img: "/VISHNU.png",
+    bg: "linear-gradient(135deg, #003322 0%, #005c3b 60%, #004d32 100%)",
+    accent: "#34d399",
+  },
+  {
+    name: "Apollo University",
+    location: "Chittoor, Andhra Pradesh",
+    nirf: "—",
+    rating: "4.0/5",
+    tag: "Private University",
+    highlight: "Healthcare-tech integrated engineering programs",
+    branches: ["CSE", "ECE", "Biomedical", "AI & ML", "Civil", "Mechanical"],
+    img: "/APOLLO.png",
+    bg: "linear-gradient(135deg, #1a0a00 0%, #7c2d12 60%, #9a3412 100%)",
+    accent: "#fb923c",
+  },
+  {
+    name: "SRM University AP",
+    location: "Amaravati, Andhra Pradesh",
+    nirf: "51",
+    rating: "4.4/5",
+    tag: "Private University",
+    highlight: "Top research output & global academic collaborations",
+    branches: ["CSE", "AI & ML", "ECE", "Mechanical", "Civil", "Biotechnology"],
+    img: "/SRM AP.png",
+    bg: "linear-gradient(135deg, #0a0a1a 0%, #1e1b4b 60%, #312e81 100%)",
+    accent: "#818cf8",
+  },
+  {
+    name: "GITAM University",
+    location: "Visakhapatnam, Andhra Pradesh",
+    nirf: "61",
+    rating: "4.2/5",
+    tag: "Deemed University",
+    highlight: "Established research culture with strong industry connections",
+    branches: ["CSE", "ECE", "EEE", "Mechanical", "Civil", "Chemical"],
+    img: "/GITAM.png",
+    bg: "linear-gradient(135deg, #0f1923 0%, #1a3344 60%, #0d2233 100%)",
+    accent: "#38bdf8",
   },
 ];
 
-const values = [
-  {
-    letter: "A",
-    title: "Independence",
-    desc: "We accept no commission, referral fee, or incentive payment from any institution, lender, or third party. Our revenue comes entirely from our clients. This structural independence is the foundation of every honest recommendation we make.",
-  },
-  {
-    letter: "B",
-    title: "Accountability",
-    desc: "The same senior counselor who conducts your discovery session owns your file through enrollment. We do not hand students off to junior executives at critical moments. Accountability is personal, named, and tracked.",
-  },
-  {
-    letter: "C",
-    title: "Evidence",
-    desc: "Every recommendation is grounded in data — placement statistics, admission cutoff trends, salary benchmarks, and alumni outcome tracking, updated annually. We do not advise from intuition or institutional reputation alone.",
-  },
-  {
-    letter: "D",
-    title: "Continuity",
-    desc: "Our relationship with students does not end at enrollment. We conduct semester check-in calls, provide mentorship through internship and placement season, and track long-term outcomes. A student who comes to us at 16 may still be in contact with their counselor at 26.",
-  },
+// ── AP & TS ENGINEERING COLLEGES ──
+const apColleges = [
+  { name: "VIT-AP University", loc: "Amaravati", nirf: "41", rating: 4.3, seats: "2,400+", fee: "1.5–2.2L/yr", tag: "Top Ranked" },
+  { name: "SRM AP", loc: "Amaravati", nirf: "51", rating: 4.4, seats: "1,800+", fee: "1.8–2.5L/yr", tag: "Top Ranked" },
+  { name: "GITAM University", loc: "Vizag", nirf: "61", rating: 4.2, seats: "2,200+", fee: "1.2–1.8L/yr", tag: "Deemed" },
+  { name: "Andhra University", loc: "Vizag", nirf: "72", rating: 4.0, seats: "3,000+", fee: "0.3–0.6L/yr", tag: "State Univ" },
+  { name: "VR Siddhartha EC", loc: "Vijayawada", nirf: "101-150", rating: 4.2, seats: "900+", fee: "0.6–0.9L/yr", tag: "Autonomous" },
+  { name: "Vishnu Inst of Tech", loc: "Bhimavaram", nirf: "101-150", rating: 4.1, seats: "1,200+", fee: "0.5–0.8L/yr", tag: "Autonomous" },
+  { name: "KL University", loc: "Vijayawada", nirf: "33", rating: 4.3, seats: "4,000+", fee: "1.2–1.6L/yr", tag: "Deemed" },
+  { name: "LBRCE", loc: "Mylavaram", nirf: "—", rating: 4.0, seats: "600+", fee: "0.4–0.6L/yr", tag: "Affiliated" },
+  { name: "Apollo University", loc: "Chittoor", nirf: "—", rating: 4.0, seats: "800+", fee: "0.8–1.2L/yr", tag: "Private" },
+  { name: "Vignan University", loc: "Guntur", nirf: "81", rating: 4.1, seats: "2,000+", fee: "0.9–1.3L/yr", tag: "Deemed" },
 ];
 
-const stats = [
-  { val: "12+", sub: "Years in Operation" },
-  { val: "5,000+", sub: "Students Guided" },
-  { val: "250+", sub: "Partner Institutions" },
-  { val: "18", sub: "Countries" },
-  { val: "98%", sub: "Top-3 Success Rate" },
-  { val: "40+", sub: "Certified Counselors" },
+const tsColleges = [
+  { name: "JNTU Hyderabad", loc: "Hyderabad", nirf: "101-150", rating: 4.0, seats: "3,500+", fee: "0.2–0.4L/yr", tag: "State Univ" },
+  { name: "BITS Pilani Hyd", loc: "Hyderabad", nirf: "26", rating: 4.6, seats: "900+", fee: "4.5–5.5L/yr", tag: "Top Ranked" },
+  { name: "IIIT Hyderabad", loc: "Hyderabad", nirf: "8", rating: 4.8, seats: "300+", fee: "3.0–4.0L/yr", tag: "Top Ranked" },
+  { name: "Osmania University", loc: "Hyderabad", nirf: "91", rating: 4.0, seats: "2,800+", fee: "0.2–0.4L/yr", tag: "State Univ" },
+  { name: "Mahindra University", loc: "Hyderabad", nirf: "—", rating: 4.3, seats: "600+", fee: "3.5–4.5L/yr", tag: "Private" },
+  { name: "VNR VJIET", loc: "Hyderabad", nirf: "101-150", rating: 4.2, seats: "1,200+", fee: "0.7–1.0L/yr", tag: "Autonomous" },
+  { name: "SR Engineering", loc: "Warangal", nirf: "—", rating: 4.0, seats: "900+", fee: "0.4–0.7L/yr", tag: "Autonomous" },
+  { name: "RGUKT Basar", loc: "Basar", nirf: "—", rating: 3.9, seats: "1,800+", fee: "0.1–0.2L/yr", tag: "State" },
+  { name: "Chaitanya Bharathi", loc: "Hyderabad", nirf: "—", rating: 4.1, seats: "1,400+", fee: "0.5–0.8L/yr", tag: "Autonomous" },
+  { name: "CVR College", loc: "Hyderabad", nirf: "—", rating: 4.1, seats: "1,000+", fee: "0.6–0.9L/yr", tag: "Autonomous" },
 ];
 
-const commitments = [
-  { title: "A named counselor from day one to enrollment", desc: "You will never be handed off. The same senior counselor who conducts your first session owns your file through every stage of the process." },
-  { title: "Advice that is never influenced by commission", desc: "We earn nothing from colleges, lenders, or third parties. Every recommendation exists solely because it serves your interest." },
-  { title: "Written documentation of every recommendation", desc: "Every career pathway recommendation, college shortlist, and financial plan is provided in writing — so you can review, question, and refer back to it." },
-  { title: "Real-time availability during critical windows", desc: "During JEE, NEET, state counseling rounds, and visa application deadlines, a senior counselor is reachable — not a chatbot, not a junior executive." },
-  { title: "Post-enrollment support through your first year", desc: "Semester check-in calls, mentorship connections, and ongoing career guidance continue well beyond the day you receive your admission letter." },
-  { title: "Transparent outcome data upon request", desc: "We publish our admission outcome statistics annually and share historical placement data for any institution or program you are considering." },
+// ── EXAMS ──
+const exams = [
+  { name: "JEE Main", body: "NTA", for: "NITs, IIITs, Central Univ.", slots: "Jan & Apr", tip: "Aim 90+ percentile for good NITs" },
+  { name: "JEE Advanced", body: "IIT", for: "IITs only", slots: "May", tip: "Top 2.5L from JEE Main qualify" },
+  { name: "EAPCET (AP)", body: "APSCHE", for: "All AP Engineering", slots: "May", tip: "Cutoff varies by branch & category" },
+  { name: "TGEAPCET (TS)", body: "TSCHE", for: "All TS Engineering", slots: "May", tip: "State counseling via TSCHE" },
+  { name: "BITSAT", body: "BITS Pilani", for: "BITS campuses", slots: "May", tip: "Score 300+ for CS branches" },
+  { name: "VITEEE", body: "VIT", for: "VIT campuses", slots: "Apr", tip: "Top 5K rank for CSE Vellore" },
 ];
 
-export default function About() {
-  const [activePillar, setActivePillar] = useState(null);
+// ── TOP BRANCHES ──
+const branches = [
+  { name: "Computer Science & Engineering", code: "CSE", demand: 98, avg_pkg: "8–22 LPA", jobs: "Software Dev, Product, SDE" },
+  { name: "AI & Machine Learning", code: "AI/ML", demand: 96, avg_pkg: "10–28 LPA", jobs: "ML Engineer, Data Scientist" },
+  { name: "Electronics & Communication", code: "ECE", demand: 82, avg_pkg: "5–15 LPA", jobs: "VLSI, Embedded, Telecom" },
+  { name: "Electrical & Electronics", code: "EEE", demand: 70, avg_pkg: "4–12 LPA", jobs: "Power, Core Infra, PSU" },
+  { name: "Mechanical Engineering", code: "MECH", demand: 65, avg_pkg: "4–10 LPA", jobs: "Manufacturing, Auto, Defence" },
+  { name: "Civil Engineering", code: "CIVIL", demand: 60, avg_pkg: "3–9 LPA", jobs: "Infra, Govt, Real Estate" },
+  { name: "Data Science", code: "DS", demand: 94, avg_pkg: "9–24 LPA", jobs: "Analytics, BI, Research" },
+  { name: "Information Technology", code: "IT", demand: 90, avg_pkg: "7–18 LPA", jobs: "Systems, Dev, Consulting" },
+];
+
+// ── APPLY CARDS (10) ──
+const applyColleges = [
+  { name: "IIIT Hyderabad", loc: "Hyderabad, TS", nirf: "8", rating: 4.8, tag: "Premier", color: "#7c3aed", abbr: "IIITH", fee: "3.0–4.0L/yr", deadline: "May 2025" },
+  { name: "BITS Pilani Hyd", loc: "Hyderabad, TS", nirf: "26", rating: 4.6, tag: "Top Ranked", color: "#b91c1c", abbr: "BITS", fee: "4.5–5.5L/yr", deadline: "May 2025" },
+  { name: "KL University", loc: "Vijayawada, AP", nirf: "33", rating: 4.3, tag: "Deemed", color: "#c59a00", abbr: "KLU", fee: "1.2–1.6L/yr", deadline: "May 2025" },
+  { name: "VIT-AP University", loc: "Amaravati, AP", nirf: "41", rating: 4.3, tag: "Top Ranked", color: "#1e40af", abbr: "VITAP", fee: "1.5–2.2L/yr", deadline: "Rolling" },
+  { name: "SRM AP", loc: "Amaravati, AP", nirf: "51", rating: 4.4, tag: "Private", color: "#4338ca", abbr: "SRM", fee: "1.8–2.5L/yr", deadline: "Rolling" },
+  { name: "GITAM", loc: "Vizag, AP", nirf: "61", rating: 4.2, tag: "Deemed", color: "#0e7490", abbr: "GITAM", fee: "1.2–1.8L/yr", deadline: "Jun 2025" },
+  { name: "Vignan University", loc: "Guntur, AP", nirf: "81", rating: 4.1, tag: "Deemed", color: "#065f46", abbr: "VU", fee: "0.9–1.3L/yr", deadline: "Jun 2025" },
+  { name: "VR Siddhartha", loc: "Vijayawada, AP", nirf: "101+", rating: 4.2, tag: "Autonomous", color: "#92400e", abbr: "VRSC", fee: "0.6–0.9L/yr", deadline: "Jul 2025" },
+  { name: "Mahindra University", loc: "Hyderabad, TS", nirf: "—", rating: 4.3, tag: "Private", color: "#1d4ed8", abbr: "MU", fee: "3.5–4.5L/yr", deadline: "Rolling" },
+  { name: "Vishnu Inst of Tech", loc: "Bhimavaram, AP", nirf: "101+", rating: 4.1, tag: "Autonomous", color: "#166534", abbr: "VITS", fee: "0.5–0.8L/yr", deadline: "Jul 2025" },
+];
+
+// ── COUNSELING STEPS ──
+const counselingSteps = [
+  { num: "01", title: "Rank Analysis", desc: "We analyse your JEE/EAPCET rank, category, home state quota & branch preference." },
+  { num: "02", title: "College Shortlist", desc: "Data-driven shortlist of 8–12 colleges with historical cutoff trends." },
+  { num: "03", title: "Choice Filling", desc: "Present during every JOSAA, EAPCET & TGEAPCET round — optimised order." },
+  { num: "04", title: "Seat Lock & Fees", desc: "We guide fee payment, document submission & seat confirmation." },
+];
+
+export default function Engineering() {
+  const [activeSlide, setActiveSlide] = useState(0);
+  const [prevSlide, setPrevSlide] = useState(null);
+  const [animating, setAnimating] = useState(false);
+  const [activeTab, setActiveTab] = useState("AP");
+  const slideTimer = useRef(null);
+
+  const startTimer = () => {
+    clearInterval(slideTimer.current);
+    slideTimer.current = setInterval(() => {
+      setActiveSlide(p => (p + 1) % collegeSlides.length);
+    }, 5000);
+  };
+
+  useEffect(() => {
+    startTimer();
+    return () => clearInterval(slideTimer.current);
+  }, []);
+
+  const goSlide = (i) => {
+    if (i === activeSlide || animating) return;
+    setPrevSlide(activeSlide);
+    setAnimating(true);
+    setActiveSlide(i);
+    setTimeout(() => { setPrevSlide(null); setAnimating(false); }, 700);
+    startTimer();
+  };
+
+  const slide = collegeSlides[activeSlide];
+  const tableData = activeTab === "AP" ? apColleges : tsColleges;
+
+  // Fallback gradient backgrounds (used as bg when image fails)
+  const fallbackBgs = [
+    "linear-gradient(135deg,#0a1628,#1a3a6e)",
+    "linear-gradient(135deg,#0f0c29,#302b63)",
+    "linear-gradient(135deg,#1a0533,#3d1a6e)",
+    "linear-gradient(135deg,#003322,#005c3b)",
+    "linear-gradient(135deg,#1a0a00,#7c2d12)",
+    "linear-gradient(135deg,#0a0a1a,#312e81)",
+    "linear-gradient(135deg,#0f1923,#1a3344)",
+  ];
 
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Syne:wght@400;500;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
 
         :root {
-          --g: #C6A84B;
-          --g2: #DFC06E;
-          --gdim: rgba(198,168,75,0.09);
-          --gborder: rgba(198,168,75,0.18);
-          --ink: #080808;
-          --ink2: #101010;
-          --ink3: #181818;
-          --smoke: rgba(255,255,255,0.88);
-          --muted: rgba(255,255,255,0.48);
-          --faint: rgba(255,255,255,0.22);
-          --hair: rgba(255,255,255,0.06);
+          --blue: #1a56db;
+          --blue-dark: #1442b5;
+          --blue-deep: #0d2d6e;
+          --blue-light: #e8f0fe;
+          --blue-mid: #3b72f0;
+          --orange: #f97316;
+          --orange-light: #fb923c;
+          --orange-faint: #fff4ed;
+          --white: #ffffff;
+          --off: #f8faff;
+          --gray: #64748b;
+          --gray-light: #e2e8f0;
+          --text: #0f172a;
+          --text2: #334155;
+          --radius: 12px;
         }
 
-        .ab * { box-sizing: border-box; }
-        .ab { font-family: 'Syne', sans-serif; background: var(--ink); color: var(--smoke); line-height: 1; }
+        .eng * { box-sizing: border-box; }
+        .eng {
+          font-family: 'Space Grotesk', sans-serif;
+          background: #fff; color: var(--text); line-height: 1;
+        }
+        .eng-sora { font-family: 'Sora', sans-serif; }
 
-        .ab-tag {
-          display: inline-flex; align-items: center; gap: 10px;
-          font-size: 9.5px; font-weight: 700; letter-spacing: 0.28em;
-          text-transform: uppercase; color: var(--g);
+        .eng-pill {
+          display: inline-flex; align-items: center; gap: 8px;
+          background: var(--blue-light); color: var(--blue);
+          font-size: 11px; font-weight: 700; letter-spacing: 0.14em;
+          text-transform: uppercase; padding: 6px 16px; border-radius: 100px;
+          margin-bottom: 18px;
         }
-        .ab-tag-line { height: 1px; width: 28px; background: var(--g); flex-shrink: 0; }
+        .eng-pill-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--blue); }
+        .eng-pill.orange { background: var(--orange-faint); color: var(--orange); }
+        .eng-pill.orange .eng-pill-dot { background: var(--orange); }
+        .eng-pill.white { background: rgba(255,255,255,0.12); color: #fff; }
+        .eng-pill.white .eng-pill-dot { background: #fff; }
 
-        /* ── HERO ── */
-        .ab-hero {
-          min-height: 92vh; display: grid; grid-template-columns: 1fr 1fr;
-          border-bottom: 1px solid var(--gborder); position: relative; overflow: hidden;
+        /* ══ FULL-SCREEN SLIDES ══ */
+        .eng-slides {
+          position: relative;
+          width: 100%;
+          height: 100vh;
+          min-height: 560px;
+          max-height: 800px;
+          overflow: hidden;
+          background: #0a1628;
         }
-        .ab-hero-left {
-          padding: 100px 80px; display: flex; flex-direction: column; justify-content: flex-end;
-          border-right: 1px solid var(--gborder); position: relative; z-index: 1;
-        }
-        .ab-hero-right {
-          display: flex; flex-direction: column; justify-content: space-between;
-          padding: 100px 72px; position: relative; background: var(--ink2);
-        }
-        .ab-hero-bg {
-          position: absolute; inset: 0;
-          background: radial-gradient(ellipse 80% 60% at 80% 40%, rgba(198,168,75,0.05) 0%, transparent 65%);
-          pointer-events: none;
-        }
-        .ab-hero-h1 {
-          font-family: 'Cormorant', Georgia, serif;
-          font-size: clamp(52px, 7vw, 96px); font-weight: 700;
-          line-height: 0.95; margin: 28px 0 36px; letter-spacing: -0.01em;
-        }
-        .ab-hero-h1 em { font-style: italic; color: var(--g); }
-        .ab-hero-lead { font-size: 15px; color: var(--muted); line-height: 1.82; max-width: 480px; margin: 0; }
 
-        .ab-manifesto {
-          border-left: 2px solid var(--g); padding: 28px 32px; background: var(--gdim);
+        /* Each slide is a full-screen layer */
+        .eng-slide-layer {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          transition: opacity 0.7s ease;
         }
-        .ab-manifesto-text {
-          font-family: 'Cormorant', serif; font-size: 21px; font-style: italic;
-          color: var(--smoke); line-height: 1.65; margin: 0;
-        }
-        .ab-hero-stats { display: flex; flex-direction: column; gap: 0; }
-        .ab-hero-stat {
-          display: flex; align-items: baseline; gap: 16px; padding: 20px 0;
-          border-bottom: 1px solid var(--hair);
-        }
-        .ab-hero-stat:last-child { border-bottom: none; }
-        .ab-hero-stat-val {
-          font-family: 'Cormorant', serif; font-size: 36px; font-weight: 700;
-          color: var(--g); line-height: 1; flex-shrink: 0; min-width: 80px;
-        }
-        .ab-hero-stat-label { font-size: 12px; color: var(--muted); }
+        .eng-slide-layer.entering { opacity: 1; }
+        .eng-slide-layer.exiting { opacity: 0; }
 
-        /* ── ORIGIN ── */
-        .ab-origin {
-          padding: 120px 80px; background: var(--ink2);
-          display: grid; grid-template-columns: 300px 1fr; gap: 100px;
-          border-bottom: 1px solid var(--gborder);
+        /* Full-bleed background image */
+        .eng-slide-bg-img {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: center;
         }
-        .ab-origin-h2 {
-          font-family: 'Cormorant', serif; font-size: clamp(34px, 3.5vw, 52px);
-          font-weight: 700; line-height: 1.08; margin: 14px 0 0;
-        }
-        .ab-origin-h2 em { font-style: italic; color: var(--g); }
-        .ab-origin-paras { display: flex; flex-direction: column; gap: 22px; }
-        .ab-origin-para { font-size: 15px; color: var(--muted); line-height: 1.88; margin: 0; }
-        .ab-origin-para strong { color: var(--smoke); font-weight: 600; }
 
-        /* ── PILLARS ACCORDION ── */
-        .ab-pillars { background: var(--ink); border-bottom: 1px solid var(--gborder); }
-        .ab-pillars-header { padding: 100px 80px 0; }
-        .ab-pillars-h2 {
-          font-family: 'Cormorant', serif;
-          font-size: clamp(32px, 4vw, 54px); font-weight: 700; line-height: 1.05; margin: 14px 0 0;
+        /* Gradient overlay so text is readable */
+        .eng-slide-overlay {
+          position: absolute;
+          inset: 0;
+          /* strong bottom-left gradient for text legibility */
+          background: linear-gradient(
+            to top,
+            rgba(0,0,0,0.82) 0%,
+            rgba(0,0,0,0.45) 40%,
+            rgba(0,0,0,0.15) 70%,
+            rgba(0,0,0,0.05) 100%
+          );
         }
-        .ab-pillars-h2 em { font-style: italic; color: var(--g); }
 
-        .ab-accordion { margin-top: 64px; border-top: 1px solid var(--gborder); }
-        .ab-acc-row { border-bottom: 1px solid var(--gborder); overflow: hidden; }
-        .ab-acc-trigger {
-          width: 100%; padding: 0 80px;
-          display: grid; grid-template-columns: 72px 1fr 44px;
-          align-items: center; gap: 32px;
-          cursor: pointer; background: none; border: none; text-align: left;
-          transition: background 0.25s; min-height: 90px;
+        /* Fallback colour bg shown when image errors */
+        .eng-slide-fallback {
+          position: absolute;
+          inset: 0;
+          z-index: 0;
         }
-        .ab-acc-trigger:hover { background: rgba(255,255,255,0.015); }
-        .ab-acc-row.open .ab-acc-trigger { background: var(--gdim); }
-        .ab-acc-num {
-          font-family: 'Cormorant', serif; font-size: 13px; font-weight: 700;
-          color: var(--g); letter-spacing: 0.06em;
-        }
-        .ab-acc-title-wrap {}
-        .ab-acc-title {
-          font-family: 'Cormorant', serif; font-size: 24px; font-weight: 700;
-          color: var(--smoke); line-height: 1.2; margin-bottom: 3px;
-        }
-        .ab-acc-caption {
-          font-size: 10.5px; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase;
-        }
-        .ab-acc-icon {
-          width: 40px; height: 40px; border: 1px solid var(--gborder); border-radius: 50%;
-          display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-          transition: all 0.3s;
-        }
-        .ab-acc-row.open .ab-acc-icon { background: var(--g); border-color: var(--g); transform: rotate(45deg); }
-        .ab-acc-icon svg { width: 14px; height: 14px; color: var(--g); }
-        .ab-acc-row.open .ab-acc-icon svg { color: var(--ink); }
 
-        .ab-acc-body { max-height: 0; overflow: hidden; transition: max-height 0.65s cubic-bezier(.22,1,.36,1); }
-        .ab-acc-row.open .ab-acc-body { max-height: 1400px; }
-        .ab-acc-inner {
-          padding: 0 80px 64px;
-          display: grid; grid-template-columns: 1fr 260px; gap: 80px;
+        /* Content sits above overlay */
+        .eng-slide-content {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          z-index: 2;
+          padding: 48px 72px 110px;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 10px;
         }
-        .ab-acc-paras { display: flex; flex-direction: column; gap: 20px; }
-        .ab-acc-para { font-size: 14.5px; color: var(--muted); line-height: 1.88; margin: 0; }
-        .ab-acc-para:first-child { color: rgba(255,255,255,0.70); font-size: 15.5px; }
-        .ab-metrics { display: flex; flex-direction: column; gap: 1px; align-self: start; }
-        .ab-metric {
-          border: 1px solid var(--gborder); background: var(--ink2);
-          padding: 22px 24px; border-bottom: none;
-        }
-        .ab-metric:first-child { border-radius: 3px 3px 0 0; }
-        .ab-metric:last-child { border-bottom: 1px solid var(--gborder); border-radius: 0 0 3px 3px; }
-        .ab-metric-val {
-          font-family: 'Cormorant', serif; font-size: 32px; font-weight: 700;
-          color: var(--g); line-height: 1; margin-bottom: 6px;
-        }
-        .ab-metric-label { font-size: 11px; color: var(--muted); }
 
-        /* ── VALUES ── */
-        .ab-values { padding: 120px 80px; background: var(--ink2); border-bottom: 1px solid var(--gborder); }
-        .ab-values-h2 {
-          font-family: 'Cormorant', serif;
-          font-size: clamp(30px,3.5vw,50px); font-weight: 700; line-height:1.05; margin: 14px 0 56px;
+        .eng-slide-tag-badge {
+          display: inline-block;
+          font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase;
+          padding: 5px 14px; border-radius: 100px;
+          border: 1px solid rgba(255,255,255,0.3);
+          color: rgba(255,255,255,0.85);
+          background: rgba(255,255,255,0.08);
+          backdrop-filter: blur(4px);
+          margin-bottom: 4px;
         }
-        .ab-values-h2 em { font-style: italic; color: var(--g); }
-        .ab-values-grid {
-          display: grid; grid-template-columns: repeat(4,1fr); gap: 1px;
-          border: 1px solid var(--gborder); border-radius: 3px; overflow: hidden;
-        }
-        .ab-value-card {
-          background: var(--ink); padding: 44px 32px;
-          border-right: 1px solid var(--gborder);
-          position: relative; transition: background 0.25s;
-        }
-        .ab-value-card:hover { background: var(--ink3); }
-        .ab-value-card::after {
-          content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
-          background: var(--g); transform: scaleX(0); transform-origin: left;
-          transition: transform 0.4s ease;
-        }
-        .ab-value-card:hover::after { transform: scaleX(1); }
-        .ab-value-glyph {
-          font-family: 'Cormorant', serif; font-size: 72px; font-weight: 700;
-          color: rgba(198,168,75,0.08); line-height: 1; margin-bottom: 20px;
-          letter-spacing: -0.04em;
-        }
-        .ab-value-title {
-          font-family: 'Cormorant', serif; font-size: 22px; font-weight: 700;
-          color: var(--smoke); margin: 0 0 12px;
-        }
-        .ab-value-desc { font-size: 13px; color: var(--muted); line-height: 1.82; }
 
-        /* ── COMMITMENT ── */
-        .ab-commit {
-          padding: 120px 80px; background: var(--ink);
-          display: grid; grid-template-columns: 1fr 1fr; gap: 100px; align-items: start;
-          border-bottom: 1px solid var(--gborder);
+        .eng-slide-college-name {
+          font-family: 'Sora', sans-serif;
+          font-size: clamp(28px, 4.5vw, 56px);
+          font-weight: 800;
+          color: #fff;
+          line-height: 1.08;
+          letter-spacing: -0.02em;
+          text-shadow: 0 2px 24px rgba(0,0,0,0.4);
+          margin: 0;
         }
-        .ab-commit-h2 {
-          font-family: 'Cormorant', serif;
-          font-size: clamp(34px,4vw,56px); font-weight: 700; line-height:1.06; margin:14px 0 24px;
-        }
-        .ab-commit-h2 em { font-style: italic; color: var(--g); }
-        .ab-commit-body { font-size: 14.5px; color: var(--muted); line-height: 1.88; }
-        .ab-commit-items { display: flex; flex-direction: column; gap: 1px; }
-        .ab-commit-item {
-          background: var(--ink2); border: 1px solid var(--gborder); border-bottom: none;
-          padding: 22px 26px; display: flex; align-items: flex-start; gap: 18px;
-          transition: background 0.2s;
-        }
-        .ab-commit-item:first-child { border-radius: 3px 3px 0 0; }
-        .ab-commit-item:last-child { border-bottom: 1px solid var(--gborder); border-radius: 0 0 3px 3px; }
-        .ab-commit-item:hover { background: var(--ink3); }
-        .ab-commit-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--g); flex-shrink: 0; margin-top: 7px; }
-        .ab-commit-item-title { font-size: 13.5px; font-weight: 600; color: var(--smoke); margin-bottom: 4px; }
-        .ab-commit-item-desc { font-size: 12px; color: var(--muted); line-height: 1.72; }
 
-        /* ── STATS STRIP ── */
-        .ab-stats-strip {
-          background: var(--ink2); border-top: 1px solid var(--gborder);
-          display: grid; grid-template-columns: repeat(6,1fr);
+        .eng-slide-location {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          font-size: 14px;
+          color: rgba(255,255,255,0.65);
+          font-weight: 500;
+          margin-top: 2px;
         }
-        .ab-stat-cell {
-          padding: 44px 28px; border-right: 1px solid var(--gborder);
-          text-align: center; transition: background 0.2s; position: relative;
+        .eng-slide-location svg { opacity: 0.7; flex-shrink: 0; }
+
+        /* NIRF badge */
+        .eng-slide-nirf-badge {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          margin-top: 6px;
         }
-        .ab-stat-cell:last-child { border-right: none; }
-        .ab-stat-cell::after {
+        .eng-slide-nirf {
+          font-family: 'Sora', sans-serif;
+          font-size: 12px; font-weight: 800; letter-spacing: 0.08em;
+          padding: 4px 12px; border-radius: 6px;
+          background: rgba(249,115,22,0.18);
+          border: 1px solid rgba(249,115,22,0.35);
+          color: #fb923c;
+        }
+        .eng-slide-rating {
+          font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.55);
+        }
+
+        /* ── Navigation bar at bottom ── */
+        .eng-slides-nav {
+          position: absolute;
+          bottom: 32px;
+          left: 72px;
+          right: 72px;
+          z-index: 10;
+          display: flex;
+          align-items: center;
+          gap: 14px;
+        }
+        .eng-slides-dots { display: flex; gap: 6px; align-items: center; }
+        .eng-slides-dot {
+          width: 8px; height: 8px; border-radius: 50%;
+          background: rgba(255,255,255,0.25); cursor: pointer; border: none;
+          transition: all 0.3s; padding: 0;
+        }
+        .eng-slides-dot.active {
+          background: var(--orange); width: 26px; border-radius: 4px;
+        }
+        .eng-slides-counter {
+          font-size: 12px; color: rgba(255,255,255,0.35); font-weight: 700;
+          letter-spacing: 0.06em; font-family: 'Sora', sans-serif;
+        }
+        .eng-slides-arrows { display: flex; gap: 8px; margin-left: auto; }
+        .eng-slides-arrow {
+          width: 42px; height: 42px; border-radius: 50%;
+          background: rgba(255,255,255,0.08);
+          border: 1px solid rgba(255,255,255,0.18);
+          color: #fff; cursor: pointer;
+          display: flex; align-items: center; justify-content: center;
+          transition: all 0.2s; backdrop-filter: blur(4px);
+        }
+        .eng-slides-arrow:hover { background: var(--orange); border-color: var(--orange); }
+        .eng-slides-arrow svg { width: 16px; height: 16px; }
+
+        /* Progress bar */
+        .eng-slides-progress {
+          position: absolute;
+          top: 0; left: 0; right: 0; height: 3px; z-index: 20;
+          background: rgba(255,255,255,0.1);
+        }
+        .eng-slides-progress-bar {
+          height: 100%;
+          background: var(--orange);
+          transition: width 0.1s linear;
+          animation: slideProgress 5s linear infinite;
+        }
+        @keyframes slideProgress {
+          from { width: 0%; }
+          to { width: 100%; }
+        }
+
+        /* ══ AP & TS TABLE ══ */
+        .eng-table-section {
+          background: #fff; padding: 100px 80px;
+          border-bottom: 1px solid var(--gray-light);
+        }
+        .eng-table-tabs {
+          display: flex; gap: 0; border: 1.5px solid var(--gray-light);
+          border-radius: 10px; overflow: hidden; margin-bottom: 32px;
+          max-width: 320px;
+        }
+        .eng-table-tab {
+          flex: 1; padding: 12px 24px; background: #fff;
+          border: none; cursor: pointer; font-family: 'Sora', sans-serif;
+          font-size: 13px; font-weight: 700; color: var(--gray);
+          transition: all 0.2s; border-right: 1.5px solid var(--gray-light);
+        }
+        .eng-table-tab:last-child { border-right: none; }
+        .eng-table-tab.active { background: var(--blue-deep); color: #fff; }
+
+        .eng-table { width: 100%; border-collapse: collapse; }
+        .eng-table thead th {
+          font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+          color: var(--gray); padding: 12px 16px; border-bottom: 2px solid var(--gray-light);
+          text-align: left; background: var(--off);
+        }
+        .eng-table tbody tr { border-bottom: 1px solid var(--gray-light); transition: background 0.15s; }
+        .eng-table tbody tr:hover { background: var(--off); }
+        .eng-table tbody td { padding: 14px 16px; font-size: 13.5px; color: var(--text2); }
+        .eng-table-name { font-weight: 700; color: var(--text); }
+        .eng-table-tag {
+          display: inline-block; font-size: 9.5px; font-weight: 700;
+          letter-spacing: 0.1em; text-transform: uppercase;
+          padding: 3px 9px; border-radius: 4px; margin-left: 8px;
+        }
+        .eng-table-tag.top { background: #fef3c7; color: #92400e; }
+        .eng-table-tag.deemed { background: var(--blue-light); color: var(--blue-dark); }
+        .eng-table-tag.state { background: #f0fdf4; color: #166534; }
+        .eng-table-tag.auto { background: #fdf4ff; color: #7e22ce; }
+        .eng-table-tag.private { background: var(--orange-faint); color: #c2410c; }
+        .eng-table-stars { display: flex; gap: 2px; color: var(--orange); }
+        .eng-table-nirf {
+          font-family: 'Sora', sans-serif; font-size: 13px; font-weight: 700;
+          color: var(--blue);
+        }
+
+        /* ══ BRANCHES ══ */
+        .eng-branches { background: var(--off); padding: 100px 80px; }
+        .eng-branches-h2 {
+          font-family: 'Sora', sans-serif; font-size: clamp(26px, 3vw, 40px);
+          font-weight: 800; color: var(--text); margin: 0 0 48px; line-height: 1.15;
+        }
+        .eng-branches-h2 span { color: var(--blue); }
+        .eng-branches-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+        .eng-branch-card {
+          background: #fff; border: 1.5px solid var(--gray-light); border-radius: var(--radius);
+          padding: 24px 28px; transition: all 0.25s; position: relative;
+        }
+        .eng-branch-card:hover { border-color: var(--blue); box-shadow: 0 6px 24px rgba(26,86,219,0.10); }
+        .eng-branch-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+        .eng-branch-code {
+          font-family: 'Sora', sans-serif; font-size: 11px; font-weight: 800;
+          letter-spacing: 0.14em; color: var(--blue); background: var(--blue-light);
+          padding: 4px 10px; border-radius: 6px;
+        }
+        .eng-branch-demand { font-size: 12px; font-weight: 700; color: var(--gray); }
+        .eng-branch-name {
+          font-family: 'Sora', sans-serif; font-size: 15px; font-weight: 700;
+          color: var(--text); margin-bottom: 10px;
+        }
+        .eng-branch-bar-bg { background: var(--gray-light); border-radius: 4px; height: 4px; margin-bottom: 12px; }
+        .eng-branch-bar { height: 4px; border-radius: 4px; background: linear-gradient(90deg, var(--blue), var(--orange)); }
+        .eng-branch-meta { display: flex; gap: 20px; }
+        .eng-branch-meta-item label { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray); display: block; margin-bottom: 2px; }
+        .eng-branch-meta-item span { font-size: 12px; font-weight: 600; color: var(--text2); }
+
+        /* ══ EXAMS ══ */
+        .eng-exams { background: var(--blue-deep); padding: 100px 80px; }
+        .eng-exams-h2 {
+          font-family: 'Sora', sans-serif; font-size: clamp(26px, 3vw, 40px);
+          font-weight: 800; color: #fff; margin: 0 0 48px; line-height: 1.15;
+        }
+        .eng-exams-h2 span { color: var(--orange); }
+        .eng-exams-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+        .eng-exam-card {
+          background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08);
+          border-radius: var(--radius); padding: 28px 24px;
+          transition: background 0.2s; position: relative; overflow: hidden;
+        }
+        .eng-exam-card::after {
           content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-          background: var(--g); transform: scaleX(0); transition: transform 0.35s ease;
+          background: var(--orange); transform: scaleX(0); transform-origin: left; transition: transform 0.35s;
         }
-        .ab-stat-cell:hover::after { transform: scaleX(1); }
-        .ab-stat-cell:hover { background: var(--ink3); }
-        .ab-stat-val {
-          font-family: 'Cormorant', serif; font-size: 38px; font-weight: 700;
-          color: var(--g); line-height: 1; margin-bottom: 8px;
+        .eng-exam-card:hover { background: rgba(255,255,255,0.08); }
+        .eng-exam-card:hover::after { transform: scaleX(1); }
+        .eng-exam-name {
+          font-family: 'Sora', sans-serif; font-size: 18px; font-weight: 800;
+          color: #fff; margin-bottom: 6px;
         }
-        .ab-stat-sub { font-size: 11px; color: var(--muted); line-height: 1.45; }
+        .eng-exam-body { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--orange); margin-bottom: 14px; }
+        .eng-exam-row { display: flex; justify-content: space-between; margin-bottom: 6px; }
+        .eng-exam-row label { font-size: 11px; color: rgba(255,255,255,0.35); font-weight: 600; }
+        .eng-exam-row span { font-size: 12px; color: rgba(255,255,255,0.7); font-weight: 600; }
+        .eng-exam-tip {
+          margin-top: 16px; padding: 10px 14px; border-radius: 8px;
+          background: rgba(249,115,22,0.12); border: 1px solid rgba(249,115,22,0.2);
+          font-size: 12px; color: rgba(255,255,255,0.65); line-height: 1.5;
+          display: flex; align-items: flex-start; gap: 8px;
+        }
+        .eng-exam-tip-icon { color: var(--orange); flex-shrink: 0; font-size: 14px; margin-top: 1px; }
 
-        /* ── CTA ── */
-        .ab-cta {
-          padding: 120px 80px; background: var(--ink); text-align: center; position: relative; overflow: hidden;
+        /* ══ APPLY SECTION ══ */
+        .eng-apply { background: #fff; padding: 100px 80px; }
+        .eng-apply-h2 {
+          font-family: 'Sora', sans-serif; font-size: clamp(26px, 3vw, 40px);
+          font-weight: 800; color: var(--text); margin: 0 0 48px; line-height: 1.15;
         }
-        .ab-cta::before {
-          content: ''; position: absolute; bottom: -160px; left: 50%; transform: translateX(-50%);
-          width: 700px; height: 350px;
-          background: radial-gradient(ellipse, rgba(198,168,75,0.07) 0%, transparent 68%);
-          pointer-events: none;
+        .eng-apply-h2 span { color: var(--blue); }
+        .eng-apply-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+        .eng-apply-card {
+          border: 1.5px solid var(--gray-light); border-radius: var(--radius);
+          padding: 22px 24px; background: #fff;
+          display: flex; align-items: center; justify-content: space-between; gap: 20px;
+          transition: all 0.25s; position: relative; overflow: hidden;
         }
-        .ab-cta-inner { position: relative; max-width: 680px; margin: 0 auto; }
-        .ab-cta-h2 {
-          font-family: 'Cormorant', serif;
-          font-size: clamp(36px, 5vw, 64px); font-weight: 700; line-height: 1.06; margin: 14px 0 20px;
+        .eng-apply-card::before {
+          content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+          background: var(--blue); transform: scaleY(0); transform-origin: bottom; transition: transform 0.3s;
         }
-        .ab-cta-h2 em { font-style: italic; color: var(--g); }
-        .ab-cta-sub { font-size: 14.5px; color: var(--muted); line-height: 1.78; margin: 0 0 40px; }
-        .ab-cta-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-        .ab-btn-primary {
-          font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
-          background: var(--g); color: var(--ink); border: none;
-          padding: 16px 40px; border-radius: 4px; cursor: pointer;
-          transition: background 0.2s, transform 0.15s; text-decoration: none; display: inline-block;
+        .eng-apply-card:hover { border-color: var(--blue); box-shadow: 0 4px 20px rgba(26,86,219,0.10); }
+        .eng-apply-card:hover::before { transform: scaleY(1); }
+        .eng-apply-left { display: flex; align-items: center; gap: 14px; }
+        .eng-apply-logo {
+          width: 44px; height: 44px; border-radius: 8px; flex-shrink: 0;
+          display: flex; align-items: center; justify-content: center;
+          font-family: 'Sora', sans-serif; font-size: 10px; font-weight: 800; color: #fff;
         }
-        .ab-btn-primary:hover { background: var(--g2); transform: translateY(-2px); }
-        .ab-btn-outline {
-          font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
-          background: transparent; color: var(--smoke);
-          border: 1.5px solid rgba(255,255,255,0.18); padding: 15px 36px;
-          border-radius: 4px; cursor: pointer;
-          transition: border-color 0.2s, color 0.2s; text-decoration: none; display: inline-block;
+        .eng-apply-name { font-family: 'Sora', sans-serif; font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+        .eng-apply-meta { font-size: 12px; color: var(--gray); }
+        .eng-apply-right { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; flex-shrink: 0; }
+        .eng-apply-fee { font-size: 12px; font-weight: 600; color: var(--text2); }
+        .eng-apply-deadline { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--orange); }
+        .eng-apply-btn {
+          font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+          background: var(--blue); color: #fff; border: none;
+          padding: 8px 18px; border-radius: 6px; cursor: pointer;
+          transition: background 0.2s; text-decoration: none; display: inline-block;
         }
-        .ab-btn-outline:hover { border-color: var(--g); color: var(--g); }
+        .eng-apply-btn:hover { background: var(--blue-dark); }
+        .eng-apply-nirf {
+          font-family: 'Sora', sans-serif; font-size: 11px; font-weight: 800;
+          color: var(--blue); background: var(--blue-light);
+          padding: 2px 8px; border-radius: 4px;
+        }
 
-        /* ── RESPONSIVE ── */
+        /* ══ COUNSELING ══ */
+        .eng-counsel { background: var(--off); padding: 100px 80px; }
+        .eng-counsel-h2 {
+          font-family: 'Sora', sans-serif; font-size: clamp(26px, 3vw, 40px);
+          font-weight: 800; color: var(--text); margin: 0 0 48px; line-height: 1.15;
+        }
+        .eng-counsel-h2 span { color: var(--blue); }
+        .eng-counsel-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+        .eng-counsel-card {
+          background: #fff; border: 1.5px solid var(--gray-light);
+          border-radius: var(--radius); padding: 28px 24px;
+          position: relative; transition: all 0.25s;
+        }
+        .eng-counsel-card::after {
+          content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+          background: linear-gradient(90deg, var(--blue), var(--orange));
+          border-radius: 0 0 var(--radius) var(--radius);
+          transform: scaleX(0); transform-origin: left; transition: transform 0.35s;
+        }
+        .eng-counsel-card:hover { border-color: var(--blue); box-shadow: 0 6px 24px rgba(26,86,219,0.10); }
+        .eng-counsel-card:hover::after { transform: scaleX(1); }
+        .eng-counsel-num {
+          font-family: 'Sora', sans-serif; font-size: 36px; font-weight: 800;
+          color: var(--blue-light); line-height: 1; margin-bottom: 14px; letter-spacing: -0.04em;
+        }
+        .eng-counsel-title {
+          font-family: 'Sora', sans-serif; font-size: 15px; font-weight: 700;
+          color: var(--text); margin-bottom: 8px;
+        }
+        .eng-counsel-desc { font-size: 13px; color: var(--gray); line-height: 1.65; }
+
+        /* ══ CTA ══ */
+        .eng-cta {
+          background: var(--blue-deep); padding: 80px 80px;
+          text-align: center; position: relative; overflow: hidden;
+        }
+        .eng-cta-circle {
+          position: absolute; bottom: -150px; left: 50%; transform: translateX(-50%);
+          width: 600px; height: 300px; border-radius: 50%;
+          background: rgba(249,115,22,0.07); pointer-events: none;
+        }
+        .eng-cta-h2 {
+          font-family: 'Sora', sans-serif; font-size: clamp(28px, 4vw, 48px);
+          font-weight: 800; color: #fff; margin: 0 0 16px; line-height: 1.1;
+          position: relative; z-index: 1;
+        }
+        .eng-cta-h2 span { color: var(--orange); }
+        .eng-cta-sub { font-size: 15px; color: rgba(255,255,255,0.55); margin: 0 0 36px; max-width: 520px; margin-left: auto; margin-right: auto; position: relative; z-index: 1; line-height: 1.7; }
+        .eng-cta-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; position: relative; z-index: 1; }
+
+        .eng-btn-primary {
+          font-family: 'Sora', sans-serif; font-size: 12px; font-weight: 700;
+          letter-spacing: 0.07em; text-transform: uppercase;
+          background: var(--orange); color: #fff; border: none;
+          padding: 14px 32px; border-radius: 8px; cursor: pointer;
+          transition: all 0.2s; text-decoration: none; display: inline-block;
+          box-shadow: 0 4px 20px rgba(249,115,22,0.35);
+        }
+        .eng-btn-primary:hover { background: var(--orange-light); transform: translateY(-2px); }
+        .eng-btn-outline {
+          font-family: 'Sora', sans-serif; font-size: 12px; font-weight: 700;
+          letter-spacing: 0.07em; text-transform: uppercase;
+          background: transparent; color: #fff;
+          border: 1.5px solid rgba(255,255,255,0.3); padding: 13px 28px;
+          border-radius: 8px; cursor: pointer; transition: all 0.2s;
+          text-decoration: none; display: inline-block;
+        }
+        .eng-btn-outline:hover { border-color: var(--orange); color: var(--orange); }
+
+        /* ══ WAVE ══ */
+        .eng-wave { display: block; line-height: 0; margin-bottom: -2px; }
+
+        /* ══ RESPONSIVE ══ */
         @media (max-width: 1024px) {
-          .ab-hero { grid-template-columns: 1fr; min-height: auto; }
-          .ab-hero-left { padding: 80px 48px 56px; border-right: none; border-bottom: 1px solid var(--gborder); }
-          .ab-hero-right { padding: 56px 48px 80px; }
-          .ab-origin { grid-template-columns: 1fr; gap: 48px; padding: 80px 48px; }
-          .ab-pillars-header { padding: 80px 48px 0; }
-          .ab-acc-trigger { padding: 0 40px; grid-template-columns: 56px 1fr 40px; gap: 20px; }
-          .ab-acc-inner { padding: 0 40px 48px; grid-template-columns: 1fr; gap: 36px; }
-          .ab-metrics { flex-direction: row; flex-wrap: wrap; gap: 8px; }
-          .ab-metric { flex: 1; min-width: 110px; border-radius: 3px !important; border-bottom: 1px solid var(--gborder) !important; }
-          .ab-values { padding: 80px 40px; }
-          .ab-values-grid { grid-template-columns: 1fr 1fr; }
-          .ab-commit { grid-template-columns: 1fr; gap: 48px; padding: 80px 48px; }
-          .ab-stats-strip { grid-template-columns: repeat(3,1fr); }
-          .ab-stat-cell:nth-child(3n) { border-right: none; }
-          .ab-stat-cell { border-bottom: 1px solid var(--gborder); }
-          .ab-cta { padding: 80px 40px; }
+          .eng-slide-content { padding: 40px 48px 100px; }
+          .eng-slides-nav { left: 48px; right: 48px; }
+          .eng-table-section, .eng-branches, .eng-exams, .eng-apply, .eng-counsel, .eng-cta { padding: 80px 48px; }
+          .eng-exams-grid { grid-template-columns: 1fr 1fr; }
+          .eng-counsel-grid { grid-template-columns: 1fr 1fr; }
         }
-        @media (max-width: 640px) {
-          .ab-hero-left, .ab-hero-right { padding: 60px 28px; }
-          .ab-origin { padding: 64px 28px; }
-          .ab-pillars-header { padding: 64px 28px 0; }
-          .ab-acc-trigger { padding: 0 24px; min-height: 72px; gap: 14px; }
-          .ab-acc-inner { padding: 0 24px 40px; }
-          .ab-values { padding: 64px 24px; }
-          .ab-values-grid { grid-template-columns: 1fr; }
-          .ab-commit { padding: 64px 28px; }
-          .ab-stats-strip { grid-template-columns: 1fr 1fr; }
-          .ab-stat-cell:nth-child(3n) { border-right: 1px solid var(--gborder); }
-          .ab-stat-cell:nth-child(2n) { border-right: none; }
-          .ab-cta { padding: 64px 28px; }
+        @media (max-width: 768px) {
+          .eng-slides { height: 80vh; min-height: 480px; max-height: 650px; }
+          .eng-slide-content { padding: 28px 24px 90px; }
+          .eng-slides-nav { left: 24px; right: 24px; bottom: 24px; }
+          .eng-slide-college-name { font-size: clamp(22px, 6vw, 36px); }
+          .eng-table-section, .eng-branches, .eng-exams, .eng-apply, .eng-counsel, .eng-cta { padding: 64px 24px; }
+          .eng-branches-grid { grid-template-columns: 1fr; }
+          .eng-exams-grid { grid-template-columns: 1fr; }
+          .eng-apply-grid { grid-template-columns: 1fr; }
+          .eng-counsel-grid { grid-template-columns: 1fr; }
         }
       `}</style>
 
-      <div className="ab">
+      <div className="eng">
 
-        {/* ══ HERO ══ */}
-        <section className="ab-hero">
-          <div className="ab-hero-left">
-            <Reveal>
-              <div className="ab-tag"><div className="ab-tag-line" />About Maharsh Edutech</div>
-              <h1 className="ab-hero-h1">
-                We Guide<br /><em>Futures.</em><br />Not Admissions.
-              </h1>
-              <p className="ab-hero-lead">
-                Maharsh Edutech is an Andhra Pradesh and Telangana-rooted education counseling firm that has spent twelve years doing one thing: helping students make the most consequential decisions of their early lives with complete clarity, expert guidance, and unwavering integrity. We are not a placement agency. We are a counseling firm — and that distinction defines everything about how we operate.
-              </p>
-            </Reveal>
+        {/* ══ FULL-SCREEN COLLEGE IMAGE SLIDES ══ */}
+        <section className="eng-slides">
+          {/* Progress bar animation key resets on slide change */}
+          <div className="eng-slides-progress" key={activeSlide}>
+            <div className="eng-slides-progress-bar" />
           </div>
-          <div className="ab-hero-right">
-            <div className="ab-hero-bg" />
-            <Reveal delay={120}>
-              <div className="ab-manifesto">
-                <p className="ab-manifesto-text">
-                  "The education consulting industry in India is full of people who earn money when a student enrolls in a particular college. We earn money only when a student chooses us — and we work to deserve that choice every single time."
-                </p>
-              </div>
-            </Reveal>
-            <Reveal delay={200}>
-              <div className="ab-hero-stats">
-                {stats.map((s, i) => (
-                  <div key={i} className="ab-hero-stat">
-                    <div className="ab-hero-stat-val">{s.val}</div>
-                    <div className="ab-hero-stat-label">{s.sub}</div>
-                  </div>
-                ))}
-              </div>
-            </Reveal>
-          </div>
-        </section>
 
-        {/* ══ ORIGIN / WHO WE ARE ══ */}
-        <section className="ab-origin">
-          <Reveal>
-            <div className="ab-tag"><div className="ab-tag-line" />Our Origin</div>
-            <h2 className="ab-origin-h2">
-              Built in<br />Hyderabad.<br /><em>Trusted</em><br />Nationally.
-            </h2>
-          </Reveal>
-          <Reveal delay={100}>
-            <div className="ab-origin-paras">
-              <p className="ab-origin-para">
-                Maharsh Edutech was established in Hyderabad with a specific observation: that the quality of education guidance a student receives is overwhelmingly determined by their socioeconomic position, their family's professional network, and their proximity to large urban centres — none of which have any bearing on a student's intelligence, ambition, or potential.
-              </p>
-              <p className="ab-origin-para">
-                A student in Vijayawada weighing NEET counseling options, a student in Warangal considering whether to pursue engineering or commerce, a student in Guntur applying to universities in the United Kingdom — each deserves access to the same quality of guidance that affluent families in metropolitan India can purchase from expensive private consultants. That conviction is what Maharsh Edutech was built to act on.
-              </p>
-              <p className="ab-origin-para">
-                <strong>Over twelve years, we have built a team of 40 certified counselors, application specialists, financial advisors, and visa experts</strong> who operate as an integrated unit — not a collection of siloed departments. Every student file is owned by a named counselor who is accountable for the outcome. Every recommendation is grounded in data. Every process is documented, tracked, and reviewed for quality.
-              </p>
-              <p className="ab-origin-para">
-                We serve students across Class 10, Class 12, undergraduate, and postgraduate transitions. We serve families across Telugu, Tamil, Hindi, Malayalam, Kannada, and Marathi-speaking communities. We operate across India and facilitate admissions in 18 countries. But every conversation begins the same way — with listening, without a script, and without a predetermined conclusion.
-              </p>
-              <p className="ab-origin-para">
-                <strong>We do not earn commissions from institutions. We do not earn referral payments from lenders.</strong> Our only revenue is the transparent service fee paid by the families who trust us with their most important decisions. This is not a marketing statement. It is the structural fact that makes every piece of advice we give genuinely independent.
-              </p>
-            </div>
-          </Reveal>
-        </section>
+          {collegeSlides.map((s, i) => (
+            <div
+              key={i}
+              className={`eng-slide-layer ${i === activeSlide ? 'entering' : 'exiting'}`}
+              style={{ pointerEvents: i === activeSlide ? 'auto' : 'none' }}
+            >
+              {/* Fallback gradient background */}
+              <div
+                className="eng-slide-fallback"
+                style={{ background: fallbackBgs[i % fallbackBgs.length] }}
+              />
 
-        {/* ══ WHAT WE DO — Accordion ══ */}
-        <section className="ab-pillars">
-          <Reveal>
-            <div className="ab-pillars-header">
-              <div className="ab-tag"><div className="ab-tag-line" />What We Do</div>
-              <h2 className="ab-pillars-h2">
-                Four Services.<br /><em>One Commitment.</em>
-              </h2>
-            </div>
-          </Reveal>
+              {/* Full-bleed image */}
+              <img
+                className="eng-slide-bg-img"
+                src={s.img}
+                alt={s.name}
+                onError={e => { e.target.style.display = 'none'; }}
+              />
 
-          <div className="ab-accordion">
-            {pillars.map((p, i) => {
-              const isOpen = activePillar === i;
-              return (
-                <div key={i} className={`ab-acc-row${isOpen ? " open" : ""}`}>
-                  <button
-                    className="ab-acc-trigger"
-                    onClick={() => setActivePillar(isOpen ? null : i)}
-                  >
-                    <div className="ab-acc-num">{p.num}</div>
-                    <div className="ab-acc-title-wrap">
-                      <div className="ab-acc-title">{p.title}</div>
-                      <div className="ab-acc-caption">{p.caption}</div>
-                    </div>
-                    <div className="ab-acc-icon">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <line x1="12" y1="5" x2="12" y2="19"/>
-                        <line x1="5" y1="12" x2="19" y2="12"/>
-                      </svg>
-                    </div>
-                  </button>
-                  <div className="ab-acc-body">
-                    <div className="ab-acc-inner">
-                      <div className="ab-acc-paras">
-                        {p.body.map((para, j) => (
-                          <p key={j} className="ab-acc-para">{para}</p>
-                        ))}
-                      </div>
-                      <div className="ab-metrics">
-                        {p.metrics.map((m, j) => (
-                          <div key={j} className="ab-metric">
-                            <div className="ab-metric-val">{m.val}</div>
-                            <div className="ab-metric-label">{m.label}</div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
+              {/* Dark gradient overlay */}
+              <div className="eng-slide-overlay" />
+
+              {/* Text content — name + location only */}
+              <div className="eng-slide-content">
+                <span className="eng-slide-tag-badge">{s.tag}</span>
+
+                <h2 className="eng-slide-college-name">{s.name}</h2>
+
+                <div className="eng-slide-location">
+                  <Icons.Pin />
+                  {s.location}
                 </div>
-              );
-            })}
+
+                <div className="eng-slide-nirf-badge">
+                  {s.nirf !== "—" && (
+                    <span className="eng-slide-nirf">NIRF #{s.nirf}</span>
+                  )}
+                  <span className="eng-slide-rating">★ {s.rating}</span>
+                </div>
+              </div>
+            </div>
+          ))}
+
+          {/* Navigation */}
+          <div className="eng-slides-nav">
+            <div className="eng-slides-dots">
+              {collegeSlides.map((_, i) => (
+                <button
+                  key={i}
+                  className={`eng-slides-dot${activeSlide === i ? ' active' : ''}`}
+                  onClick={() => goSlide(i)}
+                />
+              ))}
+            </div>
+            <span className="eng-slides-counter">
+              {String(activeSlide + 1).padStart(2, '0')} / {String(collegeSlides.length).padStart(2, '0')}
+            </span>
+            <div className="eng-slides-arrows">
+              <button className="eng-slides-arrow" onClick={() => goSlide((activeSlide - 1 + collegeSlides.length) % collegeSlides.length)}>
+                <Icons.ChevronLeft />
+              </button>
+              <button className="eng-slides-arrow" onClick={() => goSlide((activeSlide + 1) % collegeSlides.length)}>
+                <Icons.ChevronRight />
+              </button>
+            </div>
           </div>
         </section>
 
-        {/* ══ CORE VALUES ══ */}
-        <section className="ab-values">
+        {/* ══ AP & TS COLLEGES TABLE ══ */}
+        <section className="eng-table-section">
           <Reveal>
-            <div className="ab-tag"><div className="ab-tag-line" />How We Operate</div>
-            <h2 className="ab-values-h2">
-              The Principles That <em>Define Us</em>
+            <div className="eng-pill"><div className="eng-pill-dot" /> Colleges by State</div>
+            <h2 className="eng-branches-h2">
+              AP & TS <span>Engineering Colleges</span>
             </h2>
           </Reveal>
-          <Reveal delay={100}>
-            <div className="ab-values-grid">
-              {values.map((v, i) => (
-                <div key={i} className="ab-value-card">
-                  <div className="ab-value-glyph">{v.letter}</div>
-                  <div className="ab-value-title">{v.title}</div>
-                  <p className="ab-value-desc">{v.desc}</p>
+          <Reveal delay={80}>
+            <div className="eng-table-tabs">
+              <button className={`eng-table-tab${activeTab === 'AP' ? ' active' : ''}`} onClick={() => setActiveTab('AP')}>
+                Andhra Pradesh
+              </button>
+              <button className={`eng-table-tab${activeTab === 'TS' ? ' active' : ''}`} onClick={() => setActiveTab('TS')}>
+                Telangana
+              </button>
+            </div>
+            <div style={{overflowX:'auto'}}>
+              <table className="eng-table">
+                <thead>
+                  <tr>
+                    <th>College</th>
+                    <th>Location</th>
+                    <th>NIRF Rank</th>
+                    <th>Rating</th>
+                    <th>Total Seats</th>
+                    <th>Annual Fee</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {tableData.map((c, i) => (
+                    <tr key={i}>
+                      <td>
+                        <span className="eng-table-name">{c.name}</span>
+                        <span className={`eng-table-tag ${c.tag === 'Top Ranked' ? 'top' : c.tag === 'Deemed' ? 'deemed' : c.tag.includes('State') ? 'state' : c.tag === 'Autonomous' ? 'auto' : 'private'}`}>
+                          {c.tag}
+                        </span>
+                      </td>
+                      <td>{c.loc}</td>
+                      <td><span className="eng-table-nirf">{c.nirf}</span></td>
+                      <td>
+                        <div className="eng-table-stars">
+                          {[...Array(5)].map((_, j) => (
+                            <span key={j} style={{opacity: j < Math.round(c.rating) ? 1 : 0.2}}><Icons.Star /></span>
+                          ))}
+                          <span style={{fontSize:'12px', color:'var(--gray)', marginLeft:'4px'}}>{c.rating}</span>
+                        </div>
+                      </td>
+                      <td>{c.seats}</td>
+                      <td style={{color:'var(--blue)', fontWeight:600}}>{c.fee}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </Reveal>
+        </section>
+
+        {/* ══ TOP BRANCHES ══ */}
+        <section className="eng-branches">
+          <Reveal>
+            <div className="eng-pill"><div className="eng-pill-dot" /> Branch Demand</div>
+            <h2 className="eng-branches-h2">
+              Top Branches by <span>Market Demand</span>
+            </h2>
+          </Reveal>
+          <Reveal delay={80}>
+            <div className="eng-branches-grid">
+              {branches.map((b, i) => (
+                <div key={i} className="eng-branch-card">
+                  <div className="eng-branch-top">
+                    <span className="eng-branch-code">{b.code}</span>
+                    <span className="eng-branch-demand">Demand Score: {b.demand}/100</span>
+                  </div>
+                  <div className="eng-branch-name">{b.name}</div>
+                  <div className="eng-branch-bar-bg">
+                    <div className="eng-branch-bar" style={{width: `${b.demand}%`}} />
+                  </div>
+                  <div className="eng-branch-meta">
+                    <div className="eng-branch-meta-item">
+                      <label>Avg Package</label>
+                      <span>{b.avg_pkg}</span>
+                    </div>
+                    <div className="eng-branch-meta-item">
+                      <label>Top Roles</label>
+                      <span>{b.jobs}</span>
+                    </div>
+                  </div>
                 </div>
               ))}
             </div>
           </Reveal>
         </section>
 
-        {/* ══ COMMITMENT ══ */}
-        <section className="ab-commit">
+        {/* ══ WAVE ══ */}
+        <svg className="eng-wave" viewBox="0 0 1440 48" fill="none" xmlns="http://www.w3.org/2000/svg" style={{width:'100%', background:'var(--blue-deep)'}}>
+          <path d="M0 0 C480 48 960 0 1440 48 L1440 48 L0 48 Z" fill="var(--off)"/>
+        </svg>
+
+        {/* ══ ENTRANCE EXAMS ══ */}
+        <section className="eng-exams">
           <Reveal>
-            <div>
-              <div className="ab-tag"><div className="ab-tag-line" />Our Commitment</div>
-              <h2 className="ab-commit-h2">
-                What You Can<br /><em>Always Expect</em><br />From Us
-              </h2>
-              <p className="ab-commit-body">
-                Commitments are easy to state. The ones below are structural — meaning they are built into how our business operates, not aspirational values written on a wall. Every student who works with Maharsh Edutech receives these, without exception, regardless of which service tier they engage.
-              </p>
-            </div>
+            <div className="eng-pill orange"><div className="eng-pill-dot" /> Entrance Exams</div>
+            <h2 className="eng-exams-h2">
+              Key Exams to <span>Know & Crack</span>
+            </h2>
           </Reveal>
-          <Reveal delay={120}>
-            <div className="ab-commit-items">
-              {commitments.map((item, i) => (
-                <div key={i} className="ab-commit-item">
-                  <div className="ab-commit-dot" />
-                  <div>
-                    <div className="ab-commit-item-title">{item.title}</div>
-                    <div className="ab-commit-item-desc">{item.desc}</div>
+          <Reveal delay={80}>
+            <div className="eng-exams-grid">
+              {exams.map((ex, i) => (
+                <div key={i} className="eng-exam-card">
+                  <div className="eng-exam-name">{ex.name}</div>
+                  <div className="eng-exam-body">{ex.body}</div>
+                  <div className="eng-exam-row">
+                    <label>For</label>
+                    <span>{ex.for}</span>
+                  </div>
+                  <div className="eng-exam-row">
+                    <label>Window</label>
+                    <span>{ex.slots}</span>
+                  </div>
+                  <div className="eng-exam-tip">
+                    <span className="eng-exam-tip-icon">💡</span>
+                    {ex.tip}
                   </div>
                 </div>
               ))}
@@ -608,35 +928,81 @@ export default function About() {
           </Reveal>
         </section>
 
-        {/* ══ STATS STRIP ══ */}
-        <Reveal>
-          <div className="ab-stats-strip">
-            {stats.map((s, i) => (
-              <div key={i} className="ab-stat-cell">
-                <div className="ab-stat-val">{s.val}</div>
-                <div className="ab-stat-sub">{s.sub}</div>
-              </div>
-            ))}
-          </div>
-        </Reveal>
+        {/* ══ WAVE ══ */}
+        <svg className="eng-wave" viewBox="0 0 1440 48" fill="none" xmlns="http://www.w3.org/2000/svg" style={{width:'100%', background:'#fff'}}>
+          <path d="M0 48 C480 0 960 48 1440 0 L1440 0 L0 0 Z" fill="var(--blue-deep)"/>
+        </svg>
+
+        {/* ══ APPLY SECTION ══ */}
+        <section className="eng-apply">
+          <Reveal>
+            <div className="eng-pill"><div className="eng-pill-dot" /> Apply Now</div>
+            <h2 className="eng-apply-h2">
+              Top Colleges <span>Open for Applications</span>
+            </h2>
+          </Reveal>
+          <Reveal delay={80}>
+            <div className="eng-apply-grid">
+              {applyColleges.map((c, i) => (
+                <div key={i} className="eng-apply-card">
+                  <div className="eng-apply-left">
+                    <div className="eng-apply-logo" style={{background: c.color}}>
+                      {c.abbr}
+                    </div>
+                    <div>
+                      <div className="eng-apply-name">{c.name}</div>
+                      <div className="eng-apply-meta">
+                        {c.loc} &nbsp;·&nbsp;
+                        <span className="eng-apply-nirf">NIRF {c.nirf}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="eng-apply-right">
+                    <div className="eng-apply-fee">{c.fee}</div>
+                    <div className="eng-apply-deadline">Deadline: {c.deadline}</div>
+                    <a href="/contact" className="eng-apply-btn">Apply</a>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </Reveal>
+        </section>
+
+        {/* ══ COUNSELING STEPS ══ */}
+        <section className="eng-counsel">
+          <Reveal>
+            <div className="eng-pill"><div className="eng-pill-dot" /> Our Process</div>
+            <h2 className="eng-counsel-h2">
+              How We Guide Your <span>Seat Allotment</span>
+            </h2>
+          </Reveal>
+          <Reveal delay={80}>
+            <div className="eng-counsel-grid">
+              {counselingSteps.map((s, i) => (
+                <div key={i} className="eng-counsel-card">
+                  <div className="eng-counsel-num">{s.num}</div>
+                  <div className="eng-counsel-title">{s.title}</div>
+                  <div className="eng-counsel-desc">{s.desc}</div>
+                </div>
+              ))}
+            </div>
+          </Reveal>
+        </section>
 
         {/* ══ CTA ══ */}
-        <section className="ab-cta">
+        <section className="eng-cta">
+          <div className="eng-cta-circle" />
           <Reveal>
-            <div className="ab-cta-inner">
-              <div className="ab-tag" style={{justifyContent:'center'}}>
-                <div className="ab-tag-line" />Begin Here<div className="ab-tag-line" />
-              </div>
-              <h2 className="ab-cta-h2">
-                A Conversation<br />Changes <em>Everything</em>
-              </h2>
-              <p className="ab-cta-sub">
-                Your first session is complimentary, completely without obligation, and entirely focused on understanding your situation — not presenting a package. Book a 30-minute call with a certified counselor and see what genuinely independent guidance feels like.
-              </p>
-              <div className="ab-cta-btns">
-                <a href="/contact" className="ab-btn-primary">Book Free Session</a>
-                <a href="/services" className="ab-btn-outline">Explore Services</a>
-              </div>
+            <div className="eng-pill orange" style={{justifyContent:'center'}}><div className="eng-pill-dot" /> Get Started</div>
+            <h2 className="eng-cta-h2">
+              Your Engineering Seat.<br /><span>Secured with Data.</span>
+            </h2>
+            <p className="eng-cta-sub">
+              Book a free counseling session. We'll analyse your rank, build your college list, and be present through every round.
+            </p>
+            <div className="eng-cta-btns">
+              <a href="/contact" className="eng-btn-primary">Book Free Counseling</a>
+              <a href="/about" className="eng-btn-outline">About Maharsh</a>
             </div>
           </Reveal>
         </section>

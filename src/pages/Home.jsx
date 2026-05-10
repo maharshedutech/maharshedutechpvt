@@ -2,7 +2,6 @@
 import Hero from "../components/Hero";
 import React, { useEffect, useRef, useState } from "react";
 
-/* ─── Intersection Observer hook ─── */
 function useReveal(threshold = 0.1) {
   const ref = useRef(null);
   const [visible, setVisible] = useState(false);
@@ -24,8 +23,8 @@ function RevealSection({ children, className = "", style = {}, delay = 0 }) {
   return (
     <div ref={ref} className={className} style={{
       opacity: visible ? 1 : 0,
-      transform: visible ? "translateY(0)" : "translateY(48px)",
-      transition: `opacity 0.85s cubic-bezier(.22,1,.36,1) ${delay}ms, transform 0.85s cubic-bezier(.22,1,.36,1) ${delay}ms`,
+      transform: visible ? "translateY(0)" : "translateY(40px)",
+      transition: `opacity 0.75s ease ${delay}ms, transform 0.75s ease ${delay}ms`,
       ...style,
     }}>{children}</div>
   );
@@ -34,32 +33,26 @@ function RevealSection({ children, className = "", style = {}, delay = 0 }) {
 /* ─── SVG Icons ─── */
 const Icons = {
   CompassRose: () => (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
-      <circle cx="12" cy="12" r="10"/>
-      <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>
       <circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"/>
     </svg>
   ),
   ScrollDoc: () => (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
       <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-      <polyline points="14 2 14 8 20 8"/>
-      <line x1="16" y1="13" x2="8" y2="13"/>
-      <line x1="16" y1="17" x2="8" y2="17"/>
-      <polyline points="10 9 9 9 8 9"/>
+      <polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>
     </svg>
   ),
   GlobePin: () => (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
-      <circle cx="12" cy="12" r="10"/>
-      <line x1="2" y1="12" x2="22" y2="12"/>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/>
       <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
     </svg>
   ),
   CreditCard: () => (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
-      <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
-      <line x1="1" y1="10" x2="23" y2="10"/>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/>
     </svg>
   ),
   Check: () => (
@@ -68,39 +61,43 @@ const Icons = {
     </svg>
   ),
   Star: () => (
-    <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-  ),
-  Quote: () => (
-    <svg viewBox="0 0 40 30" fill="currentColor">
-      <path d="M0 30V18C0 7.6 5.6 1.6 16.8 0l2.4 4C13.2 5.2 10 8.8 10 14v1.5H18V30H0zm22 0V18C22 7.6 27.6 1.6 38.8 0l2.4 4c-6 1.2-9.2 4.8-9.2 10V15.5H40V30H22z"/>
+    <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14">
+      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
     </svg>
   ),
   Phone: () => (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
       <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.38 2 2 0 0 1 3.6 1.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.73a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
     </svg>
   ),
   Mail: () => (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
       <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
       <polyline points="22,6 12,13 2,6"/>
     </svg>
   ),
   MapPin: () => (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-      <circle cx="12" cy="10" r="3"/>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+    </svg>
+  ),
+  ChevronLeft: () => (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <polyline points="15 18 9 12 15 6"/>
+    </svg>
+  ),
+  ChevronRight: () => (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <polyline points="9 18 15 12 9 6"/>
     </svg>
   ),
   ArrowRight: () => (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <line x1="5" y1="12" x2="19" y2="12"/>
-      <polyline points="12 5 19 12 12 19"/>
+      <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
     </svg>
   ),
 };
 
-/* ─── Telangana & Andhra Pradesh Top Colleges ─── */
 const regionalColleges = [
   { name: "JNTU Hyderabad", short: "JNTU", state: "TS", image: "/images/colleges/jntu.png" },
   { name: "Osmania University", short: "OU", state: "TS", image: "/images/colleges/osmania.png" },
@@ -133,22 +130,19 @@ const nationalColleges = [
   { name: "VIT Vellore", short: "VIT", color: "#c9a227" },
 ];
 
-/* ─── What We Do Services ─── */
 const services = [
   {
     icon: "CompassRose",
     num: "01",
-    title: "Career Counseling & Guidance",
-    subtitle: "Discover Your True Direction",
-    desc: "Your career is not a guess — it is a discovery. Our certified counselors invest deeply in understanding your psychometric profile, academic trajectory, and long-term aspirations before making a single recommendation. Through structured one-on-one sessions, industry analysis, and scientifically validated assessment tools, we build a career roadmap that is precise, personal, and grounded in real-world employment data. We do not recycle templates. Every roadmap is built from scratch, for you.",
-    detail: "Many students approach us carrying the weight of family expectations, peer comparisons, and social pressure — all pointing in different directions. Our process begins by removing that noise. We work with students from Class 10 onwards, helping them understand not just what they are good at today, but what they are built for in the long run. Our psychometric assessments evaluate aptitude, emotional intelligence, learning style, risk orientation, and career values. The output is a written, detailed report that becomes the foundation of every decision made thereafter.",
+    title: "Career Counseling",
+    subtitle: "Discover Your Direction",
     points: [
-      "In-depth psychometric and aptitude assessment",
-      "One-on-one 90-minute deep-dive sessions",
-      "Written career report with 3 pathway projections",
-      "Industry salary benchmarks and growth trajectory data",
-      "Post-session follow-up and revision support",
-      "Available in Telugu, Tamil, Hindi, Malayalam, Kannada",
+      "Psychometric & aptitude assessment",
+      "90-min one-on-one deep-dive session",
+      "Written career report — 3 pathway projections",
+      "Salary benchmarks & growth data",
+      "Available in Telugu, Tamil, Hindi & more",
+      "Post-session follow-up & revision",
     ],
   },
   {
@@ -156,102 +150,54 @@ const services = [
     num: "02",
     title: "Application Support",
     subtitle: "Every Document, Perfected",
-    desc: "A great application is a form of storytelling — it shows the institution exactly who you are, why you belong there, and what you will contribute. Our application support team includes former admissions committee members, seasoned SOP writers, and documentation specialists who have helped over 5,000 students craft compelling, distinctive applications across engineering, medicine, management, law, design, and international programs.",
-    detail: "We cover every element of the application process: Statement of Purpose (SOP) writing through four rounds of expert review and revision, Letter of Recommendation (LOR) strategy and drafting, personal essay coaching, extracurricular positioning, resume and CV building, interview preparation with mock sessions and real-time feedback, and the organisation and submission of supporting documents for every institution in your shortlist. For international applications, we align every element with institution-specific evaluation rubrics to maximise your chance of selection.",
     points: [
-      "SOP drafting with 4 rounds of expert review",
-      "LOR strategy, structure, and drafting support",
-      "Personal essay coaching and positioning",
-      "Resume and CV crafting for student profiles",
+      "SOP drafting — 4 rounds of expert review",
+      "LOR strategy, structure & drafting",
+      "Personal essay coaching",
+      "Resume & CV for student profiles",
       "Mock interviews with senior counselors",
-      "Document verification and submission support",
       "University-specific application alignment",
     ],
   },
   {
     icon: "GlobePin",
     num: "03",
-    title: "End-to-End Admission — India & Abroad",
+    title: "India & Abroad Admissions",
     subtitle: "From Shortlist to Enrollment",
-    desc: "Admission into the right institution is the culmination of years of effort — and the gateway to everything that follows. We manage the complete admission lifecycle for both domestic Indian institutions and universities across 18 countries, with specialist teams for engineering, medical, management, law, architecture, design, and liberal arts. From the first college shortlist to the final enrollment confirmation, we are accountable for every step.",
-    detail: "For Indian admissions, we navigate the full complexity of JEE, NEET, CLAT, NIFT, NATA, CAT, and state-level entrance counseling processes. We have established relationships with over 250 partner institutions across India and maintain real-time access to seat availability, cutoff trends, and scholarship data. Our counseling teams are present in-person during critical rounds — JOSAA, MCC, state counseling — ensuring students and families never face a high-stakes decision without expert support. For international admissions, our specialist teams have placed students in universities across the USA, UK, Canada, Australia, Germany, Singapore, UAE, Ireland, Netherlands, and New Zealand. We coordinate every element from university shortlisting based on your academic profile and budget, to visa documentation, pre-departure orientation, and post-arrival check-ins.",
     points: [
       "250+ partner institutions across India",
-      "Engineering, Medical, MBA, Law, Design, Architecture",
+      "Engineering, Medical, MBA, Law, Design",
       "JEE, NEET, CLAT, NIFT, NATA, CAT counseling",
       "18 countries for international placements",
-      "Visa documentation and embassy preparation",
-      "Scholarship identification and application",
-      "Pre-departure briefing and airport assistance",
-      "Post-arrival check-in and community connection",
+      "Visa documentation & embassy prep",
+      "Pre-departure briefing & post-arrival check-in",
     ],
   },
   {
     icon: "CreditCard",
     num: "04",
     title: "Education Loan Assistance",
-    subtitle: "Fund Your Future, Wisely",
-    desc: "The financial dimension of higher education is one of the most anxiety-inducing aspects for families — and also one of the most misunderstood. Our financial counselors demystify the loan process entirely, working with 14 banking and NBFC partners to identify the most advantageous loan structures for your specific profile, institution, and repayment capacity. We do not receive commission from lenders. Our only goal is to help you secure funding on terms that serve your long-term financial health.",
-    detail: "We assess your family's financial eligibility, the institution's lender relationships, collateral options, and interest rate structures across nationalized banks, private banks, and non-banking financial companies. We then build a complete funding plan — combining scholarships, merit awards, institutional fee waivers, and loan amounts — to minimise the total debt burden. Our team handles all documentation, bank liaison, and follow-up, and provides detailed EMI and repayment counseling before any loan is signed. We also advise on tax benefits available under Section 80E of the Income Tax Act.",
+    subtitle: "Fund Your Future Wisely",
     points: [
-      "Tie-ups with 14 nationalized and private lenders",
-      "Collateral and non-collateral loan options",
-      "Complete funding plan: scholarship + loan combo",
-      "Full documentation and bank liaison",
-      "EMI calculation and repayment strategy",
+      "14 banking & NBFC partners",
+      "Collateral & non-collateral loan options",
+      "Full funding plan: scholarship + loan combo",
+      "Complete documentation & bank liaison",
+      "EMI calculation & repayment strategy",
       "Section 80E tax benefit advisory",
-      "Disbursement tracking and follow-up",
     ],
   },
 ];
 
-/* ─── Process Steps ─── */
 const processSteps = [
-  {
-    num: "01",
-    title: "Book Your Free Discovery Session",
-    desc: "Begin with a complimentary 30-minute consultation with one of our senior counselors. This is not a sales call — it is an open, honest conversation about where you are in your academic journey, what is worrying you, and what you are hoping to achieve. We listen before we advise.",
-    duration: "30 minutes",
-    mode: "Free",
-  },
-  {
-    num: "02",
-    title: "Psychometric & Aptitude Assessment",
-    desc: "Complete our comprehensive scientifically validated assessment covering aptitude across verbal, logical, numerical, and spatial domains; personality dimensions across the Big Five framework; career values and motivational drivers; risk orientation and decision-making style; and learning modality preferences. The assessment is conducted online or in-person and takes approximately 90 minutes.",
-    duration: "90 minutes",
-    mode: "In-depth",
-  },
-  {
-    num: "03",
-    title: "Personalised Career & College Roadmap",
-    desc: "Within 72 hours of your assessment, we deliver a detailed written roadmap — 20 to 30 pages — covering your psychometric results and interpretation, three career pathway projections with 5-year and 10-year outlooks, a prioritized shortlist of institutions matched to your profile and budget, entrance exam strategy and preparation timeline, and a financial planning overview covering fees, scholarships, and loan options.",
-    duration: "72 hours delivery",
-    mode: "Written Report",
-  },
-  {
-    num: "04",
-    title: "Application Building & Submission",
-    desc: "Our application team takes full ownership of execution. SOP drafting and revision cycles, LOR structure and preparation, university-specific essays and supplemental materials, document authentication and organization, application portal management, and continuous communication with institutional admissions offices — all handled by our specialists while you are kept informed at every milestone.",
-    duration: "4–8 weeks",
-    mode: "Managed Service",
-  },
-  {
-    num: "05",
-    title: "Counseling Rounds & Enrollment",
-    desc: "For Indian entrance counseling — JEE, NEET, state quota, management quota — we are present with you through every round, helping you build data-driven choice-filling strategies and react to real-time seat availability. For international admissions, we coordinate with institutions until your I-20, CAS, or offer letter is confirmed and funds are remitted. We do not consider our job done until you have your institution ID in hand.",
-    duration: "Variable",
-    mode: "In-person",
-  },
-  {
-    num: "06",
-    title: "Post-Enrollment Support",
-    desc: "Our relationship with students continues well beyond enrollment. We provide hostel and accommodation shortlisting, peer community introductions within your institution, semester check-in calls during your first year, mentorship sessions connecting you with alumni in your field, and ongoing career guidance as you approach internship season and placements. You are never alone in the transition.",
-    duration: "First year",
-    mode: "Ongoing",
-  },
+  { num: "01", title: "Free Discovery Session", desc: "30-min honest conversation about your goals, worries & aspirations.", badge: "Free · 30 min" },
+  { num: "02", title: "Psychometric Assessment", desc: "Aptitude, personality, career values & learning style — scientifically validated.", badge: "In-depth · 90 min" },
+  { num: "03", title: "Career & College Roadmap", desc: "20–30 page written report: 3 career paths, college shortlist, exam strategy & financial plan.", badge: "Written Report · 72 hrs" },
+  { num: "04", title: "Application Building", desc: "SOP, LOR, essays, CV, document submission — fully managed by our specialist team.", badge: "Managed · 4–8 weeks" },
+  { num: "05", title: "Counseling Rounds & Enrollment", desc: "Present through every JEE/NEET/state round. Coordinate until offer letter is confirmed.", badge: "In-person · Variable" },
+  { num: "06", title: "Post-Enrollment Support", desc: "Hostel shortlisting, peer community, semester check-ins & mentorship during first year.", badge: "Ongoing · Year 1" },
 ];
 
-/* ─── About Us ─── */
 const aboutStats = [
   { num: "12+", label: "Years of Operation" },
   { num: "5,000+", label: "Students Guided" },
@@ -261,146 +207,95 @@ const aboutStats = [
   { num: "14", label: "Loan Partner Banks" },
 ];
 
-const whyUs = [
-  {
-    num: "01",
-    title: "Certified Career Counselors",
-    desc: "Every counselor holds recognized certifications in career guidance and educational counseling — including NCDA, GCDF, or equivalent Indian credentials — and brings a minimum of five years of hands-on admissions experience across both Indian and international institutions. We do not employ freshers with scripts. We employ practitioners who understand what they are advising.",
-  },
-  {
-    num: "02",
-    title: "Zero Commission, Zero Conflict",
-    desc: "We do not receive referral fees, placement commissions, or incentive payments from any college, university, loan provider, or coaching institute. Our only source of revenue is the transparent service fee paid by the student and their family. This structural independence means our advice is aligned entirely with your interests — not ours.",
-  },
-  {
-    num: "03",
-    title: "End-to-End Accountability",
-    desc: "You will never be handed off to a junior relationship manager after your initial consultation, or left to navigate a critical application deadline without support. The same senior counselor who conducts your first session owns your file from discovery through enrollment. Accountability is personal at Maharsh Edutech.",
-  },
-  {
-    num: "04",
-    title: "Data-Driven Recommendations",
-    desc: "Our counselors are supported by a proprietary database of placement statistics, admission cutoff trends, salary benchmarks, and alumni outcome tracking — updated annually from institutional disclosures, LinkedIn data, and our own longitudinal student tracking. Every recommendation we make is grounded in evidence.",
-  },
-  {
-    num: "05",
-    title: "Regional Language Depth",
-    desc: "Career counseling requires nuance, vulnerability, and clear thinking — none of which should be compromised by a language barrier. Our team serves students in Telugu, Tamil, Malayalam, Hindi, Kannada, and Marathi, ensuring that every student can express themselves fully and receive guidance they can genuinely internalize.",
-  },
-  {
-    num: "06",
-    title: "Transparent Outcome Tracking",
-    desc: "We publish our admission outcome data annually. Across 5,000+ students counseled, 98% have secured admission into one of their top three institutional choices. We track outcomes, follow up with students after enrollment, and use longitudinal data to continuously refine our counseling methodology. We are accountable to results, not just promises.",
-  },
+// ── NEW: bullet points for the About section ──
+const aboutPoints = [
+  "Founded with one conviction: every student deserves the same quality of guidance previously available only to the well-connected",
+  "12 years of honest, outcome-driven counseling — rooted in AP & Telangana, grown into a national presence",
+  "40 certified counselors, application specialists, financial advisors & visa experts operating as one integrated unit",
+  "No commissions from colleges. No referral payments. Revenue only from transparent service fees",
+  "Collectively accountable for every student's outcome — from discovery call to enrollment confirmation",
 ];
 
-/* ─── Testimonials ─── */
+const whyUs = [
+  { num: "01", title: "Certified Career Counselors", desc: "NCDA/GCDF certified with 5+ years of hands-on admissions experience. No freshers with scripts." },
+  { num: "02", title: "Zero Commission, Zero Conflict", desc: "No referral fees from colleges, lenders, or institutes. Revenue only from transparent service fees." },
+  { num: "03", title: "End-to-End Accountability", desc: "Same senior counselor owns your file from discovery to enrollment. No handoffs to juniors." },
+  { num: "04", title: "Data-Driven Recommendations", desc: "Proprietary database of cutoff trends, salary benchmarks & alumni outcomes — updated annually." },
+  { num: "05", title: "Regional Language Depth", desc: "Serve students in Telugu, Tamil, Malayalam, Hindi, Kannada & Marathi with full nuance." },
+  { num: "06", title: "Transparent Outcome Tracking", desc: "98% of 5,000+ students secured one of their top three choices. We publish our outcome data annually." },
+];
+
 const testimonials = [
   {
-    name: "Arjun Mehta",
-    institution: "IIT Hyderabad",
-    program: "B.Tech Computer Science, 2024",
-    location: "Hyderabad, Telangana",
-    instColor: "#1a1a6e",
-    instAbbr: "IIT",
-    rating: 5,
-    short: "From overwhelmed to IIT Hyderabad in two months",
-    text: "I had absolutely no direction after my 12th results. My parents were anxious, I was overwhelmed by the sheer number of options — JEE counseling, private colleges, management quota, everything. The noise was deafening and every well-meaning relative had a different opinion. Maharsh Edutech cut through all of that within the very first session. My counselor had the extraordinary ability to listen without judgment and then frame the situation with complete clarity. Within 45 minutes, he had already mapped three realistic paths based on my JEE rank, my interests, and my family's financial situation. There was no pressure, no sales language, no manufactured urgency. Just honest, specific, experienced advice. The team then took over my JOSAA documentation and guided me through every round of counseling in real time — they were reachable on the phone even late at night when choices had to be locked. I secured Computer Science at IIT Hyderabad. That felt genuinely impossible two months before.",
+    name: "Arjun Mehta", institution: "IIT Hyderabad", program: "B.Tech Computer Science, 2024",
+    instColor: "#1a56db", instAbbr: "IIT", rating: 5,
+    headline: "Secured IIT Hyderabad — CS in Round 1 of JOSAA",
+    points: ["Complete clarity on JEE rank vs options in 45 minutes", "Data-driven JOSAA choice-filling strategy", "Counselor reachable even late at night during rounds"],
   },
   {
-    name: "Priya Nair",
-    institution: "University of Toronto",
-    program: "MSc Data Science, 2023",
-    location: "Kochi, Kerala",
-    instColor: "#002145",
-    instAbbr: "UoT",
-    rating: 5,
-    short: "University of Toronto with a partial scholarship",
-    text: "Studying abroad had always been a distant dream, made more distant by how impossibly complex the process seemed — GRE scores, IELTS, SOPs, LORs, financial proofs, visa interviews, proof of funds, scholarship applications, and deadlines that overlapped in ways I could not track. I approached Maharsh Edutech six months before my target intake and the first thing they did was create a week-by-week execution calendar that made the entire process feel manageable for the first time. My Statement of Purpose went through four rounds of expert review. Each round was not just a grammar pass — they challenged my framing, pushed me to articulate my research interests more specifically, and helped me write something that genuinely sounded like me rather than a template. They identified three scholarship opportunities I had not found despite months of independent research. I was admitted to the University of Toronto with a partial scholarship. What I valued most was the calm, systematic competence of the team — I never once felt lost, even when the process got difficult.",
+    name: "Priya Nair", institution: "University of Toronto", program: "MSc Data Science, 2023",
+    instColor: "#002145", instAbbr: "UoT", rating: 5,
+    headline: "University of Toronto with partial scholarship",
+    points: ["Week-by-week execution calendar from day one", "SOP through 4 expert review rounds", "3 scholarships identified that she hadn't found independently"],
   },
   {
-    name: "Rahul Sharma",
-    institution: "AIIMS New Delhi",
-    program: "MBBS, 2023",
-    location: "Jaipur, Rajasthan",
-    instColor: "#8b0000",
-    instAbbr: "AIIMS",
-    rating: 5,
-    short: "AIIMS Delhi in Round 1 of NEET counseling",
-    text: "NEET counseling is unlike any other process in Indian education — the stakes are enormous, the window is narrow, and the consequences of a wrong choice can cost a student an entire year. I had a competitive score but absolutely no strategic clarity about how to approach choice-filling across the all-India quota, state quota, deemed university seats, and NRI quota. The counselors at Maharsh Edutech helped me build a choice-filling strategy that was genuinely data-driven — they had historical cutoff data going back multiple years and could tell me, for each institution I was considering, not just the expected cutoff but the risk-adjusted probability of my getting a seat given my category, state domicile, and score. They understood that every choice on that list represented years of my life, not just a number in a box. They also prepared my family for the emotional volatility of watching round results — which matters more than people acknowledge. I got AIIMS Delhi in Round 1. My family and I are forever grateful.",
+    name: "Rahul Sharma", institution: "AIIMS New Delhi", program: "MBBS, 2023",
+    instColor: "#8b0000", instAbbr: "AIIMS", rating: 5,
+    headline: "AIIMS Delhi — Round 1 of NEET counseling",
+    points: ["Multi-year cutoff data per institution & category", "Risk-adjusted probability for each choice", "Family prepared for emotional volatility of round results"],
   },
   {
-    name: "Sneha Reddy",
-    institution: "Manipal University",
-    program: "BDS + MBA Healthcare track, 2024",
-    location: "Vijayawada, Andhra Pradesh",
-    instColor: "#2c5f2e",
-    instAbbr: "MU",
-    rating: 5,
-    short: "Clarity between dentistry and pharmacy — and the loan that made it possible",
-    text: "After my 12th results, I was genuinely torn between pursuing dentistry and pharmacy. Both options had merit and both had strong advocates in my family — my father wanted pharmacy for the entrepreneurship opportunities, my mother wanted dentistry for the patient-facing career. I had no objective input from anyone who understood both fields from a professional and financial perspective. The psychometric assessment at Maharsh Edutech was genuinely eye-opening — not because it gave me a magic answer, but because it helped me see my own tendencies with extraordinary clarity. The results showed a strong orientation toward direct patient care, high conscientiousness in detailed procedural work, and moderate entrepreneurial drive. The counselors then walked me through the realistic career trajectories of both BDS and B.Pharm with actual salary data, scope of practice comparisons, further study options, and industry growth forecasts. The BDS path at Manipal with an eventual MBA in Healthcare Management was the right call. I am absolutely certain about my path now — and the education loan assistance they provided made it financially feasible for my family without unreasonable stress.",
+    name: "Sneha Reddy", institution: "Manipal University", program: "BDS + MBA Healthcare, 2024",
+    instColor: "#2c5f2e", instAbbr: "MU", rating: 5,
+    headline: "Clarity between dentistry & pharmacy — and loan secured",
+    points: ["Psychometric showed strong patient-care orientation", "Real salary & scope-of-practice comparison", "Education loan assistance made it financially feasible"],
   },
   {
-    name: "Karthik Iyer",
-    institution: "BITS Pilani — Goa Campus",
-    program: "B.E. Electronics, 2024",
-    location: "Chennai, Tamil Nadu",
-    instColor: "#b71c1c",
-    instAbbr: "BITS",
-    rating: 5,
-    short: "The right BITS campus and branch — chosen with data, not prestige bias",
-    text: "I had a strong BITSAT score and was facing the classic dilemma — which campus, which branch, and whether to take a less preferred branch at a more preferred campus or vice versa. The internet was full of conflicting opinions driven by prestige bias and anecdote. What I needed was someone who could show me actual data. Maharsh Edutech gave me a thorough, structured breakdown of placement statistics disaggregated by campus and branch, research publication output, industry partnership quality, alumni network density in my target sector, and branch-specific internship opportunity data. What stood out most was their intellectual honesty — they told me when a choice was not in my best long-term interest, even if it was the more prestigious-sounding option on paper. That kind of honesty is genuinely rare in the education consulting space, where most advisors tell students what they want to hear. I am now at BITS Pilani Goa, in Electronics, with full clarity about what I want to do with these four years.",
+    name: "Karthik Iyer", institution: "BITS Pilani — Goa", program: "B.E. Electronics, 2024",
+    instColor: "#b71c1c", instAbbr: "BITS", rating: 5,
+    headline: "Right BITS campus & branch — chosen with data, not prestige bias",
+    points: ["Placement stats disaggregated by campus & branch", "Alumni network density in target sector", "Honest advice even when it contradicted prestige ranking"],
   },
   {
-    name: "Ananya Bose",
-    institution: "ISB Hyderabad",
-    program: "PGP — Post Graduate Programme, 2023",
-    location: "Kolkata, West Bengal",
-    instColor: "#1a1a6e",
-    instAbbr: "ISB",
-    rating: 5,
-    short: "From operations professional to ISB — with positioning that actually worked",
-    text: "I was a working professional with three years in supply chain operations, considering whether an MBA was genuinely the right investment for my career goals or whether I was falling into the trap of doing what everyone around me was doing. The counselors at Maharsh Edutech were the first to actually challenge the premise of my question — they asked me to articulate specifically what I expected the MBA to unlock, and whether those outcomes were achievable by other paths. That conversation alone was worth more than any generic admission guidance. After two full sessions analyzing my career history, goals, and positioning, they helped me build a narrative that was honest and distinctive — not the sanitized version that most applicants present. My essays were reviewed by counselors with direct experience of what ISB's admissions committee evaluates. I received offers from three top MBA programs and chose ISB for its industry connections in the operations and consulting sectors. The ROI on this counseling investment has been substantial, and I think of it as the most important professional advice I have ever received.",
+    name: "Ananya Bose", institution: "ISB Hyderabad", program: "PGP, 2023",
+    instColor: "#1a56db", instAbbr: "ISB", rating: 5,
+    headline: "Operations professional to ISB — positioning that worked",
+    points: ["Counselors challenged whether MBA was the right path", "Narrative built around genuine career history", "Offers from 3 top MBA programs"],
   },
   {
-    name: "Vikram Naidu",
-    institution: "Purdue University",
-    program: "MS Mechanical Engineering, 2024",
-    location: "Guntur, Andhra Pradesh",
-    instColor: "#CEB888",
-    instAbbr: "PU",
-    rating: 5,
-    short: "Purdue MS with a university graduate fellowship",
-    text: "I was a final-year engineering student at JNTU Kakinada with a decent CGPA, average GRE scores, and very limited guidance on how to position myself competitively for US graduate admissions. My first instinct was to apply to the top 20 universities in the QS ranking, which my counselor at Maharsh Edutech immediately and gently helped me reconsider. She showed me why program-specific research fit, faculty alignment, and funding availability were far more important than aggregate rankings for MS applicants in engineering. We spent two sessions building a balanced university list — safeties, targets, and reaches — all with credible rationale for why I could be competitive at each. My SOP was rewritten from scratch three times until it clearly articulated my specific research interests and connected them to faculty work at each university. My counselor identified a graduate research assistantship opportunity at Purdue that I had not found. I applied specifically noting the faculty connection in my application, was shortlisted for an interview, and ultimately received a graduate fellowship. I cannot overstate how different this outcome would have been without the expert positioning they provided.",
+    name: "Vikram Naidu", institution: "Purdue University", program: "MS Mechanical Engg, 2024",
+    instColor: "#CEB888", instAbbr: "PU", rating: 5,
+    headline: "Purdue MS with graduate fellowship",
+    points: ["Faculty-aligned shortlist — not just QS rankings", "SOP rewritten 3 times for research specificity", "RA opportunity identified that led to fellowship"],
   },
   {
-    name: "Divya Krishnamurthy",
-    institution: "NLSIU Bangalore",
-    program: "B.A. LL.B., 2023",
-    location: "Secunderabad, Telangana",
-    instColor: "#003366",
-    instAbbr: "NLS",
-    rating: 5,
-    short: "CLAT rank 34 — and knowing exactly what to do with it",
-    text: "I had prepared for CLAT for two years and achieved a rank of 34 in the all-India merit list — a result that any law aspirant would celebrate. But in the days immediately after results, I found myself more anxious than celebratory, because I had no framework for understanding which NLU was right for me and why. The rankings exist but they do not capture clinical legal education quality, research culture, infrastructure for the specific practice area I was interested in, or the placement record in the specific firms I had identified as targets. Maharsh Edutech took all of this seriously. My counselor — who had personally advised students entering NLSIU, NALSAR, and NUJS over several years — walked me through each institution's culture, faculty quality in constitutional and human rights law specifically, moot court opportunities, law review publication norms, and detailed clerkship and firm placement data. The choice of NLSIU was clear and I made it with conviction. That confidence has carried through into my first year in ways I did not expect.",
+    name: "Divya Krishnamurthy", institution: "NLSIU Bangalore", program: "B.A. LL.B., 2023",
+    instColor: "#003366", instAbbr: "NLS", rating: 5,
+    headline: "CLAT Rank 34 — chose NLSIU with conviction",
+    points: ["NLU-by-NLU breakdown of clinical legal education quality", "Placement data for specific target firms", "Made the choice with data, not just ranking tables"],
   },
 ];
 
 export default function Home() {
-  const [activeTesti, setActiveTesti] = useState(0);
   const [activeService, setActiveService] = useState(0);
+  const [activeStep, setActiveStep] = useState(null);
+  const [activeTesti, setActiveTesti] = useState(0);
   const timerRef = useRef(null);
 
+  // ── CHANGE: testimonials now rotate every 3500ms (was 6000ms) ──
   useEffect(() => {
     timerRef.current = setInterval(() => {
       setActiveTesti(p => (p + 1) % testimonials.length);
-    }, 8000);
+    }, 3500);
     return () => clearInterval(timerRef.current);
   }, []);
 
-  const handleTestiClick = (i) => {
+  const goTesti = (i) => {
     clearInterval(timerRef.current);
     setActiveTesti(i);
+    timerRef.current = setInterval(() => {
+      setActiveTesti(p => (p + 1) % testimonials.length);
+    }, 3500);
   };
 
   return (
@@ -408,536 +303,833 @@ export default function Home() {
       <Hero />
 
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
 
         :root {
-          --gold: #C9A84C;
-          --gold2: #E2C46B;
-          --gold-dim: rgba(201,168,76,0.10);
-          --gold-border: rgba(201,168,76,0.20);
-          --ink: #0A0A0A;
-          --ink2: #121212;
-          --ink3: #1A1A1A;
-          --ink4: #252525;
-          --smoke: rgba(255,255,255,0.85);
-          --muted: rgba(255,255,255,0.50);
-          --faint: rgba(255,255,255,0.25);
-          --hair: rgba(255,255,255,0.07);
-          --radius: 3px;
+          --blue: #1a56db;
+          --blue-dark: #1442b5;
+          --blue-deep: #0d2d6e;
+          --blue-light: #e8f0fe;
+          --blue-mid: #3b72f0;
+          --orange: #f97316;
+          --orange-light: #fb923c;
+          --orange-faint: #fff4ed;
+          --white: #ffffff;
+          --off: #f8faff;
+          --gray: #64748b;
+          --gray-light: #e2e8f0;
+          --text: #0f172a;
+          --text2: #334155;
+          --radius: 12px;
         }
 
         .h * { box-sizing: border-box; }
-        .h { font-family: 'DM Sans', sans-serif; background: var(--ink); color: var(--smoke); line-height: 1; }
-
-        .h-serif { font-family: 'Playfair Display', Georgia, serif; }
-
-        /* ── Ornamental label ── */
-        .h-tag {
-          display: inline-flex; align-items: center; gap: 12px;
-          font-size: 10px; font-weight: 600; letter-spacing: 0.28em;
-          text-transform: uppercase; color: var(--gold);
+        .h {
+          font-family: 'Space Grotesk', sans-serif;
+          background: #fff;
+          color: var(--text);
+          line-height: 1;
         }
-        .h-tag-line { height: 1px; width: 32px; background: var(--gold); flex-shrink: 0; }
 
-        /* ══ COLLEGE STRIP ══ */
-        .h-strip { background: var(--ink2); border-bottom: 1px solid var(--gold-border); padding: 14px 0; overflow: hidden; position: relative; }
+        .h-sora { font-family: 'Sora', sans-serif; }
+
+        /* ── Section label pill ── */
+        .h-pill {
+          display: inline-flex; align-items: center; gap: 8px;
+          background: var(--blue-light); color: var(--blue);
+          font-size: 11px; font-weight: 700; letter-spacing: 0.14em;
+          text-transform: uppercase; padding: 6px 16px; border-radius: 100px;
+          margin-bottom: 18px;
+        }
+        .h-pill-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--blue); }
+        .h-pill.orange { background: var(--orange-faint); color: var(--orange); }
+        .h-pill.orange .h-pill-dot { background: var(--orange); }
+
+        /* ═══ COLLEGE STRIP ═══ */
+        .h-strip-wrap { background: var(--off); border-top: 1px solid var(--gray-light); border-bottom: 1px solid var(--gray-light); }
+        .h-strip { padding: 12px 0; overflow: hidden; position: relative; }
         .h-strip::before, .h-strip::after {
-          content: ''; position: absolute; top: 0; bottom: 0; width: 120px; z-index: 2; pointer-events: none;
+          content: ''; position: absolute; top: 0; bottom: 0; width: 100px; z-index: 2; pointer-events: none;
         }
-        .h-strip::before { left: 0; background: linear-gradient(to right, var(--ink2), transparent); }
-        .h-strip::after { right: 0; background: linear-gradient(to left, var(--ink2), transparent); }
-        .h-strip-label {
-          position: absolute; left: 24px; top: 50%; transform: translateY(-50%);
-          font-size: 9px; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase;
-          color: var(--gold); z-index: 3; background: var(--ink2); padding: 0 12px 0 0;
-        }
+        .h-strip::before { left: 0; background: linear-gradient(to right, var(--off), transparent); }
+        .h-strip::after { right: 0; background: linear-gradient(to left, var(--off), transparent); }
         .h-strip-track {
           display: flex; gap: 0; width: max-content;
-          animation: stripScroll 38s linear infinite;
+          animation: stripScroll 36s linear infinite;
         }
         .h-strip-track:hover { animation-play-state: paused; }
         @keyframes stripScroll { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
         .h-strip-item {
           display: flex; align-items: center; gap: 10px;
-          padding: 0 28px; border-right: 1px solid var(--hair);
-          flex-shrink: 0;
+          padding: 0 24px; border-right: 1px solid var(--gray-light); flex-shrink: 0;
         }
         .h-strip-logo {
-          width: 34px; height: 34px; border-radius: 5px; flex-shrink: 0;
-          overflow: hidden; border: 1px solid var(--hair);
+          width: 32px; height: 32px; border-radius: 6px; flex-shrink: 0; overflow: hidden;
+          border: 1px solid var(--gray-light); background: #fff;
           display: flex; align-items: center; justify-content: center;
-          background: var(--ink3);
         }
-        .h-strip-logo img {
-          width: 100%; height: 100%; object-fit: contain; padding: 4px;
-          filter: brightness(0.9) contrast(1.05);
-        }
-        .h-strip-logo-text {
-          font-family: 'Playfair Display', serif; font-size: 9px; font-weight: 700;
-          color: var(--gold); letter-spacing: 0.04em;
-        }
-        .h-strip-name { font-size: 11.5px; font-weight: 500; color: var(--muted); white-space: nowrap; }
+        .h-strip-logo img { width: 100%; height: 100%; object-fit: contain; padding: 3px; }
+        .h-strip-logo-text { font-family: 'Sora', sans-serif; font-size: 8px; font-weight: 800; color: var(--blue-dark); }
+        .h-strip-name { font-size: 12px; font-weight: 500; color: var(--text2); white-space: nowrap; }
         .h-strip-state {
-          font-size: 8.5px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase;
-          color: var(--gold); background: var(--gold-dim); padding: 2px 6px; border-radius: 2px;
+          font-size: 9px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+          color: var(--blue); background: var(--blue-light); padding: 2px 7px; border-radius: 4px;
+        }
+        .h-strip-label {
+          display: inline-flex; align-items: center;
+          font-size: 9px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
+          color: var(--gray); padding: 4px 0;
         }
 
-        /* ══ ABOUT ══ */
-        .h-about { padding: 120px 80px; background: var(--ink); position: relative; overflow: hidden; }
-        .h-about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 100px; align-items: start; }
-        .h-about-left {}
-        .h-about-eyebrow { margin-bottom: 20px; }
-        .h-about-h2 {
-          font-family: 'Playfair Display', serif; font-size: clamp(36px, 4vw, 58px);
-          font-weight: 900; line-height: 1.05; margin: 0 0 28px; color: var(--smoke);
-        }
-        .h-about-h2 em { font-style: italic; color: var(--gold); }
-        .h-about-body {
-          font-size: 15px; color: var(--muted); line-height: 1.85; margin: 0 0 20px;
-        }
-        .h-about-right { padding-top: 12px; }
-        .h-stats-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1px; border: 1px solid var(--gold-border); border-radius: var(--radius); overflow: hidden; }
-        .h-stat-box {
-          background: var(--ink2); padding: 32px 24px;
-          border-right: 1px solid var(--gold-border);
-          border-bottom: 1px solid var(--gold-border);
-          position: relative;
-        }
-        .h-stat-box::after {
-          content: ''; position: absolute; bottom: 0; left: 24px;
-          width: 0; height: 2px; background: var(--gold);
-          transition: width 0.6s ease;
-        }
-        .h-stat-box:hover::after { width: calc(100% - 48px); }
-        .h-stat-num {
-          font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 900;
-          color: var(--gold); line-height: 1; margin-bottom: 8px;
-        }
-        .h-stat-label { font-size: 11.5px; color: var(--muted); line-height: 1.5; }
-        .h-about-quote {
-          margin-top: 40px; padding: 28px 32px;
-          border-left: 3px solid var(--gold); background: var(--ink2);
-          border-radius: 0 var(--radius) var(--radius) 0;
-        }
-        .h-about-quote-text {
-          font-family: 'Playfair Display', serif; font-size: 16px; font-style: italic;
-          color: var(--smoke); line-height: 1.7; margin: 0 0 10px;
-        }
-        .h-about-quote-attr { font-size: 11px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
-
-        /* ══ WHAT WE DO — Tabbed Services ══ */
-        .h-services { padding: 120px 80px; background: var(--ink2); position: relative; }
-        .h-services-nav {
-          display: flex; gap: 0; border: 1px solid var(--gold-border);
-          border-radius: var(--radius); overflow: hidden; margin: 52px 0 0;
-        }
-        .h-svc-nav-btn {
-          flex: 1; padding: 20px 16px; background: var(--ink); cursor: pointer;
-          border: none; border-right: 1px solid var(--gold-border);
-          display: flex; flex-direction: column; align-items: flex-start; gap: 6px;
-          transition: background 0.25s; text-align: left;
-        }
-        .h-svc-nav-btn:last-child { border-right: none; }
-        .h-svc-nav-btn.active { background: var(--gold-dim); }
-        .h-svc-nav-num {
-          font-family: 'Playfair Display', serif; font-size: 12px; color: var(--gold); font-weight: 700;
-        }
-        .h-svc-nav-label { font-size: 12px; font-weight: 600; color: var(--muted); line-height: 1.3; }
-        .h-svc-nav-btn.active .h-svc-nav-label { color: var(--smoke); }
-        .h-svc-nav-bar {
-          width: 0; height: 2px; background: var(--gold); margin-top: 4px;
-          transition: width 0.4s ease;
-        }
-        .h-svc-nav-btn.active .h-svc-nav-bar { width: 28px; }
-        
-        .h-svc-panel {
-          border: 1px solid var(--gold-border); border-top: none;
-          border-radius: 0 0 var(--radius) var(--radius);
-          display: grid; grid-template-columns: 1fr 1fr; min-height: 480px;
-        }
-        .h-svc-left {
-          padding: 56px 52px; border-right: 1px solid var(--gold-border);
-        }
-        .h-svc-icon {
-          width: 52px; height: 52px; border: 1px solid var(--gold-border);
-          border-radius: 10px; display: flex; align-items: center; justify-content: center;
-          color: var(--gold); margin-bottom: 24px;
-        }
-        .h-svc-icon svg { width: 22px; height: 22px; }
-        .h-svc-title {
-          font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700;
-          color: var(--smoke); margin: 0 0 6px; line-height: 1.2;
-        }
-        .h-svc-subtitle {
-          font-size: 12px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase;
-          color: var(--gold); margin-bottom: 24px;
-        }
-        .h-svc-desc {
-          font-size: 14.5px; color: var(--muted); line-height: 1.85; margin: 0 0 16px;
-        }
-        .h-svc-detail {
-          font-size: 13.5px; color: rgba(255,255,255,0.38); line-height: 1.85; margin: 0;
-        }
-        .h-svc-right {
-          padding: 56px 48px; background: var(--ink);
-        }
-        .h-svc-points-title {
-          font-size: 10px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase;
-          color: var(--gold); margin-bottom: 24px;
-        }
-        .h-svc-points { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 14px; }
-        .h-svc-point {
-          display: flex; align-items: flex-start; gap: 12px;
-          font-size: 13.5px; color: rgba(255,255,255,0.65); line-height: 1.55;
-        }
-        .h-svc-check {
-          width: 18px; height: 18px; flex-shrink: 0; margin-top: 1px;
-          border-radius: 50%; border: 1px solid var(--gold-border);
-          display: flex; align-items: center; justify-content: center; color: var(--gold);
-        }
-        .h-svc-check svg { width: 9px; height: 9px; }
-
-        /* ══ PATH — Process ══ */
-        .h-process { padding: 120px 80px; background: var(--ink); position: relative; overflow: hidden; }
-        .h-process-bg {
-          position: absolute; left: 80px; top: 0; bottom: 0; width: 1px;
-          background: linear-gradient(to bottom, transparent, var(--gold-border) 15%, var(--gold-border) 85%, transparent);
-          pointer-events: none;
-        }
-        /* SVG curved path behind steps */
-        .h-process-svg {
-          position: absolute; left: 0; top: 0; width: 100%; height: 100%;
-          pointer-events: none; overflow: visible;
-        }
-        .h-process-inner { position: relative; z-index: 1; }
-        .h-process-steps { display: flex; flex-direction: column; gap: 0; margin-top: 64px; }
-        .h-pstep {
-          display: grid; grid-template-columns: 120px 1fr;
-          gap: 0; align-items: stretch;
-          padding: 0; position: relative;
-        }
-        .h-pstep-left {
-          display: flex; flex-direction: column; align-items: center; padding-top: 40px;
-        }
-        .h-pstep-node {
-          width: 64px; height: 64px; border-radius: 50%;
-          border: 1.5px solid var(--gold-border); background: var(--ink);
-          display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-          font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700;
-          color: var(--gold); transition: all 0.35s; z-index: 2; position: relative;
-        }
-        .h-pstep:hover .h-pstep-node {
-          background: var(--gold); color: var(--ink); border-color: var(--gold);
-          box-shadow: 0 0 0 8px var(--gold-dim);
-        }
-        .h-pstep-connector {
-          flex: 1; width: 1.5px; background: var(--gold-border); margin: 8px 0 0;
-        }
-        .h-pstep:last-child .h-pstep-connector { display: none; }
-        .h-pstep-right {
-          padding: 40px 0 56px 48px; border-bottom: 1px solid var(--hair);
-        }
-        .h-pstep:last-child .h-pstep-right { border-bottom: none; }
-        .h-pstep-meta { display: flex; gap: 16px; margin-bottom: 14px; }
-        .h-pstep-badge {
-          font-size: 9.5px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase;
-          color: var(--gold); background: var(--gold-dim); border: 1px solid var(--gold-border);
-          padding: 3px 10px; border-radius: 2px;
-        }
-        .h-pstep-title {
-          font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700;
-          color: var(--smoke); margin: 0 0 14px; line-height: 1.2;
-        }
-        .h-pstep-desc {
-          font-size: 14px; color: var(--muted); line-height: 1.85; margin: 0; max-width: 680px;
-        }
-
-        /* ══ WHY US ══ */
-        .h-why { padding: 120px 80px; background: var(--ink2); }
-        .h-why-header { max-width: 600px; margin-bottom: 64px; }
-        .h-why-h2 {
-          font-family: 'Playfair Display', serif;
-          font-size: clamp(32px, 4vw, 52px); font-weight: 900; line-height: 1.05;
-          margin: 12px 0 20px;
-        }
-        .h-why-h2 em { font-style: italic; color: var(--gold); }
-        .h-why-lead { font-size: 14.5px; color: var(--muted); line-height: 1.82; }
-        .h-why-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; border: 1px solid var(--gold-border); border-radius: var(--radius); overflow: hidden; }
-        .h-why-card {
-          background: var(--ink); padding: 44px 36px;
-          border-right: 1px solid var(--gold-border); border-bottom: 1px solid var(--gold-border);
-          transition: background 0.25s; position: relative;
-        }
-        .h-why-card::before {
-          content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-          background: var(--gold); transform: scaleX(0); transform-origin: left;
-          transition: transform 0.4s ease;
-        }
-        .h-why-card:hover::before { transform: scaleX(1); }
-        .h-why-card:hover { background: var(--ink3); }
-        .h-why-num {
-          font-family: 'Playfair Display', serif; font-size: 52px; font-weight: 900;
-          color: rgba(201,168,76,0.12); line-height: 1; margin-bottom: 20px;
-          letter-spacing: -0.03em;
-        }
-        .h-why-title {
-          font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700;
-          color: var(--smoke); margin: 0 0 12px; line-height: 1.3;
-        }
-        .h-why-desc { font-size: 13px; color: var(--muted); line-height: 1.82; }
-
-        /* ══ TESTIMONIALS ══ */
-        .h-testi { padding: 120px 80px; background: var(--ink); }
-        .h-testi-header { max-width: 600px; margin-bottom: 64px; }
-        .h-testi-layout { display: grid; grid-template-columns: 280px 1fr; gap: 2px; }
-        .h-testi-sidebar {
-          display: flex; flex-direction: column; gap: 0;
-          border: 1px solid var(--gold-border); border-radius: var(--radius) 0 0 var(--radius);
-          overflow: hidden;
-        }
-        .h-testi-item {
-          padding: 20px 22px; border-bottom: 1px solid var(--hair);
-          cursor: pointer; transition: background 0.2s;
-          border-left: 3px solid transparent;
-        }
-        .h-testi-item:last-child { border-bottom: none; }
-        .h-testi-item.active { background: var(--gold-dim); border-left-color: var(--gold); }
-        .h-testi-item:hover:not(.active) { background: rgba(255,255,255,0.02); }
-        .h-testi-item-name { font-size: 13px; font-weight: 600; color: var(--smoke); margin-bottom: 3px; }
-        .h-testi-item-short { font-size: 11px; color: var(--muted); line-height: 1.4; }
-        .h-testi-panel {
-          border: 1px solid var(--gold-border); border-left: none;
-          border-radius: 0 var(--radius) var(--radius) 0;
-          background: var(--ink2); padding: 56px 60px;
-          display: flex; flex-direction: column;
-        }
-        .h-testi-quote-mark { color: var(--gold); opacity: 0.18; margin-bottom: 32px; }
-        .h-testi-quote-mark svg { width: 40px; height: 30px; }
-        .h-testi-text {
-          font-family: 'Playfair Display', serif; font-size: clamp(14px, 1.5vw, 18px);
-          font-style: italic; font-weight: 400; color: rgba(255,255,255,0.80);
-          line-height: 1.9; margin: 0 0 44px; flex: 1;
-        }
-        .h-testi-footer { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; }
-        .h-testi-name-row {}
-        .h-testi-name { font-size: 15px; font-weight: 700; color: var(--smoke); margin-bottom: 5px; }
-        .h-testi-meta { font-size: 12px; color: var(--muted); line-height: 1.5; }
-        .h-testi-stars { display: flex; gap: 2px; margin-top: 8px; }
-        .h-testi-stars svg { width: 11px; height: 11px; color: var(--gold); }
-        .h-testi-badge {
-          display: flex; align-items: center; gap: 10px;
-          border: 1px solid var(--gold-border); background: var(--gold-dim);
-          padding: 12px 16px; border-radius: 4px; flex-shrink: 0;
-        }
-        .h-testi-badge-logo {
-          width: 34px; height: 34px; border-radius: 4px;
-          display: flex; align-items: center; justify-content: center;
-          font-family: 'Playfair Display', serif; font-size: 9px; font-weight: 700;
-          color: white;
-        }
-        .h-testi-badge-inst { font-size: 13px; font-weight: 600; color: var(--smoke); }
-        .h-testi-badge-verified { font-size: 10px; color: var(--muted); margin-top: 2px; }
-        .h-testi-dots { display: flex; gap: 6px; margin-top: 28px; }
-        .h-testi-dot {
-          width: 5px; height: 5px; border-radius: 50%;
-          background: var(--hair); cursor: pointer; transition: background 0.2s;
-          border: 1px solid var(--gold-border);
-        }
-        .h-testi-dot.active { background: var(--gold); }
-
-        /* ══ CTA ══ */
-        .h-cta {
-          padding: 140px 80px;
-          background: var(--ink);
-          border-top: 1px solid var(--gold-border);
+        /* ═══ ABOUT ═══ */
+        .h-about {
+          background: #fff;
+          padding: 100px 80px;
           position: relative; overflow: hidden;
         }
-        .h-cta::before {
-          content: '';
-          position: absolute; bottom: -200px; left: 50%; transform: translateX(-50%);
-          width: 800px; height: 400px;
-          background: radial-gradient(ellipse, rgba(201,168,76,0.07) 0%, transparent 70%);
+        .h-about-decor {
+          position: absolute; top: -120px; right: -120px;
+          width: 500px; height: 500px;
+          background: linear-gradient(135deg, var(--blue-light) 0%, transparent 70%);
+          border-radius: 50%;
+          pointer-events: none;
+          opacity: 0.7;
+        }
+        .h-about-decor2 {
+          position: absolute; bottom: -80px; left: -80px;
+          width: 320px; height: 320px;
+          background: linear-gradient(135deg, var(--orange-faint) 0%, transparent 70%);
+          border-radius: 50%; pointer-events: none; opacity: 0.9;
+        }
+
+        /* ── NEW: About layout — full-width founder photo on top, then two-col below ── */
+        .h-about-inner { max-width: 1200px; margin: 0 auto; position: relative; z-index: 1; }
+
+        /* Founder hero image — large, spanning full width like the counselor image */
+        .h-founder-hero {
+          width: 100%;
+          border-radius: var(--radius);
+          overflow: hidden;
+          margin-bottom: 60px;
+          position: relative;
+          background: var(--blue-light);
+          box-shadow: 0 16px 64px rgba(26,86,219,0.12);
+        }
+        .h-founder-hero img {
+          width: 100%;
+          height: 480px;
+          object-fit: cover;
+          object-position: center top;
+          display: block;
+        }
+        /* Gradient overlay at bottom for name/title */
+        .h-founder-hero-overlay {
+          position: absolute; bottom: 0; left: 0; right: 0;
+          padding: 48px 48px 36px;
+          background: linear-gradient(to top, rgba(13,45,110,0.92) 0%, transparent 100%);
+          display: flex; align-items: flex-end; justify-content: space-between; gap: 24px;
+        }
+        .h-founder-hero-name {
+          font-family: 'Sora', sans-serif; font-size: 28px; font-weight: 800;
+          color: #fff; margin-bottom: 6px; line-height: 1.1;
+        }
+        .h-founder-hero-title {
+          font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+          color: var(--orange);
+        }
+        .h-founder-hero-badge {
+          flex-shrink: 0; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+          border-radius: 10px; padding: 12px 20px; backdrop-filter: blur(8px);
+          font-size: 12px; color: rgba(255,255,255,0.8); font-weight: 600; text-align: center; line-height: 1.5;
+        }
+        /* Placeholder for when image doesn't load */
+        .h-founder-hero-placeholder {
+          width: 100%; height: 480px;
+          display: flex; flex-direction: column; align-items: center; justify-content: center;
+          gap: 16px; background: var(--blue-light);
+        }
+        .h-founder-hero-placeholder-icon {
+          width: 80px; height: 80px; border-radius: 50%; background: var(--blue);
+          display: flex; align-items: center; justify-content: center;
+        }
+        .h-founder-hero-placeholder-text {
+          font-family: 'Sora', sans-serif; font-size: 14px; font-weight: 600;
+          color: var(--blue); letter-spacing: 0.08em;
+        }
+
+        /* Two-col below the founder photo */
+        .h-about-grid {
+          display: grid; grid-template-columns: 1.1fr 0.9fr;
+          gap: 80px; align-items: start;
+        }
+
+        .h-about-h2 {
+          font-family: 'Sora', sans-serif;
+          font-size: clamp(30px, 3.5vw, 48px); font-weight: 800; line-height: 1.15;
+          margin: 0 0 24px; color: var(--text);
+        }
+        .h-about-h2 span { color: var(--blue); }
+
+        /* ── NEW: bullet points list for About ── */
+        .h-about-points {
+          list-style: none; padding: 0; margin: 0;
+          display: flex; flex-direction: column; gap: 14px;
+        }
+        .h-about-point {
+          display: flex; align-items: flex-start; gap: 12px;
+          font-size: 15px; color: var(--text2); line-height: 1.65;
+        }
+        .h-about-point-dot {
+          width: 22px; height: 22px; border-radius: 50%; flex-shrink: 0;
+          background: var(--blue-light); border: 1.5px solid var(--blue);
+          display: flex; align-items: center; justify-content: center;
+          color: var(--blue); margin-top: 2px;
+        }
+        .h-about-point-dot svg { width: 11px; height: 11px; }
+
+        .h-stats-grid {
+          display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+        }
+        .h-stat-box {
+          border: 1.5px solid var(--gray-light); border-radius: var(--radius);
+          padding: 28px 24px; background: #fff; position: relative; overflow: hidden;
+          transition: border-color 0.25s, box-shadow 0.25s;
+        }
+        .h-stat-box::before {
+          content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+          background: linear-gradient(90deg, var(--blue), var(--orange)); transform: scaleX(0);
+          transform-origin: left; transition: transform 0.4s ease;
+        }
+        .h-stat-box:hover { border-color: var(--blue-mid); box-shadow: 0 4px 20px rgba(26,86,219,0.10); }
+        .h-stat-box:hover::before { transform: scaleX(1); }
+        .h-stat-num {
+          font-family: 'Sora', sans-serif; font-size: 36px; font-weight: 800;
+          color: var(--blue); line-height: 1; margin-bottom: 8px;
+        }
+        .h-stat-label { font-size: 12px; font-weight: 500; color: var(--gray); line-height: 1.4; }
+        .h-stat-bg-num {
+          position: absolute; bottom: -8px; right: 12px; font-family: 'Sora', sans-serif;
+          font-size: 72px; font-weight: 800; color: var(--blue-light); line-height: 1;
+          pointer-events: none; letter-spacing: -0.04em;
+        }
+
+        .h-wave { display: block; line-height: 0; margin-bottom: -2px; }
+
+        /* ═══ SERVICES ═══ */
+        .h-services {
+          background: var(--blue-deep);
+          padding: 100px 80px;
+          position: relative; overflow: hidden;
+        }
+        .h-svc-circle1 {
+          position: absolute; top: -100px; right: -100px;
+          width: 500px; height: 500px; border-radius: 50%;
+          border: 1px solid rgba(255,255,255,0.05);
           pointer-events: none;
         }
-        .h-cta-inner { position: relative; max-width: 760px; margin: 0 auto; text-align: center; }
+        .h-svc-circle2 {
+          position: absolute; bottom: -150px; left: -80px;
+          width: 400px; height: 400px; border-radius: 50%;
+          background: rgba(249,115,22,0.06); pointer-events: none;
+        }
+        .h-svc-circle3 {
+          position: absolute; top: 50%; left: 50%;
+          transform: translate(-50%, -50%);
+          width: 700px; height: 700px; border-radius: 50%;
+          border: 1px solid rgba(255,255,255,0.03);
+          pointer-events: none;
+        }
+
+        .h-svc-head-h2 {
+          font-family: 'Sora', sans-serif; font-size: clamp(28px, 3.5vw, 44px);
+          font-weight: 800; color: #fff; margin: 0 0 12px; line-height: 1.15;
+        }
+        .h-svc-head-sub { font-size: 15px; color: rgba(255,255,255,0.6); line-height: 1.75; max-width: 520px; }
+        .h-svc-head { position: relative; z-index: 1; margin-bottom: 52px; }
+
+        .h-svc-tabs {
+          display: flex; gap: 0; border-radius: 10px; overflow: hidden;
+          border: 1px solid rgba(255,255,255,0.1); margin-bottom: 0;
+          position: relative; z-index: 1;
+        }
+        .h-svc-tab {
+          flex: 1; padding: 18px 12px; background: rgba(255,255,255,0.04);
+          border: none; border-right: 1px solid rgba(255,255,255,0.08);
+          cursor: pointer; display: flex; align-items: center; gap: 10px;
+          text-align: left; transition: background 0.2s;
+        }
+        .h-svc-tab:last-child { border-right: none; }
+        .h-svc-tab.active { background: rgba(249,115,22,0.15); }
+        .h-svc-tab:hover:not(.active) { background: rgba(255,255,255,0.07); }
+        .h-svc-tab-num {
+          font-family: 'Sora', sans-serif; font-size: 11px; font-weight: 700;
+          color: var(--orange); opacity: 0.7; flex-shrink: 0;
+        }
+        .h-svc-tab.active .h-svc-tab-num { opacity: 1; }
+        .h-svc-tab-icon { color: rgba(255,255,255,0.4); flex-shrink: 0; }
+        .h-svc-tab.active .h-svc-tab-icon { color: var(--orange); }
+        .h-svc-tab-icon svg { width: 16px; height: 16px; }
+        .h-svc-tab-label {
+          font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.5); line-height: 1.3;
+        }
+        .h-svc-tab.active .h-svc-tab-label { color: #fff; }
+
+        /* ─── SERVICE PANEL ─── */
+        .h-svc-panel {
+          border: 1px solid rgba(255,255,255,0.1); border-top: 2px solid var(--orange);
+          border-radius: 0 0 12px 12px; background: rgba(255,255,255,0.03);
+          display: grid;
+          grid-template-columns: 1fr 1fr 420px;
+          gap: 0;
+          align-items: stretch;
+          position: relative; z-index: 1;
+          overflow: hidden;
+        }
+
+        /* Content columns get padding */
+        .h-svc-content-col {
+          padding: 48px 52px;
+        }
+        .h-svc-content-col:first-child {
+          border-right: 1px solid rgba(255,255,255,0.07);
+        }
+
+        /* ─── COUNSELOR IMAGE: large, no box, flush to panel edge ─── */
+        .h-svc-counselor-img-wrap {
+          position: relative;
+          display: block;
+          overflow: hidden;
+          /* No border, no background, no border-radius on sides touching panel edge */
+          border-radius: 0 0 12px 0;
+        }
+        .h-svc-counselor-img {
+          width: 100%;
+          height: 100%;
+          min-height: 480px;
+          object-fit: cover;
+          object-position: center top;
+          display: block;
+          /* Remove white bg from PNG */
+          mix-blend-mode: luminosity;
+          filter: brightness(1.1) contrast(1.05);
+          transition: transform 0.6s ease;
+        }
+        .h-svc-counselor-img-wrap:hover .h-svc-counselor-img {
+          transform: scale(1.04);
+        }
+
+        .h-svc-panel-title {
+          font-family: 'Sora', sans-serif; font-size: 26px; font-weight: 800;
+          color: #fff; margin: 0 0 6px; line-height: 1.2;
+        }
+        .h-svc-panel-sub {
+          font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+          color: var(--orange); margin-bottom: 28px;
+        }
+        .h-svc-points { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 14px; }
+        .h-svc-point { display: flex; align-items: flex-start; gap: 12px; font-size: 14px; color: rgba(255,255,255,0.75); line-height: 1.5; }
+        .h-svc-check {
+          width: 20px; height: 20px; flex-shrink: 0; border-radius: 50%;
+          background: rgba(249,115,22,0.15); border: 1px solid rgba(249,115,22,0.4);
+          display: flex; align-items: center; justify-content: center; color: var(--orange); margin-top: 1px;
+        }
+        .h-svc-check svg { width: 10px; height: 10px; }
+        .h-svc-icon-big {
+          width: 56px; height: 56px; border-radius: 12px;
+          background: rgba(249,115,22,0.1); border: 1px solid rgba(249,115,22,0.2);
+          display: flex; align-items: center; justify-content: center; color: var(--orange); margin-bottom: 20px;
+        }
+        .h-svc-icon-big svg { width: 24px; height: 24px; }
+
+        /* ═══ PROCESS — Flowchart ═══ */
+        .h-process {
+          background: var(--off);
+          padding: 100px 80px;
+          position: relative; overflow: hidden;
+        }
+        .h-proc-diag {
+          position: absolute; top: 0; right: 0; bottom: 0;
+          width: 40%;
+          background: linear-gradient(135deg, transparent 40%, rgba(26,86,219,0.04) 100%);
+          pointer-events: none;
+        }
+        .h-proc-diag2 {
+          position: absolute; top: -50px; left: -50px;
+          width: 200px; height: 200px; border-radius: 50%;
+          border: 1.5px solid var(--blue-light); pointer-events: none;
+        }
+
+        .h-proc-head { position: relative; z-index: 1; margin-bottom: 60px; }
+        .h-proc-h2 {
+          font-family: 'Sora', sans-serif; font-size: clamp(28px, 3.5vw, 44px);
+          font-weight: 800; color: var(--text); margin: 0 0 12px; line-height: 1.15;
+        }
+        .h-proc-sub { font-size: 15px; color: var(--text2); line-height: 1.75; max-width: 520px; }
+
+        .h-flow { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; position: relative; z-index: 1; }
+        .h-flow-card {
+          background: #fff; border: 1.5px solid var(--gray-light); border-radius: var(--radius);
+          padding: 28px 24px; cursor: pointer; transition: all 0.25s; position: relative; overflow: hidden;
+        }
+        .h-flow-card::after {
+          content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+          background: linear-gradient(90deg, var(--blue), var(--orange));
+          transform: scaleX(0); transform-origin: left; transition: transform 0.35s;
+        }
+        .h-flow-card.active, .h-flow-card:hover {
+          border-color: var(--blue); box-shadow: 0 8px 32px rgba(26,86,219,0.12);
+        }
+        .h-flow-card.active::after, .h-flow-card:hover::after { transform: scaleX(1); }
+        .h-flow-num {
+          font-family: 'Sora', sans-serif; font-size: 13px; font-weight: 800;
+          color: var(--blue); margin-bottom: 10px; letter-spacing: 0.06em;
+        }
+        .h-flow-title {
+          font-family: 'Sora', sans-serif; font-size: 15px; font-weight: 700;
+          color: var(--text); margin-bottom: 8px; line-height: 1.3;
+        }
+        .h-flow-badge {
+          display: inline-block; font-size: 10px; font-weight: 600; letter-spacing: 0.1em;
+          text-transform: uppercase; color: var(--orange); background: var(--orange-faint);
+          padding: 3px 10px; border-radius: 100px; margin-bottom: 12px;
+        }
+        .h-flow-desc { font-size: 13px; color: var(--gray); line-height: 1.65; margin: 0; }
+
+        .h-flow-connector {
+          display: flex; align-items: center; justify-content: center;
+          color: var(--blue); opacity: 0.35;
+          grid-column: 1 / -1;
+        }
+        .h-flow-connector svg { width: 20px; height: 20px; }
+        
+        .h-flow-detail {
+          grid-column: 1 / -1; background: var(--blue-deep); border-radius: var(--radius);
+          padding: 32px 36px; color: #fff; margin-top: -8px;
+          border: 1.5px solid rgba(255,255,255,0.08);
+        }
+        .h-flow-detail-title {
+          font-family: 'Sora', sans-serif; font-size: 17px; font-weight: 700;
+          color: #fff; margin-bottom: 16px;
+        }
+        .h-flow-detail-text { font-size: 14px; color: rgba(255,255,255,0.7); line-height: 1.75; }
+
+        /* ═══ WHY US ═══ */
+        .h-why {
+          background: #fff; padding: 100px 80px;
+          position: relative; overflow: hidden;
+        }
+        .h-why-decor {
+          position: absolute; top: -120px; right: 60px;
+          width: 400px; height: 400px; border-radius: 50%;
+          border: 1.5px solid var(--gray-light); pointer-events: none;
+        }
+        .h-why-decor2 {
+          position: absolute; bottom: -80px; right: -80px;
+          width: 300px; height: 300px; border-radius: 50%;
+          background: var(--blue-light); opacity: 0.5; pointer-events: none;
+        }
+        .h-why-h2 {
+          font-family: 'Sora', sans-serif; font-size: clamp(28px, 3.5vw, 44px);
+          font-weight: 800; color: var(--text); margin: 0 0 12px; line-height: 1.15;
+        }
+        .h-why-h2 span { color: var(--blue); }
+        .h-why-sub { font-size: 15px; color: var(--text2); line-height: 1.75; max-width: 520px; margin: 0 0 56px; }
+        .h-why-grid {
+          display: grid; grid-template-columns: repeat(3, 1fr);
+          gap: 20px; position: relative; z-index: 1;
+        }
+        .h-why-card {
+          border: 1.5px solid var(--gray-light); border-radius: var(--radius);
+          padding: 32px 28px; background: #fff; transition: all 0.25s; position: relative;
+        }
+        .h-why-card::before {
+          content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+          background: linear-gradient(90deg, var(--blue), var(--orange));
+          border-radius: var(--radius) var(--radius) 0 0;
+          transform: scaleX(0); transform-origin: left; transition: transform 0.35s;
+        }
+        .h-why-card:hover { box-shadow: 0 8px 32px rgba(26,86,219,0.10); border-color: var(--blue); }
+        .h-why-card:hover::before { transform: scaleX(1); }
+        .h-why-star { display: flex; gap: 2px; color: var(--orange); margin-bottom: 16px; }
+        .h-why-title {
+          font-family: 'Sora', sans-serif; font-size: 16px; font-weight: 700;
+          color: var(--text); margin: 0 0 10px; line-height: 1.3;
+        }
+        .h-why-desc { font-size: 13px; color: var(--gray); line-height: 1.7; margin: 0; }
+        .h-why-num-big {
+          font-family: 'Sora', sans-serif; font-size: 48px; font-weight: 800;
+          color: var(--blue-light); line-height: 1; margin-bottom: 16px; letter-spacing: -0.04em;
+        }
+
+        /* ═══ TESTIMONIALS ═══ */
+        .h-testi {
+          background: var(--blue-deep); padding: 100px 80px;
+          position: relative; overflow: hidden;
+        }
+        .h-testi-circle {
+          position: absolute; bottom: -200px; right: -100px;
+          width: 600px; height: 600px; border-radius: 50%;
+          border: 1px solid rgba(255,255,255,0.04); pointer-events: none;
+        }
+        .h-testi-circle2 {
+          position: absolute; top: -100px; left: -100px;
+          width: 400px; height: 400px; border-radius: 50%;
+          background: rgba(249,115,22,0.05); pointer-events: none;
+        }
+        .h-testi-h2 {
+          font-family: 'Sora', sans-serif; font-size: clamp(28px, 3.5vw, 44px);
+          font-weight: 800; color: #fff; margin: 0 0 12px; line-height: 1.15;
+        }
+        .h-testi-h2 span { color: var(--orange); }
+        .h-testi-sub { font-size: 15px; color: rgba(255,255,255,0.55); line-height: 1.75; max-width: 480px; margin: 0 0 56px; }
+        .h-testi-head { position: relative; z-index: 1; }
+
+        .h-testi-slide-wrap { position: relative; z-index: 1; }
+        .h-testi-slide {
+          background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08);
+          border-radius: 16px; padding: 48px 52px;
+          transition: opacity 0.4s ease;
+        }
+        .h-testi-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; margin-bottom: 32px; }
+        .h-testi-person { display: flex; align-items: center; gap: 16px; }
+        .h-testi-avatar {
+          width: 52px; height: 52px; border-radius: 50%; flex-shrink: 0;
+          display: flex; align-items: center; justify-content: center;
+          font-family: 'Sora', sans-serif; font-size: 18px; font-weight: 800; color: #fff;
+        }
+        .h-testi-person-name { font-family: 'Sora', sans-serif; font-size: 17px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+        .h-testi-person-prog { font-size: 13px; color: rgba(255,255,255,0.5); line-height: 1.4; }
+        .h-testi-inst-badge {
+          display: flex; align-items: center; gap: 12px; flex-shrink: 0;
+          border: 1px solid rgba(255,255,255,0.1); border-radius: 10px;
+          padding: 12px 18px; background: rgba(255,255,255,0.04);
+        }
+        .h-testi-inst-logo {
+          width: 36px; height: 36px; border-radius: 6px; flex-shrink: 0;
+          display: flex; align-items: center; justify-content: center;
+          font-family: 'Sora', sans-serif; font-size: 9px; font-weight: 800; color: #fff;
+        }
+        .h-testi-inst-name { font-size: 13px; font-weight: 600; color: #fff; }
+        .h-testi-inst-verified { font-size: 10px; color: rgba(255,255,255,0.45); margin-top: 2px; }
+
+        .h-testi-headline {
+          font-family: 'Sora', sans-serif; font-size: 20px; font-weight: 700;
+          color: #fff; margin-bottom: 24px; line-height: 1.3;
+          border-left: 3px solid var(--orange); padding-left: 16px;
+        }
+        .h-testi-points { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 12px; }
+        .h-testi-point { display: flex; align-items: flex-start; gap: 12px; font-size: 14.5px; color: rgba(255,255,255,0.7); line-height: 1.5; }
+        .h-testi-point-check {
+          width: 20px; height: 20px; border-radius: 50%; flex-shrink: 0;
+          background: rgba(249,115,22,0.15); border: 1px solid rgba(249,115,22,0.35);
+          display: flex; align-items: center; justify-content: center; color: var(--orange); margin-top: 1px;
+        }
+        .h-testi-point-check svg { width: 10px; height: 10px; }
+        .h-testi-stars { display: flex; gap: 2px; color: var(--orange); margin-top: 24px; }
+
+        .h-testi-controls { display: flex; align-items: center; justify-content: space-between; margin-top: 28px; }
+        .h-testi-dots { display: flex; gap: 8px; align-items: center; }
+        .h-testi-dot {
+          width: 8px; height: 8px; border-radius: 50%;
+          background: rgba(255,255,255,0.2); cursor: pointer; transition: all 0.2s; border: none;
+        }
+        .h-testi-dot.active { background: var(--orange); width: 24px; border-radius: 4px; }
+        .h-testi-arrows { display: flex; gap: 8px; }
+        .h-testi-arrow {
+          width: 42px; height: 42px; border-radius: 50%;
+          background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
+          color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center;
+          transition: all 0.2s;
+        }
+        .h-testi-arrow:hover { background: var(--orange); border-color: var(--orange); }
+        .h-testi-arrow svg { width: 16px; height: 16px; }
+
+        .h-testi-counter { font-size: 13px; color: rgba(255,255,255,0.4); font-weight: 600; }
+
+        /* ═══ CTA ═══ */
+        .h-cta {
+          background: #fff; padding: 100px 80px;
+          position: relative; overflow: hidden;
+          border-top: 1px solid var(--gray-light);
+        }
+        .h-cta-circle {
+          position: absolute; bottom: -200px; left: -100px;
+          width: 500px; height: 500px; border-radius: 50%;
+          background: var(--blue-light); opacity: 0.4; pointer-events: none;
+        }
+        .h-cta-circle2 {
+          position: absolute; top: -100px; right: -80px;
+          width: 350px; height: 350px; border-radius: 50%;
+          background: var(--orange-faint); pointer-events: none;
+        }
+        .h-cta-inner { max-width: 720px; margin: 0 auto; text-align: center; position: relative; z-index: 1; }
         .h-cta-h2 {
-          font-family: 'Playfair Display', serif;
-          font-size: clamp(36px, 5vw, 68px); font-weight: 900;
-          line-height: 1.05; margin: 16px 0 22px;
+          font-family: 'Sora', sans-serif; font-size: clamp(32px, 4.5vw, 56px);
+          font-weight: 800; color: var(--text); line-height: 1.1; margin: 0 0 20px;
         }
-        .h-cta-h2 em { font-style: italic; color: var(--gold); }
-        .h-cta-sub { font-size: 15px; color: var(--muted); line-height: 1.75; margin: 0 0 48px; }
-        .h-cta-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 72px; }
+        .h-cta-h2 span { color: var(--blue); }
+        .h-cta-sub { font-size: 16px; color: var(--text2); line-height: 1.75; margin: 0 0 44px; }
+        .h-cta-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-bottom: 72px; }
         .h-btn-primary {
-          font-size: 11.5px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
-          background: var(--gold); color: var(--ink); border: none;
-          padding: 16px 40px; border-radius: 4px; cursor: pointer;
-          transition: background 0.2s, transform 0.15s; text-decoration: none; display: inline-block;
+          font-family: 'Sora', sans-serif; font-size: 13px; font-weight: 700;
+          letter-spacing: 0.06em; text-transform: uppercase;
+          background: var(--orange); color: #fff; border: none;
+          padding: 15px 36px; border-radius: 8px; cursor: pointer;
+          transition: all 0.2s; text-decoration: none; display: inline-block;
+          box-shadow: 0 4px 20px rgba(249,115,22,0.35);
         }
-        .h-btn-primary:hover { background: var(--gold2); transform: translateY(-2px); }
+        .h-btn-primary:hover { background: var(--orange-light); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(249,115,22,0.45); }
         .h-btn-outline {
-          font-size: 11.5px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
-          background: transparent; color: var(--smoke);
-          border: 1.5px solid rgba(255,255,255,0.2); padding: 15px 36px;
-          border-radius: 4px; cursor: pointer;
-          transition: border-color 0.2s, color 0.2s; text-decoration: none; display: inline-block;
+          font-family: 'Sora', sans-serif; font-size: 13px; font-weight: 700;
+          letter-spacing: 0.06em; text-transform: uppercase;
+          background: transparent; color: var(--blue);
+          border: 2px solid var(--blue); padding: 13px 32px;
+          border-radius: 8px; cursor: pointer;
+          transition: all 0.2s; text-decoration: none; display: inline-block;
         }
-        .h-btn-outline:hover { border-color: var(--gold); color: var(--gold); }
-        .h-contact-strip { display: flex; justify-content: center; gap: 56px; flex-wrap: wrap; padding-top: 48px; border-top: 1px solid var(--hair); }
+        .h-btn-outline:hover { background: var(--blue); color: #fff; }
+        .h-contact-strip { display: flex; justify-content: center; gap: 48px; flex-wrap: wrap; padding-top: 48px; border-top: 1px solid var(--gray-light); }
         .h-contact-item { display: flex; align-items: center; gap: 14px; }
         .h-contact-icon {
-          width: 40px; height: 40px; border: 1px solid var(--gold-border); border-radius: 8px;
-          display: flex; align-items: center; justify-content: center; color: var(--gold); flex-shrink: 0;
+          width: 44px; height: 44px; border: 1.5px solid var(--blue-light); border-radius: 10px;
+          display: flex; align-items: center; justify-content: center; color: var(--blue); flex-shrink: 0;
+          background: var(--blue-light);
         }
-        .h-contact-icon svg { width: 15px; height: 15px; }
-        .h-contact-label { font-size: 9px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--faint); margin-bottom: 4px; }
-        .h-contact-val { font-size: 13.5px; font-weight: 500; color: var(--muted); }
-
-        /* ── Divider ── */
-        .h-rule { border: none; border-top: 1px solid var(--gold-border); margin: 0; }
+        .h-contact-icon svg { width: 17px; height: 17px; }
+        .h-contact-label { font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gray); margin-bottom: 4px; }
+        .h-contact-val { font-size: 14px; font-weight: 600; color: var(--text); }
 
         /* ── Responsive ── */
-        @media (max-width: 1024px) {
-          .h-about { padding: 80px 48px; }
-          .h-about-grid { grid-template-columns: 1fr; gap: 60px; }
-          .h-services, .h-process, .h-why, .h-testi, .h-cta { padding: 80px 40px; }
-          .h-svc-panel { grid-template-columns: 1fr; }
-          .h-svc-right { border-top: 1px solid var(--gold-border); }
-          .h-why-grid { grid-template-columns: repeat(2,1fr); }
-          .h-testi-layout { grid-template-columns: 1fr; }
-          .h-testi-sidebar { border-radius: var(--radius); }
-          .h-testi-panel { border-left: 1px solid var(--gold-border); border-radius: var(--radius); }
-          .h-testi-footer { flex-direction: column; align-items: flex-start; }
+        @media (max-width: 1200px) {
+          .h-svc-panel {
+            grid-template-columns: 1fr 1fr;
+          }
+          .h-svc-counselor-img-wrap {
+            grid-column: 1 / -1;
+            border-radius: 0 0 12px 12px;
+          }
+          .h-svc-counselor-img {
+            min-height: 420px;
+            max-height: 500px;
+            object-position: center 20%;
+          }
         }
-        @media (max-width: 640px) {
+
+        @media (max-width: 1024px) {
+          .h-about, .h-services, .h-process, .h-why, .h-testi, .h-cta { padding: 80px 48px; }
+          .h-about-grid { grid-template-columns: 1fr; gap: 52px; }
+          .h-founder-hero img { height: 380px; }
+          .h-svc-panel { grid-template-columns: 1fr; }
+          .h-svc-content-col { padding: 36px 36px; }
+          .h-svc-counselor-img-wrap {
+            grid-column: unset;
+            border-radius: 0 0 12px 12px;
+          }
+          .h-svc-counselor-img {
+            min-height: 400px;
+            max-height: 480px;
+          }
+          .h-why-grid { grid-template-columns: repeat(2,1fr); }
+          .h-flow { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 768px) {
           .h-about, .h-services, .h-process, .h-why, .h-testi, .h-cta { padding: 64px 24px; }
-          .h-stats-grid { grid-template-columns: 1fr 1fr; }
+          .h-founder-hero img { height: 280px; }
+          .h-founder-hero-overlay { padding: 28px 24px 20px; flex-direction: column; gap: 12px; }
+          .h-founder-hero-name { font-size: 20px; }
+          .h-svc-tabs { flex-direction: column; }
+          .h-svc-tab { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.08); }
+          .h-svc-content-col { padding: 28px 24px; }
+          .h-svc-counselor-img {
+            min-height: 340px;
+            max-height: 420px;
+          }
           .h-why-grid { grid-template-columns: 1fr; }
-          .h-svc-nav-btn { padding: 14px 10px; }
-          .h-svc-nav-label { font-size: 10.5px; }
-          .h-pstep { grid-template-columns: 80px 1fr; }
-          .h-pstep-node { width: 48px; height: 48px; font-size: 14px; }
-          .h-svc-left, .h-svc-right { padding: 36px 28px; }
-          .h-contact-strip { gap: 28px; flex-direction: column; align-items: center; }
+          .h-flow { grid-template-columns: 1fr; }
+          .h-testi-slide { padding: 32px 24px; }
+          .h-testi-top { flex-direction: column; }
+          .h-stats-grid { grid-template-columns: 1fr 1fr; }
+          .h-contact-strip { gap: 24px; flex-direction: column; align-items: center; }
         }
       `}</style>
 
       <div className="h">
 
-        {/* ══ REGIONAL COLLEGE STRIP — AP & TS ══ */}
-        <div className="h-strip">
-          <div className="h-strip-label">AP · TS</div>
-          <div className="h-strip-track">
-            {[...Array(2)].map((_, pass) =>
-              regionalColleges.map((c, i) => (
-                <div key={`r-${pass}-${i}`} className="h-strip-item">
-                  <div className="h-strip-logo">
-                    <img src={c.image} alt={c.name} onError={e => { e.target.style.display='none'; e.target.nextSibling.style.display='flex'; }} />
-                    <span className="h-strip-logo-text" style={{display:'none'}}>{c.short}</span>
-                  </div>
-                  <span className="h-strip-name">{c.name}</span>
-                  <span className="h-strip-state">{c.state}</span>
-                </div>
-              ))
-            )}
+        {/* ══ COLLEGE STRIPS ══ */}
+        <div className="h-strip-wrap">
+          <div style={{padding:'8px 32px 0', display:'flex', gap:'12px', alignItems:'center'}}>
+            <span className="h-strip-label">AP · TS Colleges</span>
           </div>
-        </div>
-
-        {/* ══ NATIONAL COLLEGE STRIP ══ */}
-        <div className="h-strip" style={{borderTop:'1px solid var(--gold-border)'}}>
-          <div className="h-strip-label" style={{color:'var(--faint)'}}>National</div>
-          <div className="h-strip-track" style={{animationDirection:'reverse', animationDuration:'30s'}}>
-            {[...Array(2)].map((_, pass) =>
-              nationalColleges.map((c, i) => (
-                <div key={`n-${pass}-${i}`} className="h-strip-item">
-                  <div className="h-strip-logo" style={{background: c.color + '22', border:`1px solid ${c.color}44`}}>
-                    <span className="h-strip-logo-text" style={{color: c.color, display:'flex'}}>{c.short}</span>
+          <div className="h-strip">
+            <div className="h-strip-track">
+              {[...Array(2)].map((_, pass) =>
+                regionalColleges.map((c, i) => (
+                  <div key={`r-${pass}-${i}`} className="h-strip-item">
+                    <div className="h-strip-logo">
+                      <img src={c.image} alt={c.name} onError={e => { e.target.style.display='none'; if(e.target.nextSibling) e.target.nextSibling.style.display='flex'; }} />
+                      <span className="h-strip-logo-text" style={{display:'none'}}>{c.short}</span>
+                    </div>
+                    <span className="h-strip-name">{c.name}</span>
+                    <span className="h-strip-state">{c.state}</span>
                   </div>
-                  <span className="h-strip-name">{c.name}</span>
-                </div>
-              ))
-            )}
+                ))
+              )}
+            </div>
+          </div>
+          <div style={{borderTop:'1px solid var(--gray-light)', padding:'0 0 0 0'}}>
+            <div style={{padding:'8px 32px 0', display:'flex', gap:'12px', alignItems:'center'}}>
+              <span className="h-strip-label">National</span>
+            </div>
+            <div className="h-strip">
+              <div className="h-strip-track" style={{animationDirection:'reverse', animationDuration:'28s'}}>
+                {[...Array(2)].map((_, pass) =>
+                  nationalColleges.map((c, i) => (
+                    <div key={`n-${pass}-${i}`} className="h-strip-item">
+                      <div className="h-strip-logo" style={{background: c.color + '22', border:`1px solid ${c.color}44`}}>
+                        <span className="h-strip-logo-text" style={{color: c.color, display:'flex'}}>{c.short}</span>
+                      </div>
+                      <span className="h-strip-name">{c.name}</span>
+                    </div>
+                  ))
+                )}
+              </div>
+            </div>
           </div>
         </div>
 
         {/* ══ ABOUT US ══ */}
         <section className="h-about">
+          <div className="h-about-decor" />
+          <div className="h-about-decor2" />
           <RevealSection>
-            <div className="h-about-grid">
-              <div className="h-about-left">
-                <div className="h-about-eyebrow">
-                  <div className="h-tag"><div className="h-tag-line" /> About Maharsh Edutech <div className="h-tag-line" /></div>
+            <div className="h-about-inner">
+
+              {/* ── CHANGE: Large founder photo at the top ── */}
+              <div className="h-founder-hero">
+                <img
+                  src="/images/founder.jpg"
+                  alt="Founder — Maharsh Edutech"
+                  onError={e => {
+                    e.target.style.display = 'none';
+                    // show placeholder sibling
+                    const placeholder = e.target.parentElement.querySelector('.h-founder-hero-placeholder');
+                    if (placeholder) placeholder.style.display = 'flex';
+                  }}
+                />
+                {/* Placeholder shown when image fails */}
+                <div className="h-founder-hero-placeholder" style={{display:'none'}}>
+                  <div className="h-founder-hero-placeholder-icon">
+                    <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="#fff" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                      <circle cx="12" cy="7" r="4"/>
+                    </svg>
+                  </div>
+                  <div className="h-founder-hero-placeholder-text">Founder Photo</div>
                 </div>
-                <h2 className="h-about-h2">Andhra Pradesh & Telangana's Most <em>Trusted</em> Education Partner</h2>
-                <p className="h-about-body">
-                  Maharsh Edutech was founded with a single conviction: that every student in India deserves access to the same quality of education guidance that was previously available only to those with the right connections or the financial means to afford expensive overseas consultants. We are an Andhra Pradesh and Telangana-rooted firm that has grown into a national presence — because the quality of our advice, and the honesty of our model, speaks through the outcomes of our students.
-                </p>
-                <p className="h-about-body">
-                  Over twelve years, we have guided more than 5,000 students through every major educational transition — from Class 10 stream selection to postgraduate admissions in India and across 18 countries. Our team of 40 certified counselors, application specialists, financial advisors, and visa experts operates as a single integrated unit, collectively accountable for every student's outcome.
-                </p>
-                <p className="h-about-body">
-                  We do not earn commissions from colleges. We do not receive referral payments from lenders. We do not employ freshers to deliver generic advice from a script. Maharsh Edutech earns its reputation entirely through the quality of the decisions our students make — and the futures those decisions build.
-                </p>
-                <div className="h-about-quote">
-                  <p className="h-about-quote-text">"We built Maharsh Edutech because we saw too many brilliant students make consequential decisions with the wrong information. We wanted to change that — one student at a time."</p>
-                  <div className="h-about-quote-attr">— Founder, Maharsh Edutech · Hyderabad</div>
+                {/* Overlay with name/title */}
+                <div className="h-founder-hero-overlay">
+                  <div>
+                    <div className="h-founder-hero-name">Founder Name</div>
+                    <div className="h-founder-hero-title">Founder & CEO · Maharsh Edutech Pvt Ltd</div>
+                  </div>
+                  <div className="h-founder-hero-badge">
+                    NCDA Certified<br />Career Counselor<br />15+ Years
+                  </div>
                 </div>
               </div>
-              <div className="h-about-right">
-                <div className="h-stats-grid">
-                  {aboutStats.map((s, i) => (
-                    <div key={i} className="h-stat-box">
-                      <div className="h-stat-num">{s.num}</div>
-                      <div className="h-stat-label">{s.label}</div>
-                    </div>
-                  ))}
+
+              {/* ── Two-col: text + stats ── */}
+              <div className="h-about-grid">
+                <div>
+                  <div className="h-pill"><div className="h-pill-dot" /> About Maharsh Edutech</div>
+                  <h2 className="h-about-h2 h-sora">
+                    AP & Telangana's Most<br /><span>Trusted Education Partner</span>
+                  </h2>
+
+                  {/* ── CHANGE: bullet points instead of paragraphs ── */}
+                  <ul className="h-about-points">
+                    {aboutPoints.map((pt, i) => (
+                      <li key={i} className="h-about-point">
+                        <div className="h-about-point-dot">
+                          <Icons.Check />
+                        </div>
+                        {pt}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Stats */}
+                <div style={{paddingTop:'52px'}}>
+                  <div className="h-stats-grid">
+                    {aboutStats.map((s, i) => (
+                      <div key={i} className="h-stat-box">
+                        <div className="h-stat-bg-num">{s.num.replace(/[^0-9]/g,'')}</div>
+                        <div className="h-stat-num">{s.num}</div>
+                        <div className="h-stat-label">{s.label}</div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
+
             </div>
           </RevealSection>
         </section>
 
-        <hr className="h-rule" />
+        {/* Wave */}
+        <svg className="h-wave" viewBox="0 0 1440 48" fill="none" xmlns="http://www.w3.org/2000/svg" style={{width:'100%', background:'var(--blue-deep)'}}>
+          <path d="M0 0 C480 48 960 0 1440 48 L1440 48 L0 48 Z" fill="white"/>
+        </svg>
 
-        {/* ══ WHAT WE DO — Services ══ */}
+        {/* ══ SERVICES ══ */}
         <section className="h-services">
+          <div className="h-svc-circle1" />
+          <div className="h-svc-circle2" />
+          <div className="h-svc-circle3" />
+
           <RevealSection>
-            <div className="h-tag"><div className="h-tag-line" /> What We Do</div>
-            <h2 style={{fontFamily:'Playfair Display, serif', fontSize:'clamp(32px,4vw,52px)', fontWeight:900, lineHeight:1.05, margin:'14px 0 16px', color:'var(--smoke)'}}>
-              Four Pillars of <em style={{fontStyle:'italic',color:'var(--gold)'}}>Complete Support</em>
-            </h2>
-            <p style={{fontSize:'14.5px',color:'var(--muted)',lineHeight:1.82,maxWidth:560,margin:0}}>
-              Every service we offer is designed to address one specific dimension of the complex, multi-stage process of building an educational career. Together, they form a seamless system of support.
-            </p>
+            <div className="h-svc-head">
+              <div className="h-pill orange"><div className="h-pill-dot" /> What We Do</div>
+              <h2 className="h-svc-head-h2 h-sora">Four Pillars of Complete Support</h2>
+              <p className="h-svc-head-sub">Every service addresses one specific dimension of building your educational career.</p>
+            </div>
           </RevealSection>
 
           <RevealSection delay={120}>
-            <div className="h-services-nav">
+            <div className="h-svc-tabs">
               {services.map((s, i) => (
                 <button
                   key={i}
-                  className={`h-svc-nav-btn${activeService === i ? ' active' : ''}`}
+                  className={`h-svc-tab${activeService === i ? ' active' : ''}`}
                   onClick={() => setActiveService(i)}
                 >
-                  <div className="h-svc-nav-num">{s.num}</div>
-                  <div className="h-svc-nav-label">{s.title}</div>
-                  <div className="h-svc-nav-bar" />
+                  <span className="h-svc-tab-num">{s.num}</span>
+                  <span className="h-svc-tab-icon">
+                    {Icons[s.icon] && React.createElement(Icons[s.icon])}
+                  </span>
+                  <span className="h-svc-tab-label">{s.title}</span>
                 </button>
               ))}
             </div>
 
             <div className="h-svc-panel">
-              <div className="h-svc-left" style={{background:'var(--ink2)'}}>
-                <div className="h-svc-icon">
+
+              {/* Column 1 — Icon & Title */}
+              <div className="h-svc-content-col">
+                <div className="h-svc-icon-big">
                   {Icons[services[activeService].icon] && React.createElement(Icons[services[activeService].icon])}
                 </div>
-                <div className="h-svc-subtitle">{services[activeService].subtitle}</div>
-                <div className="h-svc-title">{services[activeService].title}</div>
-                <p className="h-svc-desc">{services[activeService].desc}</p>
-                <p className="h-svc-detail">{services[activeService].detail}</p>
+                <div className="h-svc-panel-sub">{services[activeService].subtitle}</div>
+                <div className="h-svc-panel-title">{services[activeService].title}</div>
               </div>
-              <div className="h-svc-right">
-                <div className="h-svc-points-title">What's Included</div>
+
+              {/* Column 2 — Checklist */}
+              <div className="h-svc-content-col">
+                <div style={{fontSize:'10px',fontWeight:700,letterSpacing:'0.18em',textTransform:'uppercase',color:'rgba(255,255,255,0.35)',marginBottom:'18px'}}>
+                  What's Included
+                </div>
                 <ul className="h-svc-points">
                   {services[activeService].points.map((pt, i) => (
                     <li key={i} className="h-svc-point">
@@ -947,66 +1139,94 @@ export default function Home() {
                   ))}
                 </ul>
               </div>
+
+              {/* Column 3 — Counselor Image: large, no box, flush */}
+              <div className="h-svc-counselor-img-wrap">
+                <img
+                  className="h-svc-counselor-img"
+                  src="/counselor.png"
+                  alt="Maharsh Edutech Counselor"
+                  onError={e => {
+                    e.target.parentElement.style.display = 'none';
+                  }}
+                />
+              </div>
+
             </div>
           </RevealSection>
         </section>
 
-        <hr className="h-rule" />
+        {/* Wave */}
+        <svg className="h-wave" viewBox="0 0 1440 48" fill="none" xmlns="http://www.w3.org/2000/svg" style={{width:'100%', background:'var(--off)'}}>
+          <path d="M0 48 C480 0 960 48 1440 0 L1440 0 L0 0 Z" fill="var(--blue-deep)"/>
+        </svg>
 
-        {/* ══ PROCESS — PATH ══ */}
+        {/* ══ PROCESS ══ */}
         <section className="h-process">
+          <div className="h-proc-diag" />
+          <div className="h-proc-diag2" />
+
           <RevealSection>
-            <div className="h-tag"><div className="h-tag-line" /> How It Works</div>
-            <h2 style={{fontFamily:'Playfair Display, serif', fontSize:'clamp(32px,4vw,52px)', fontWeight:900, lineHeight:1.05, margin:'14px 0 16px', color:'var(--smoke)'}}>
-              Your Path, <em style={{fontStyle:'italic',color:'var(--gold)'}}>Step by Step</em>
-            </h2>
-            <p style={{fontSize:'14.5px',color:'var(--muted)',lineHeight:1.82,maxWidth:580,margin:0}}>
-              We have designed a six-stage process that provides complete clarity, eliminates guesswork, and ensures no critical decision is made without expert input. Each stage builds on the last — creating a structured journey from first conversation to first day of college.
-            </p>
+            <div className="h-proc-head">
+              <div className="h-pill"><div className="h-pill-dot" /> How It Works</div>
+              <h2 className="h-proc-h2 h-sora">Your Path, Step by Step</h2>
+              <p className="h-proc-sub">Click any step to see details. Six stages — each building on the last.</p>
+            </div>
           </RevealSection>
 
           <RevealSection delay={100}>
-            <div className="h-process-inner">
-              <div className="h-process-steps">
-                {processSteps.map((step, i) => (
-                  <div key={i} className="h-pstep">
-                    <div className="h-pstep-left">
-                      <div className="h-pstep-node">{step.num}</div>
-                      <div className="h-pstep-connector" />
-                    </div>
-                    <div className="h-pstep-right">
-                      <div className="h-pstep-meta">
-                        <span className="h-pstep-badge">{step.mode}</span>
-                        <span className="h-pstep-badge" style={{background:'transparent',color:'var(--faint)',borderColor:'var(--hair)'}}>{step.duration}</span>
-                      </div>
-                      <div className="h-pstep-title">{step.title}</div>
-                      <p className="h-pstep-desc">{step.desc}</p>
-                    </div>
+            <div className="h-flow">
+              {processSteps.map((step, i) => (
+                <React.Fragment key={i}>
+                  <div
+                    className={`h-flow-card${activeStep === i ? ' active' : ''}`}
+                    onClick={() => setActiveStep(activeStep === i ? null : i)}
+                  >
+                    <div className="h-flow-num">{step.num}</div>
+                    <div className="h-flow-title">{step.title}</div>
+                    <div className="h-flow-badge">{step.badge}</div>
+                    <p className="h-flow-desc">{step.desc}</p>
                   </div>
-                ))}
-              </div>
+                  {activeStep === i && (i % 3 === 2 || i === processSteps.length - 1 || (i < 3 && i === processSteps.slice(0,3).lastIndexOf(processSteps[activeStep]))) && (
+                    <div className="h-flow-detail">
+                      <div className="h-flow-detail-title">{step.title}</div>
+                      <div className="h-flow-detail-text">{step.desc}</div>
+                    </div>
+                  )}
+                </React.Fragment>
+              ))}
+              {activeStep !== null && activeStep < 3 && (
+                <div className="h-flow-detail" style={{gridColumn:'1/-1', marginTop:'-8px'}}>
+                  <div className="h-flow-detail-title">{processSteps[activeStep].title} · {processSteps[activeStep].badge}</div>
+                  <div className="h-flow-detail-text">{processSteps[activeStep].desc}</div>
+                </div>
+              )}
             </div>
           </RevealSection>
         </section>
 
-        <hr className="h-rule" />
+        {/* Wave */}
+        <svg className="h-wave" viewBox="0 0 1440 48" fill="none" xmlns="http://www.w3.org/2000/svg" style={{width:'100%', background:'#fff'}}>
+          <path d="M0 0 C480 48 960 0 1440 48 L1440 48 L0 48 Z" fill="var(--off)"/>
+        </svg>
 
         {/* ══ WHY US ══ */}
         <section className="h-why">
+          <div className="h-why-decor" />
+          <div className="h-why-decor2" />
           <RevealSection>
-            <div className="h-why-header">
-              <div className="h-tag"><div className="h-tag-line" /> Why Maharsh Edutech</div>
-              <h2 className="h-why-h2">Built on <em>Integrity.</em><br />Delivered with Expertise.</h2>
-              <p className="h-why-lead">
-                The education consulting industry is crowded with advisors who earn commissions from colleges, offer generic advice recycled from brochures, and vanish after enrollment is confirmed. Maharsh Edutech was built to be the structural opposite of that — in every dimension of how we operate.
-              </p>
-            </div>
+            <div className="h-pill"><div className="h-pill-dot" /> Why Maharsh Edutech</div>
+            <h2 className="h-why-h2 h-sora">Built on Integrity.<br /><span>Delivered with Expertise.</span></h2>
+            <p className="h-why-sub">Structurally independent. Data-driven. Accountable to outcomes — not commissions.</p>
           </RevealSection>
           <RevealSection delay={100}>
             <div className="h-why-grid">
               {whyUs.map((item, i) => (
                 <div key={i} className="h-why-card">
-                  <div className="h-why-num">{item.num}</div>
+                  <div className="h-why-num-big">{item.num}</div>
+                  <div className="h-why-star">
+                    {[...Array(5)].map((_, j) => <Icons.Star key={j} />)}
+                  </div>
                   <div className="h-why-title">{item.title}</div>
                   <p className="h-why-desc">{item.desc}</p>
                 </div>
@@ -1015,110 +1235,111 @@ export default function Home() {
           </RevealSection>
         </section>
 
-        <hr className="h-rule" />
+        {/* Wave */}
+        <svg className="h-wave" viewBox="0 0 1440 48" fill="none" xmlns="http://www.w3.org/2000/svg" style={{width:'100%', background:'var(--blue-deep)'}}>
+          <path d="M0 48 C480 0 960 48 1440 0 L1440 0 L0 0 Z" fill="#fff"/>
+        </svg>
 
         {/* ══ TESTIMONIALS ══ */}
         <section className="h-testi">
+          <div className="h-testi-circle" />
+          <div className="h-testi-circle2" />
+
           <RevealSection>
-            <div className="h-testi-header">
-              <div className="h-tag"><div className="h-tag-line" /> Student Stories</div>
-              <h2 style={{fontFamily:'Playfair Display, serif', fontSize:'clamp(32px,4vw,52px)', fontWeight:900, lineHeight:1.05, margin:'14px 0 16px', color:'var(--smoke)'}}>
-                5,000+ Students.<br /><em style={{fontStyle:'italic',color:'var(--gold)'}}>One Consistent Result.</em>
-              </h2>
-              <p style={{fontSize:'14.5px',color:'var(--muted)',lineHeight:1.82,margin:0}}>
-                These are unedited accounts from students we have guided across engineering, medicine, management, law, and international programs. Every word is their own.
-              </p>
+            <div className="h-testi-head">
+              <div className="h-pill orange"><div className="h-pill-dot" /> Student Stories</div>
+              <h2 className="h-testi-h2 h-sora">5,000+ Students.<br /><span>One Consistent Result.</span></h2>
+              <p className="h-testi-sub">Real outcomes from engineering, medical, law & international programs.</p>
             </div>
           </RevealSection>
 
           <RevealSection delay={100}>
-            <div className="h-testi-layout">
-              <div className="h-testi-sidebar">
-                {testimonials.map((t, i) => (
-                  <div
-                    key={i}
-                    className={`h-testi-item${activeTesti === i ? ' active' : ''}`}
-                    onClick={() => handleTestiClick(i)}
-                  >
-                    <div className="h-testi-item-name">{t.name}</div>
-                    <div className="h-testi-item-short">{t.short}</div>
-                  </div>
-                ))}
-              </div>
-
-              <div className="h-testi-panel">
-                <div className="h-testi-quote-mark"><Icons.Quote /></div>
-                <p className="h-testi-text">{testimonials[activeTesti].text}</p>
-                <div className="h-testi-footer">
-                  <div className="h-testi-name-row">
-                    <div className="h-testi-name">{testimonials[activeTesti].name}</div>
-                    <div className="h-testi-meta">
-                      {testimonials[activeTesti].program}<br />{testimonials[activeTesti].location}
+            <div className="h-testi-slide-wrap">
+              <div className="h-testi-slide" style={{opacity: 1}}>
+                <div className="h-testi-top">
+                  <div className="h-testi-person">
+                    <div className="h-testi-avatar" style={{background: testimonials[activeTesti].instColor}}>
+                      {testimonials[activeTesti].name.split(' ').map(n=>n[0]).join('')}
                     </div>
-                    <div className="h-testi-stars">
-                      {Array(testimonials[activeTesti].rating).fill(null).map((_, j) => <Icons.Star key={j} />)}
+                    <div>
+                      <div className="h-testi-person-name">{testimonials[activeTesti].name}</div>
+                      <div className="h-testi-person-prog">{testimonials[activeTesti].program}</div>
                     </div>
                   </div>
-                  <div className="h-testi-badge">
-                    <div className="h-testi-badge-logo" style={{background: testimonials[activeTesti].instColor}}>
+                  <div className="h-testi-inst-badge">
+                    <div className="h-testi-inst-logo" style={{background: testimonials[activeTesti].instColor}}>
                       {testimonials[activeTesti].instAbbr}
                     </div>
                     <div>
-                      <div className="h-testi-badge-inst">{testimonials[activeTesti].institution}</div>
-                      <div className="h-testi-badge-verified">Verified Admission</div>
+                      <div className="h-testi-inst-name">{testimonials[activeTesti].institution}</div>
+                      <div className="h-testi-inst-verified">✓ Verified Admission</div>
                     </div>
                   </div>
                 </div>
-                <div className="h-testi-dots">
-                  {testimonials.map((_, i) => (
-                    <div key={i} className={`h-testi-dot${activeTesti === i ? ' active' : ''}`} onClick={() => handleTestiClick(i)} />
+
+                <div className="h-testi-headline">{testimonials[activeTesti].headline}</div>
+
+                <ul className="h-testi-points">
+                  {testimonials[activeTesti].points.map((pt, i) => (
+                    <li key={i} className="h-testi-point">
+                      <div className="h-testi-point-check"><Icons.Check /></div>
+                      {pt}
+                    </li>
                   ))}
+                </ul>
+
+                <div className="h-testi-stars">
+                  {[...Array(testimonials[activeTesti].rating)].map((_, j) => <Icons.Star key={j} />)}
+                </div>
+              </div>
+
+              <div className="h-testi-controls">
+                <div style={{display:'flex', alignItems:'center', gap:'16px'}}>
+                  <div className="h-testi-dots">
+                    {testimonials.map((_, i) => (
+                      <button key={i} className={`h-testi-dot${activeTesti === i ? ' active' : ''}`} onClick={() => goTesti(i)} />
+                    ))}
+                  </div>
+                  <span className="h-testi-counter">{activeTesti + 1} / {testimonials.length}</span>
+                </div>
+                <div className="h-testi-arrows">
+                  <button className="h-testi-arrow" onClick={() => goTesti((activeTesti - 1 + testimonials.length) % testimonials.length)}>
+                    <Icons.ChevronLeft />
+                  </button>
+                  <button className="h-testi-arrow" onClick={() => goTesti((activeTesti + 1) % testimonials.length)}>
+                    <Icons.ChevronRight />
+                  </button>
                 </div>
               </div>
             </div>
           </RevealSection>
         </section>
 
+        {/* Wave */}
+        <svg className="h-wave" viewBox="0 0 1440 48" fill="none" xmlns="http://www.w3.org/2000/svg" style={{width:'100%', background:'#fff'}}>
+          <path d="M0 0 C480 48 960 0 1440 48 L1440 48 L0 48 Z" fill="var(--blue-deep)"/>
+        </svg>
+
         {/* ══ CTA ══ */}
         <section className="h-cta">
+          <div className="h-cta-circle" />
+          <div className="h-cta-circle2" />
           <RevealSection>
             <div className="h-cta-inner">
-              <div className="h-tag" style={{justifyContent:'center'}}>
-                <div className="h-tag-line" /> Take the First Step <div className="h-tag-line" />
+              <div className="h-pill" style={{justifyContent:'center'}}>
+                <div className="h-pill-dot" /> Take the First Step
               </div>
-              <h2 className="h-cta-h2">
-                Your Career Path Begins<br />with <em>One Conversation</em>
-              </h2>
+              <h2 className="h-cta-h2 h-sora">Your Career Path Starts<br />with <span>One Conversation</span></h2>
               <p className="h-cta-sub">
-                Book a complimentary 30-minute session with a certified counselor. There is no sales pitch, no pressure, and no obligation. Just an honest, informed conversation about your future — and what it takes to get there.
+                Book a free 30-minute session with a certified counselor. No sales pitch. No pressure. Just honest, expert guidance.
               </p>
               <div className="h-cta-btns">
                 <a href="/counseling" className="h-btn-primary">Book Free Counseling</a>
                 <a href="/services" className="h-btn-outline">Explore All Services</a>
               </div>
-              <div className="h-contact-strip">
-                <div className="h-contact-item">
-                  <div className="h-contact-icon"><Icons.Phone /></div>
-                  <div>
-                    <div className="h-contact-label">Call Us</div>
-                    <div className="h-contact-val">+91 7337267648</div>
-                  </div>
-                </div>
-                <div className="h-contact-item">
-                  <div className="h-contact-icon"><Icons.Mail /></div>
-                  <div>
-                    <div className="h-contact-label">Email</div>
-                    <div className="h-contact-val">maharshedutech@gmail.com</div>
-                  </div>
-                </div>
-                <div className="h-contact-item">
-                  <div className="h-contact-icon"><Icons.MapPin /></div>
-                  <div>
-                    <div className="h-contact-label">Office</div>
-                    <div className="h-contact-val">Hyderabad, Telangana</div>
-                  </div>
-                </div>
-              </div>
+              
+                
+              
             </div>
           </RevealSection>
         </section>

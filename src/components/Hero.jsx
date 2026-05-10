@@ -1,9 +1,8 @@
 // src/components/Hero.jsx
-import React, { useEffect, useState, useRef } from "react";
+import React, { useState } from "react";
 
 export default function Hero() {
-  const [muted, setMuted] = useState(false); // start unmuted (with audio)
-  const videoRef = useRef(null);
+  const [muted, setMuted] = useState(false);
 
   const stats = [
     { num: '5000+', label: 'Students Guided' },
@@ -13,292 +12,262 @@ export default function Hero() {
   ];
 
   const tags = [
-    { label: 'After 10th',        gold: true  },
-    { label: 'After 12th',        gold: true  },
-    { label: 'After Graduation',  gold: true  },
-    { label: 'India Admissions',  gold: false },
-    { label: 'Abroad Admissions', gold: false },
-    { label: 'Education Loan',    gold: false },
+    { label: 'After 10th',        orange: true  },
+    { label: 'After 12th',        orange: true  },
+    { label: 'After Graduation',  orange: true  },
+    { label: 'India Admissions',  orange: false },
+    { label: 'Abroad Admissions', orange: false },
+    { label: 'Education Loan',    orange: false },
   ];
 
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-
-    // Attempt autoplay WITH audio; browsers may block it.
-    // If blocked, fall back to muted autoplay and sync state.
-    video.muted = false;
-    const playPromise = video.play();
-
-    if (playPromise !== undefined) {
-      playPromise.catch(() => {
-        // Browser blocked unmuted autoplay — fall back to muted
-        video.muted = true;
-        setMuted(true);
-        video.play().catch(() => {
-          // If even muted autoplay fails, do nothing
-        });
-      });
-    }
-  }, []);
-
-  const toggleMute = () => {
-    const video = videoRef.current;
-    if (!video) return;
-    const next = !muted;
-    video.muted = next;
-    setMuted(next);
-  };
-
   return (
-    <section style={{ position: 'relative', minHeight: '100vh', overflow: 'hidden', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+    <section style={{ position: 'relative', overflow: 'hidden', background: '#1a56db' }}>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,700;1,600&family=Outfit:wght@400;500;600;700&display=swap');
-
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
         *, *::before, *::after { box-sizing: border-box; }
 
-        /* ── Eyebrow ── */
-        .hero-eyebrow {
-          display: inline-flex; align-items: center; gap: 10px; margin-bottom: 20px;
-          animation: fadeUp 0.7s ease both;
-        }
-        .hero-eyebrow-line { width: 32px; height: 2px; background: #c9a227; flex-shrink: 0; }
-        .hero-eyebrow-text {
-          font-size: 11px; font-weight: 700; letter-spacing: 0.22em;
-          text-transform: uppercase; color: #c9a227; font-family: 'Outfit', sans-serif;
+        .hero-inner {
+          display: flex; align-items: center; justify-content: space-between;
+          padding: 70px 72px 110px; gap: 32px;
+          max-width: 1280px; margin: 0 auto; position: relative; z-index: 2;
+          font-family: 'Plus Jakarta Sans', sans-serif;
         }
 
-        /* ── Heading ── */
+
+
         .hero-h1 {
-          font-family: 'Cormorant Garamond', Georgia, serif;
-          font-size: clamp(30px, 5.5vw, 68px);
-          font-weight: 700; color: white; line-height: 1.07;
-          margin: 0 0 22px;
-          animation: fadeUp 0.7s 0.1s ease both;
+          font-family: 'Plus Jakarta Sans', sans-serif;
+          font-size: clamp(28px, 4.5vw, 52px); font-weight: 800; color: #fff;
+          line-height: 1.1; margin: 0 0 18px; letter-spacing: -0.01em;
+          animation: fadeUp 0.6s 0.08s ease both;
         }
-        .hero-h1 em { font-style: italic; color: #c9a227; }
+        .hero-h1 span { color: #f97316; }
 
-        /* ── Sub ── */
         .hero-sub {
-          font-family: 'Outfit', sans-serif; font-size: clamp(13px, 1.6vw, 15.5px);
-          color: rgba(255,255,255,0.68); line-height: 1.7;
-          max-width: 520px; margin: 0 0 32px;
-          animation: fadeUp 0.7s 0.18s ease both;
+          font-size: clamp(13px, 1.4vw, 15px); font-weight: 400;
+          color: rgba(255,255,255,0.75); line-height: 1.7;
+          max-width: 480px; margin: 0 0 28px;
+          animation: fadeUp 0.6s 0.16s ease both;
         }
 
-        /* ── Tags ── */
         .hero-tags {
-          display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 38px;
-          animation: fadeUp 0.7s 0.26s ease both;
+          display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px;
+          animation: fadeUp 0.6s 0.22s ease both;
         }
         .hero-tag {
-          font-family: 'Outfit', sans-serif; font-size: 11.5px; font-weight: 500;
-          color: rgba(255,255,255,0.65); background: rgba(255,255,255,0.06);
-          border: 1px solid rgba(255,255,255,0.1); padding: 5px 13px; border-radius: 4px;
-          transition: all 0.2s; cursor: default;
+          font-size: 11.5px; font-weight: 500; color: rgba(255,255,255,0.65);
+          background: rgba(255,255,255,0.09); border: 1px solid rgba(255,255,255,0.14);
+          padding: 5px 13px; border-radius: 4px; cursor: default;
         }
-        .hero-tag:hover { background: rgba(255,255,255,0.1); color: white; }
-        .hero-tag.gold {
-          color: #c9a227; background: rgba(201,162,39,0.1);
-          border-color: rgba(201,162,39,0.3);
+        .hero-tag.orange {
+          color: #fed7aa; background: rgba(249,115,22,0.15);
+          border-color: rgba(249,115,22,0.3);
         }
-        .hero-tag.gold:hover { background: rgba(201,162,39,0.18); }
 
-        /* ── Buttons ── */
         .hero-btns {
           display: flex; gap: 12px; flex-wrap: wrap; align-items: center;
-          animation: fadeUp 0.7s 0.34s ease both;
+          margin-bottom: 20px; animation: fadeUp 0.6s 0.28s ease both;
         }
-        .hero-btn-primary {
-          font-family: 'Outfit', sans-serif; font-size: 13px; font-weight: 700;
-          letter-spacing: 0.08em; text-transform: uppercase;
-          background: #c9a227; color: #111111; border: none;
-          padding: 13px 30px; border-radius: 6px; cursor: pointer;
-          transition: background 0.2s, transform 0.15s; text-decoration: none;
-          display: inline-block; white-space: nowrap;
+        .hero-btn-cta {
+          font-size: 14px; font-weight: 700; background: #f97316; color: #fff;
+          border: none; padding: 13px 28px; border-radius: 8px; cursor: pointer;
+          text-decoration: none; display: inline-block; letter-spacing: 0.03em;
+          box-shadow: 0 4px 20px rgba(249,115,22,0.4); transition: all 0.2s;
         }
-        .hero-btn-primary:hover { background: #e0b93a; transform: translateY(-1px); }
-        .hero-btn-outline {
-          font-family: 'Outfit', sans-serif; font-size: 13px; font-weight: 600;
-          letter-spacing: 0.06em; text-transform: uppercase;
-          background: transparent; color: white;
-          border: 1.5px solid rgba(255,255,255,0.3);
-          padding: 12px 26px; border-radius: 6px; cursor: pointer;
-          transition: border-color 0.2s, color 0.2s, transform 0.15s; text-decoration: none;
-          display: inline-block; white-space: nowrap;
+        .hero-btn-cta:hover { background: #fb923c; transform: translateY(-2px); }
+        .hero-btn-ghost {
+          font-size: 14px; font-weight: 600;
+          background: rgba(255,255,255,0.1); color: #fff;
+          border: 1.5px solid rgba(255,255,255,0.28); padding: 12px 24px;
+          border-radius: 8px; cursor: pointer; text-decoration: none;
+          display: inline-block; transition: all 0.2s;
         }
-        .hero-btn-outline:hover { border-color: #c9a227; color: #c9a227; transform: translateY(-1px); }
+        .hero-btn-ghost:hover { border-color: rgba(255,255,255,0.5); background: rgba(255,255,255,0.16); }
 
-        /* ── Trust strip ── */
         .hero-trust {
-          margin-top: 20px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
-          font-family: 'Outfit', sans-serif; font-size: 12px; color: rgba(255,255,255,0.4);
-          letter-spacing: 0.06em; animation: fadeUp 0.7s 0.42s ease both;
+          display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+          font-size: 12px; color: rgba(255,255,255,0.45); letter-spacing: 0.04em;
+          animation: fadeUp 0.6s 0.34s ease both;
         }
-        .hero-trust-dot { width: 4px; height: 4px; border-radius: 50%; background: #c9a227; opacity: 0.6; flex-shrink: 0; }
+        .hero-trust-dot { width: 3px; height: 3px; border-radius: 50%; background: rgba(255,255,255,0.3); }
 
-        /* ── Stats bar ── */
+        /* RIGHT side — student image */
+/* RIGHT side — student image (ULTRA BIG VERSION) */
+.hero-right {
+  flex: 0 0 auto;
+
+  /* 🔥 MUCH BIGGER */
+  width: clamp(520px, 48vw, 820px);
+
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+
+  position: relative;
+  align-self: stretch;
+
+  /* 🔥 push image outside container */
+  margin-right: -120px;
+  margin-bottom: -100px;
+
+  animation: fadeUp 0.6s 0.1s ease both;
+}
+
+.hero-right img {
+  width: 115%;              /* 🔥 bigger than container */
+  max-height: 720px;
+
+  object-fit: contain;
+  object-position: bottom center;
+
+  display: block;
+  position: relative;
+  z-index: 1;
+
+  /* 🔥 smooth fade into wave */
+  -webkit-mask-image: linear-gradient(to bottom, black 78%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 78%, transparent 100%);
+}
+
+        /* Arch background decoration */
+        .hero-arch-bg {
+          position: absolute; right: -20px; top: 0; bottom: 0;
+          width: 60%; opacity: 0.05; pointer-events: none; z-index: 0;
+        }
+
+        /* Wave bottom */
+        .hero-wave {
+          position: relative; z-index: 2;
+          display: block; margin-bottom: -2px; line-height: 0;
+        }
+
+        /* Stats bar */
         .hero-stats-bar {
-          position: absolute; bottom: 0; left: 0; right: 0;
-          display: flex; border-top: 1px solid rgba(201,162,39,0.25);
-          background: rgba(17,17,17,0.82);
-          backdrop-filter: blur(12px);
-          -webkit-backdrop-filter: blur(12px);
-          animation: fadeUp 0.7s 0.5s ease both;
-          z-index: 3;
+          display: flex; background: rgba(13,45,110,0.95);
+          border-top: 2px solid rgba(249,115,22,0.4);
+          position: relative; z-index: 3;
         }
         .hero-stat {
           flex: 1; padding: 18px 8px; text-align: center;
-          border-right: 1px solid rgba(201,162,39,0.12);
-          transition: background 0.2s; min-width: 0;
+          border-right: 1px solid rgba(255,255,255,0.07); transition: background 0.2s;
         }
         .hero-stat:last-child { border-right: none; }
-        .hero-stat:hover { background: rgba(201,162,39,0.05); }
+        .hero-stat:hover { background: rgba(249,115,22,0.06); }
         .hero-stat-num {
-          font-family: 'Cormorant Garamond', Georgia, serif;
-          font-size: clamp(20px, 3vw, 28px); font-weight: 700; color: #c9a227;
-          line-height: 1; margin-bottom: 4px;
+          font-size: clamp(20px, 2.5vw, 28px); font-weight: 800;
+          color: #f97316; line-height: 1; margin-bottom: 4px;
         }
         .hero-stat-label {
-          font-family: 'Outfit', sans-serif; font-size: clamp(8px, 1vw, 10px); font-weight: 500;
-          letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.45);
+          font-size: clamp(8px, 0.9vw, 10px); font-weight: 500;
+          letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.4);
         }
 
-        /* ── Audio toggle ── */
-        .hero-audio-btn {
-          position: absolute; bottom: 90px; right: 32px; z-index: 4;
-          width: 40px; height: 40px; border-radius: 50%;
-          background: rgba(17,17,17,0.7); border: 1px solid rgba(201,162,39,0.4);
-          color: white; cursor: pointer; display: flex; align-items: center; justify-content: center;
-          backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-          transition: border-color 0.2s, background 0.2s;
-          animation: fadeUp 0.7s 0.55s ease both;
-        }
-        .hero-audio-btn:hover { background: rgba(201,162,39,0.15); border-color: #c9a227; }
-        .hero-audio-btn svg {
-          width: 16px; height: 16px; fill: none; stroke: currentColor;
-          stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
-        }
-
-        /* ── Scroll hint ── */
-        .hero-scroll {
-          position: absolute; bottom: 90px; right: 84px; z-index: 2;
-          display: flex; flex-direction: column; align-items: center; gap: 6px; opacity: 0.35;
-        }
-        .hero-scroll-line {
-          width: 1px; height: 44px; background: white;
-          animation: spulse 2s ease-in-out infinite;
-        }
-        @keyframes spulse {
-          0%,100%{opacity:.3;transform:scaleY(.55)} 50%{opacity:.9;transform:scaleY(1)}
-        }
-        .hero-scroll-text {
-          font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 600;
-          letter-spacing: 0.2em; text-transform: uppercase; color: white;
-          writing-mode: vertical-lr;
-        }
-
-        /* ── Animations ── */
         @keyframes fadeUp {
-          from { opacity: 0; transform: translateY(22px); }
+          from { opacity: 0; transform: translateY(20px); }
           to   { opacity: 1; transform: translateY(0); }
         }
 
-        /* ── Responsive: Tablet ── */
+        /* ── Tablet ── */
         @media (max-width: 900px) {
-          .hero-content { padding: 70px 48px 110px !important; }
+          .hero-inner { padding: 60px 40px 100px; gap: 20px; }
+          .hero-right { width: clamp(220px, 30vw, 320px); }
         }
 
-        /* ── Responsive: Mobile ── */
+        /* ── Mobile ── */
         @media (max-width: 768px) {
-          .hero-content { padding: 60px 20px 100px !important; max-width: 100% !important; }
-          .hero-scroll { display: none; }
-          .hero-audio-btn { bottom: 86px; right: 16px; }
-          .hero-stat { padding: 14px 6px; }
+          .hero-inner {
+            flex-direction: column-reverse;
+            padding: 0;
+            gap: 0;
+            align-items: stretch;
+          }
+          .hero-right {
+            width: 100%;
+            height: 220px;
+            overflow: hidden;
+            align-items: flex-end;
+            justify-content: center;
+            /* Reset desktop overrides that cause overlap */
+            margin-right: 0;
+            margin-bottom: 0;
+            flex-shrink: 0;
+          }
+          .hero-right img {
+            width: auto; height: 100%; max-height: 220px;
+            object-position: center bottom;
+          }
+          .hero-left-wrap {
+            padding: 28px 20px 100px;
+            /* Ensure text block sits below image with no overlap */
+            position: relative;
+            z-index: 2;
+            background: #1a56db;
+          }
+          .hero-h1 { font-size: clamp(26px, 7vw, 34px); }
+          .hero-sub { font-size: 14px; }
+          .hero-btns { flex-direction: column; align-items: stretch; }
+          .hero-btn-cta, .hero-btn-ghost { width: 100%; text-align: center; }
         }
 
-        /* ── Responsive: Small mobile ── */
         @media (max-width: 480px) {
-          .hero-eyebrow-text { font-size: 9.5px; letter-spacing: 0.16em; }
-          .hero-btns { flex-direction: column; align-items: stretch; }
-          .hero-btn-primary,
-          .hero-btn-outline { width: 100%; text-align: center; }
           .hero-tags { gap: 6px; }
           .hero-tag { font-size: 10.5px; padding: 4px 10px; }
-          .hero-trust { gap: 7px; }
-          .hero-trust-dot { display: none; }
-        }
-
-        /* ── Responsive: Very small ── */
-        @media (max-width: 360px) {
-          .hero-content { padding: 50px 16px 96px !important; }
-          .hero-stat-label { letter-spacing: 0.04em; }
+          .hero-stat { padding: 14px 4px; }
         }
       `}</style>
 
-      {/* Background video — autoplay with audio, loops */}
-      <video
-        ref={videoRef}
-        autoPlay
-        loop
-        playsInline
-        style={{
-          position: 'absolute', inset: 0,
-          width: '100%', height: '100%',
-          objectFit: 'cover', zIndex: 0,
-        }}
-        src="/bgvideo.mp4"
-      />
+      {/* Arch decorative bg */}
+      <svg className="hero-arch-bg" viewBox="0 0 600 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M300 80 Q420 80 420 200 L420 400 L180 400 L180 200 Q180 80 300 80Z" stroke="white" strokeWidth="1.5" fill="none"/>
+        <path d="M300 40 Q460 40 460 200 L460 420 L140 420 L140 200 Q140 40 300 40Z" stroke="white" strokeWidth="1" fill="none"/>
+        <rect x="240" y="390" width="30" height="40" stroke="white" strokeWidth="1" fill="none"/>
+        <rect x="285" y="390" width="30" height="40" stroke="white" strokeWidth="1" fill="none"/>
+      </svg>
 
-      {/* Dark overlay */}
-      <div style={{ position: 'absolute', inset: 0, background: 'rgba(10,10,10,0.68)', zIndex: 1 }} />
+      <div className="hero-inner">
+        {/* LEFT — Text content */}
+<div className="hero-left-wrap" style={{ flex: 1, maxWidth: 600 }}>
 
-      {/* Gold left accent bar */}
-      <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: 4, background: '#c9a227', zIndex: 3 }} />
+  <h1 className="hero-h1">
+    Confused About<br />Your <span>Career Path?</span>
+  </h1>
 
-      {/* Main content */}
-      <div
-        className="hero-content"
-        style={{
-          position: 'relative', zIndex: 2,
-          padding: '80px 72px 100px',
-          width: '100%', maxWidth: '860px',
-        }}
-      >
-        <div className="hero-eyebrow">
-          <div className="hero-eyebrow-line" />
-          <span className="hero-eyebrow-text">Free Career Counseling — 2026</span>
-        </div>
+  <p className="hero-sub">
+    We help students after 10th, 12th, and graduation discover the right opportunities
+    and achieve their goals with expert guidance.
+  </p>
 
-        <h1 className="hero-h1">
-          Confused About<br />Your <em>Career Path?</em>
-        </h1>
+  <div className="hero-tags">
+    {tags.map(t => (
+      <span key={t.label} className={`hero-tag${t.orange ? ' orange' : ''}`}>{t.label}</span>
+    ))}
+  </div>
 
-        <p className="hero-sub">
-          We help students after 10th, 12th, and graduation discover the right opportunities
-          and achieve their goals with expert guidance.
-        </p>
+  <div className="hero-btns">
+    <a href="/counseling" className="hero-btn-cta">Talk to an Expert</a>
+    <a href="/services" className="hero-btn-ghost">Explore Services</a>
+  </div>
 
-        <div className="hero-tags">
-          {tags.map(t => (
-            <span key={t.label} className={`hero-tag${t.gold ? ' gold' : ''}`}>{t.label}</span>
-          ))}
-        </div>
+  <div className="hero-trust">
+    <span>Trusted by 5000+ students</span>
+    <div className="hero-trust-dot" />
+    <span>India &amp; Abroad</span>
+    <div className="hero-trust-dot" />
+    <span>No hidden fees</span>
+  </div>
 
-        <div className="hero-btns">
-          <a href="/counseling" className="hero-btn-primary">Talk to an Expert</a>
-          <a href="/services" className="hero-btn-outline">Explore Services</a>
-          <a href="/admissions" className="hero-btn-outline">View Admissions</a>
-        </div>
+</div>
 
-        <div className="hero-trust">
-          <span>Trusted by 5000+ students</span>
-          <div className="hero-trust-dot" />
-          <span>India &amp; Abroad</span>
-          <div className="hero-trust-dot" />
-          <span>No hidden fees</span>
+        {/* RIGHT — Student image (remove-bg PNG recommended) */}
+        <div className="hero-right">
+          <img src="\public\bghero.png" alt="Student" />
         </div>
       </div>
+
+      {/* White wave at bottom — matches KC Overseas style */}
+      <svg className="hero-wave" viewBox="0 0 1440 60" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%' }}>
+        <path d="M0 30 C360 60 1080 0 1440 30 L1440 60 L0 60 Z" fill="white"/>
+      </svg>
 
       {/* Stats bar */}
       <div className="hero-stats-bar">
@@ -309,36 +278,6 @@ export default function Hero() {
           </div>
         ))}
       </div>
-
-      {/* Scroll hint */}
-      <div className="hero-scroll">
-        <div className="hero-scroll-line" />
-        <span className="hero-scroll-text">Scroll</span>
-      </div>
-
-      {/* Audio toggle — shows MUTE icon when audio is ON, UNMUTE icon when OFF */}
-      <button
-        className="hero-audio-btn"
-        onClick={toggleMute}
-        aria-label={muted ? 'Unmute video' : 'Mute video'}
-        title={muted ? 'Unmute' : 'Mute'}
-      >
-        {muted ? (
-          /* Muted state → show crossed-out speaker (click to unmute) */
-          <svg viewBox="0 0 24 24">
-            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
-            <line x1="23" y1="9" x2="17" y2="15" />
-            <line x1="17" y1="9" x2="23" y2="15" />
-          </svg>
-        ) : (
-          /* Unmuted state → show speaker with sound waves (click to mute) */
-          <svg viewBox="0 0 24 24">
-            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
-            <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
-            <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
-          </svg>
-        )}
-      </button>
     </section>
   );
 }
