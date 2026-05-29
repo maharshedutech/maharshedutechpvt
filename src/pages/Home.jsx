@@ -207,7 +207,6 @@ const aboutStats = [
   { num: "14", label: "Loan Partner Banks" },
 ];
 
-// ── NEW: bullet points for the About section ──
 const aboutPoints = [
   "Founded with one conviction: every student deserves the same quality of guidance previously available only to the well-connected",
   "12 years of honest, outcome-driven counseling — rooted in AP & Telangana, grown into a national presence",
@@ -282,7 +281,6 @@ export default function Home() {
   const [activeTesti, setActiveTesti] = useState(0);
   const timerRef = useRef(null);
 
-  // ── CHANGE: testimonials now rotate every 3500ms (was 6000ms) ──
   useEffect(() => {
     timerRef.current = setInterval(() => {
       setActiveTesti(p => (p + 1) % testimonials.length);
@@ -402,65 +400,88 @@ export default function Home() {
           border-radius: 50%; pointer-events: none; opacity: 0.9;
         }
 
-        /* ── NEW: About layout — full-width founder photo on top, then two-col below ── */
         .h-about-inner { max-width: 1200px; margin: 0 auto; position: relative; z-index: 1; }
 
-        /* Founder hero image — large, spanning full width like the counselor image */
-        .h-founder-hero {
-          width: 100%;
-          border-radius: var(--radius);
-          overflow: hidden;
-          margin-bottom: 60px;
-          position: relative;
-          background: var(--blue-light);
-          box-shadow: 0 16px 64px rgba(26,86,219,0.12);
+        /* ── FOUNDER: horizontal layout — photo left, text+stats right ── */
+        .h-founder-layout {
+          display: grid;
+          grid-template-columns: 400px 1fr;
+          gap: 72px;
+          align-items: stretch;
+          margin-bottom: 0;
         }
-        .h-founder-hero img {
+
+        /* Left column: vertical portrait — no frame, no border, no background box */
+        .h-founder-portrait-col {
+          position: relative;
+          display: flex;
+          flex-direction: column;
+        }
+
+        .h-founder-portrait {
+          position: relative;
+          flex: 1;
+        }
+
+        /* The photo itself — full bleed, no container box */
+        .h-founder-portrait img {
           width: 100%;
-          height: 480px;
+          height: 100%;
+          min-height: 560px;
+          max-height: 680px;
           object-fit: cover;
           object-position: center top;
           display: block;
+          /* Soft vignette at the bottom so name reads over it */
+          -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+          mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
         }
-        /* Gradient overlay at bottom for name/title */
-        .h-founder-hero-overlay {
-          position: absolute; bottom: 0; left: 0; right: 0;
-          padding: 48px 48px 36px;
-          background: linear-gradient(to top, rgba(13,45,110,0.92) 0%, transparent 100%);
-          display: flex; align-items: flex-end; justify-content: space-between; gap: 24px;
+
+        /* Name + title sit below the image, flush, no box */
+        .h-founder-caption {
+          padding-top: 20px;
         }
-        .h-founder-hero-name {
-          font-family: 'Sora', sans-serif; font-size: 28px; font-weight: 800;
-          color: #fff; margin-bottom: 6px; line-height: 1.1;
+        .h-founder-caption-name {
+          font-family: 'Sora', sans-serif;
+          font-size: 32px; font-weight: 800;
+          color: var(--text); line-height: 1.1; margin-bottom: 6px;
         }
-        .h-founder-hero-title {
-          font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
-          color: var(--orange);
+        .h-founder-caption-title {
+          font-size: 11px; font-weight: 700; letter-spacing: 0.14em;
+          text-transform: uppercase; color: var(--orange);
+          margin-bottom: 10px;
         }
-        .h-founder-hero-badge {
-          flex-shrink: 0; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
-          border-radius: 10px; padding: 12px 20px; backdrop-filter: blur(8px);
-          font-size: 12px; color: rgba(255,255,255,0.8); font-weight: 600; text-align: center; line-height: 1.5;
+        .h-founder-caption-badge {
+          display: inline-flex; align-items: center; gap: 6px;
+          background: var(--blue-light); color: var(--blue);
+          font-size: 11px; font-weight: 600; padding: 5px 14px;
+          border-radius: 100px; letter-spacing: 0.04em;
         }
-        /* Placeholder for when image doesn't load */
-        .h-founder-hero-placeholder {
-          width: 100%; height: 480px;
+        .h-founder-caption-badge-dot {
+          width: 6px; height: 6px; border-radius: 50%; background: var(--blue);
+        }
+
+        /* Placeholder (when image missing) */
+        .h-founder-portrait-placeholder {
+          width: 100%; min-height: 560px;
           display: flex; flex-direction: column; align-items: center; justify-content: center;
-          gap: 16px; background: var(--blue-light);
+          gap: 16px; background: var(--blue-light); border-radius: 8px;
         }
-        .h-founder-hero-placeholder-icon {
+        .h-founder-portrait-placeholder-icon {
           width: 80px; height: 80px; border-radius: 50%; background: var(--blue);
           display: flex; align-items: center; justify-content: center;
         }
-        .h-founder-hero-placeholder-text {
+        .h-founder-portrait-placeholder-text {
           font-family: 'Sora', sans-serif; font-size: 14px; font-weight: 600;
           color: var(--blue); letter-spacing: 0.08em;
         }
 
-        /* Two-col below the founder photo */
-        .h-about-grid {
-          display: grid; grid-template-columns: 1.1fr 0.9fr;
-          gap: 80px; align-items: start;
+        /* Right column: pill + heading + bullets + stats */
+        .h-founder-text-col {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          padding-top: 8px;
         }
 
         .h-about-h2 {
@@ -470,9 +491,8 @@ export default function Home() {
         }
         .h-about-h2 span { color: var(--blue); }
 
-        /* ── NEW: bullet points list for About ── */
         .h-about-points {
-          list-style: none; padding: 0; margin: 0;
+          list-style: none; padding: 0; margin: 0 0 48px;
           display: flex; flex-direction: column; gap: 14px;
         }
         .h-about-point {
@@ -586,7 +606,6 @@ export default function Home() {
           overflow: hidden;
         }
 
-        /* Content columns get padding */
         .h-svc-content-col {
           padding: 48px 52px;
         }
@@ -594,12 +613,10 @@ export default function Home() {
           border-right: 1px solid rgba(255,255,255,0.07);
         }
 
-        /* ─── COUNSELOR IMAGE: large, no box, flush to panel edge ─── */
         .h-svc-counselor-img-wrap {
           position: relative;
           display: block;
           overflow: hidden;
-          /* No border, no background, no border-radius on sides touching panel edge */
           border-radius: 0 0 12px 0;
         }
         .h-svc-counselor-img {
@@ -609,7 +626,6 @@ export default function Home() {
           object-fit: cover;
           object-position: center top;
           display: block;
-          /* Remove white bg from PNG */
           mix-blend-mode: luminosity;
           filter: brightness(1.1) contrast(1.05);
           transition: transform 0.6s ease;
@@ -641,7 +657,7 @@ export default function Home() {
         }
         .h-svc-icon-big svg { width: 24px; height: 24px; }
 
-        /* ═══ PROCESS — Flowchart ═══ */
+        /* ═══ PROCESS ═══ */
         .h-process {
           background: var(--off);
           padding: 100px 80px;
@@ -913,12 +929,22 @@ export default function Home() {
             max-height: 500px;
             object-position: center 20%;
           }
+          .h-founder-layout {
+            grid-template-columns: 340px 1fr;
+            gap: 52px;
+          }
         }
 
         @media (max-width: 1024px) {
           .h-about, .h-services, .h-process, .h-why, .h-testi, .h-cta { padding: 80px 48px; }
-          .h-about-grid { grid-template-columns: 1fr; gap: 52px; }
-          .h-founder-hero img { height: 380px; }
+          .h-founder-layout {
+            grid-template-columns: 1fr;
+            gap: 40px;
+          }
+          .h-founder-portrait img {
+            min-height: 420px;
+            max-height: 520px;
+          }
           .h-svc-panel { grid-template-columns: 1fr; }
           .h-svc-content-col { padding: 36px 36px; }
           .h-svc-counselor-img-wrap {
@@ -935,9 +961,10 @@ export default function Home() {
 
         @media (max-width: 768px) {
           .h-about, .h-services, .h-process, .h-why, .h-testi, .h-cta { padding: 64px 24px; }
-          .h-founder-hero img { height: 280px; }
-          .h-founder-hero-overlay { padding: 28px 24px 20px; flex-direction: column; gap: 12px; }
-          .h-founder-hero-name { font-size: 20px; }
+          .h-founder-portrait img {
+            min-height: 340px;
+            max-height: 440px;
+          }
           .h-svc-tabs { flex-direction: column; }
           .h-svc-tab { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.08); }
           .h-svc-content-col { padding: 28px 24px; }
@@ -1005,49 +1032,46 @@ export default function Home() {
           <RevealSection>
             <div className="h-about-inner">
 
-              {/* ── CHANGE: Large founder photo at the top ── */}
-              <div className="h-founder-hero">
-                <img
-                  src="/images/founder.jpg"
-                  alt="Founder — Maharsh Edutech"
-                  onError={e => {
-                    e.target.style.display = 'none';
-                    // show placeholder sibling
-                    const placeholder = e.target.parentElement.querySelector('.h-founder-hero-placeholder');
-                    if (placeholder) placeholder.style.display = 'flex';
-                  }}
-                />
-                {/* Placeholder shown when image fails */}
-                <div className="h-founder-hero-placeholder" style={{display:'none'}}>
-                  <div className="h-founder-hero-placeholder-icon">
-                    <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="#fff" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-                      <circle cx="12" cy="7" r="4"/>
-                    </svg>
-                  </div>
-                  <div className="h-founder-hero-placeholder-text">Founder Photo</div>
-                </div>
-                {/* Overlay with name/title */}
-                <div className="h-founder-hero-overlay">
-                  <div>
-                    <div className="h-founder-hero-name">Founder Name</div>
-                    <div className="h-founder-hero-title">Founder & CEO · Maharsh Edutech Pvt Ltd</div>
-                  </div>
-                  <div className="h-founder-hero-badge">
-                    NCDA Certified<br />Career Counselor<br />15+ Years
-                  </div>
-                </div>
-              </div>
+              {/* ── Founder: photo left (vertical, no frame), text+stats right ── */}
+              <div className="h-founder-layout">
 
-              {/* ── Two-col: text + stats ── */}
-              <div className="h-about-grid">
-                <div>
+                {/* LEFT — portrait column */}
+                <div className="h-founder-portrait-col">
+                  <div className="h-founder-portrait">
+                    <img
+                      src="founder.png"
+                      alt="Founder — Maharsh Edutech"
+                      onError={e => {
+                        e.target.style.display = 'none';
+                        const placeholder = e.target.parentElement.querySelector('.h-founder-portrait-placeholder');
+                        if (placeholder) placeholder.style.display = 'flex';
+                      }}
+                    />
+                    <div className="h-founder-portrait-placeholder" style={{display:'none'}}>
+                      <div className="h-founder-portrait-placeholder-icon">
+                        <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="#fff" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                          <circle cx="12" cy="7" r="4"/>
+                        </svg>
+                      </div>
+                      <div className="h-founder-portrait-placeholder-text">Founder Photo</div>
+                    </div>
+                  </div>
+
+                  {/* Name + title below the photo — clean, no card */}
+                  <div className="h-founder-caption">
+                    <div className="h-founder-caption-name">Adarsh Chowdary</div>
+                    <div className="h-founder-caption-title">Director Of Maharsh Edutech Private Limited</div>
+                  </div>
+                </div>
+
+                {/* RIGHT — text + stats column */}
+                <div className="h-founder-text-col">
                   <div className="h-pill"><div className="h-pill-dot" /> About Maharsh Edutech</div>
                   <h2 className="h-about-h2 h-sora">
                     AP & Telangana's Most<br /><span>Trusted Education Partner</span>
                   </h2>
 
-                  {/* ── CHANGE: bullet points instead of paragraphs ── */}
                   <ul className="h-about-points">
                     {aboutPoints.map((pt, i) => (
                       <li key={i} className="h-about-point">
@@ -1058,10 +1082,7 @@ export default function Home() {
                       </li>
                     ))}
                   </ul>
-                </div>
 
-                {/* Stats */}
-                <div style={{paddingTop:'52px'}}>
                   <div className="h-stats-grid">
                     {aboutStats.map((s, i) => (
                       <div key={i} className="h-stat-box">
@@ -1072,6 +1093,7 @@ export default function Home() {
                     ))}
                   </div>
                 </div>
+
               </div>
 
             </div>
@@ -1140,7 +1162,7 @@ export default function Home() {
                 </ul>
               </div>
 
-              {/* Column 3 — Counselor Image: large, no box, flush */}
+              {/* Column 3 — Counselor Image */}
               <div className="h-svc-counselor-img-wrap">
                 <img
                   className="h-svc-counselor-img"
@@ -1337,9 +1359,6 @@ export default function Home() {
                 <a href="/counseling" className="h-btn-primary">Book Free Counseling</a>
                 <a href="/services" className="h-btn-outline">Explore All Services</a>
               </div>
-              
-                
-              
             </div>
           </RevealSection>
         </section>
