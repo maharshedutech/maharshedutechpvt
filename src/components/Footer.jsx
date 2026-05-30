@@ -188,7 +188,7 @@ export default function Footer() {
 
         <div className="mftr-bar">
           <div className="mftr-copy">
-            © {new Date().getFullYear()} <span>Maharsh Edutech Pvt Ltd</span>. All rights reserved.
+            © {new Date().getFullYear()} <span>Maharsh Edutech Private Limited</span>. All rights reserved.
           </div>
           <div className="mftr-bar-links">
             <a href="/privacy">Privacy Policy</a>
