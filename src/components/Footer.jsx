@@ -192,7 +192,7 @@ export default function Footer() {
           </div>
           <div className="mftr-bar-links">
             <a href="/privacy">Privacy Policy</a>
-            <a href="/terms">Terms of Service</a>
+            <a href="/terms">Terms & Conditions</a>
           </div>
         </div>
       </footer>
