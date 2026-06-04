@@ -2,7 +2,7 @@
 import React from "react";
 
 export default function Footer() {
-  const WA_NUMBER = "917337267648";
+  const WA_NUMBER = "919566228499";
 
   const links = [
     { label: "Home", href: "/" },
@@ -142,11 +142,11 @@ export default function Footer() {
             </nav>
 
             <div className="mftr-contacts">
-              <a href="tel:+917337267648" className="mftr-contact-row">
+              <a href="tel:+919566228499" className="mftr-contact-row">
                 <svg viewBox="0 0 24 24" fill="none" stroke="#f97316" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.38 2 2 0 0 1 3.6 1.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.73a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
                 </svg>
-                +91 73372 67648
+                +91 95662 28499
               </a>
               <a href="mailto:maharshedutech@gmail.com" className="mftr-contact-row">
                 <svg viewBox="0 0 24 24" fill="none" stroke="#f97316" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
