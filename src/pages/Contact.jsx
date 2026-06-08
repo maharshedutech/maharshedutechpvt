@@ -36,17 +36,17 @@ const contactItems = [
   {
     icon: "📞",
     label: "Mobile",
-    value: "+91 73372 67648",
+    value: "+91 95662 28499",
     sub: "Mon – Sat, 9 AM – 7 PM IST",
-    href: "tel:+917337267648",
+    href: "tel:+919566228499",
     cta: "Call Now",
   },
   {
     icon: "💬",
     label: "WhatsApp",
-    value: "+91 73372 67648",
+    value: "+91 95662 28499",
     sub: "Quick response within minutes",
-    href: "https://wa.me/917337267648",
+    href: "https://wa.me/919566228499",
     cta: "Message Us",
     isExternal: true,
   },
@@ -71,6 +71,171 @@ const hours = [
   { day: "Mon – Sat", time: "9:00 AM – 7:00 PM" },
   { day: "Sunday", time: "By Appointment" },
 ];
+
+const courses = [
+  "Engineering (B.Tech / B.E)",
+  "MBBS / Medical",
+  "Study Abroad",
+  "MBA / Management",
+  "Law (LLB)",
+  "Pharmacy (B.Pharm)",
+  "Architecture (B.Arch)",
+  "Nursing",
+  "Other",
+];
+
+// ── Inline Booking Form (same endpoint & logic as BookSessionModal) ──
+function InlineBookingForm() {
+  const [formData, setFormData] = useState({
+    name: "",
+    mobile: "",
+    location: "",
+    course: "",
+    consent: false,
+  });
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!formData.consent) {
+      alert("Please accept the consent checkbox.");
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const response = await fetch(
+        "https://integration.pqa.salesmax.ai/salesmax/leads?token=O9gEu5f3Tdiw3Rglf52abQ",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: formData.name,
+            mobile: formData.mobile,
+            location: formData.location,
+            course: formData.course,
+            source: "Website",
+            campaign: "Book Session",
+          }),
+        }
+      );
+
+      if (response.ok) {
+        alert("Thank you! Our team will contact you shortly.");
+        setFormData({ name: "", mobile: "", location: "", course: "", consent: false });
+      } else {
+        alert("Something went wrong. Please try again.");
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Failed to submit. Please try again.");
+    }
+
+    setLoading(false);
+  };
+
+  return (
+    <Reveal>
+      <div className="ct-section-label">
+        Book a Free Session <div className="ct-section-line" />
+      </div>
+      <div className="ct-booking-form">
+        <div className="ct-booking-form-header">
+          <div className="ct-booking-icon">🎓</div>
+          <div>
+            <div className="ct-booking-title">Free Counseling Session</div>
+            <div className="ct-booking-sub">Fill in your details and we'll get back to you shortly.</div>
+          </div>
+        </div>
+
+        <form onSubmit={handleSubmit}>
+          <div className="ct-form-grid">
+            {/* Name */}
+            <div className="ct-field">
+              <label className="ct-field-label">Full Name <span className="ct-req">*</span></label>
+              <input
+                type="text"
+                className="ct-input"
+                placeholder="e.g. Rahul Sharma"
+                required
+                value={formData.name}
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+              />
+            </div>
+
+            {/* Mobile */}
+            <div className="ct-field">
+              <label className="ct-field-label">Mobile Number <span className="ct-req">*</span></label>
+              <input
+                type="tel"
+                className="ct-input"
+                placeholder="10-digit mobile number"
+                required
+                pattern="[0-9]{10}"
+                value={formData.mobile}
+                onChange={(e) => setFormData({ ...formData, mobile: e.target.value })}
+              />
+            </div>
+
+            {/* Location */}
+            <div className="ct-field">
+              <label className="ct-field-label">Location <span className="ct-req">*</span></label>
+              <input
+                type="text"
+                className="ct-input"
+                placeholder="e.g. Hyderabad, Telangana"
+                required
+                value={formData.location}
+                onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+              />
+            </div>
+
+            {/* Course */}
+            <div className="ct-field">
+              <label className="ct-field-label">Interested Course <span className="ct-req">*</span></label>
+              <select
+                className="ct-input ct-select"
+                required
+                value={formData.course}
+                onChange={(e) => setFormData({ ...formData, course: e.target.value })}
+              >
+                <option value="">-- Select a Course --</option>
+                {courses.map((c) => (
+                  <option key={c} value={c}>{c}</option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          {/* Consent */}
+          <label className="ct-consent-label">
+            <input
+              type="checkbox"
+              className="ct-checkbox"
+              checked={formData.consent}
+              onChange={(e) => setFormData({ ...formData, consent: e.target.checked })}
+            />
+            <span className="ct-consent-text">
+              By submitting, I consent to receive communications from Maharsh Edutech via RCS, SMS, Voice, WhatsApp, and Email. I also agree to the{" "}
+              <a href="/terms" target="_blank" className="ct-consent-link">Terms &amp; Conditions</a>{" "}and{" "}
+              <a href="/privacy" target="_blank" className="ct-consent-link">Privacy Policy</a>.
+            </span>
+          </label>
+
+          <button
+            type="submit"
+            disabled={loading}
+            className={`ct-submit-btn${loading ? " ct-submit-loading" : ""}`}
+          >
+            {loading ? "Submitting…" : "Submit & Book My Session →"}
+          </button>
+        </form>
+      </div>
+    </Reveal>
+  );
+}
 
 export default function Contact() {
   return (
@@ -169,6 +334,95 @@ export default function Contact() {
           display: flex; align-items: center; gap: 10px; margin-bottom: 20px;
         }
         .ct-section-line { height: 1px; flex: 1; background: var(--gray-light); }
+
+        /* ══ INLINE BOOKING FORM ══ */
+        .ct-booking-form {
+          border: 1.5px solid var(--gray-light);
+          border-radius: var(--radius);
+          padding: 28px 28px 24px;
+          background: var(--off);
+          margin-bottom: 40px;
+          position: relative;
+          overflow: hidden;
+        }
+        .ct-booking-form::before {
+          content: '';
+          position: absolute; top: 0; left: 0; right: 0; height: 3px;
+          background: linear-gradient(90deg, var(--blue), var(--orange));
+        }
+        .ct-booking-form-header {
+          display: flex; align-items: center; gap: 14px; margin-bottom: 24px;
+        }
+        .ct-booking-icon {
+          width: 44px; height: 44px; border-radius: 10px;
+          background: var(--blue-light);
+          display: flex; align-items: center; justify-content: center;
+          font-size: 22px; flex-shrink: 0;
+        }
+        .ct-booking-title {
+          font-family: 'Sora', sans-serif;
+          font-size: 17px; font-weight: 800; color: var(--text); margin-bottom: 3px;
+        }
+        .ct-booking-sub { font-size: 12px; color: var(--gray); }
+
+        .ct-form-grid {
+          display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 16px;
+        }
+        .ct-field { display: flex; flex-direction: column; }
+        .ct-field-label {
+          font-size: 11px; font-weight: 700; letter-spacing: 0.08em;
+          text-transform: uppercase; color: var(--text2); margin-bottom: 6px;
+        }
+        .ct-req { color: var(--orange); margin-left: 2px; }
+        .ct-input {
+          width: 100%; padding: 11px 14px;
+          border: 1.5px solid var(--gray-light); border-radius: 8px;
+          font-size: 13.5px; font-family: 'Space Grotesk', sans-serif;
+          color: var(--text); background: #fff; outline: none;
+          transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .ct-input:focus {
+          border-color: var(--blue);
+          box-shadow: 0 0 0 3px rgba(26,86,219,0.08);
+        }
+        .ct-select { cursor: pointer; appearance: auto; }
+
+        .ct-consent-label {
+          display: flex; gap: 10px; align-items: flex-start;
+          margin-bottom: 20px; cursor: pointer;
+        }
+        .ct-checkbox {
+          margin-top: 3px; flex-shrink: 0;
+          accent-color: var(--blue); width: 14px; height: 14px;
+        }
+        .ct-consent-text {
+          font-size: 11.5px; color: var(--gray); line-height: 1.7;
+        }
+        .ct-consent-link { color: var(--blue); text-decoration: none; font-weight: 600; }
+        .ct-consent-link:hover { text-decoration: underline; }
+
+        .ct-submit-btn {
+          width: 100%; padding: 14px;
+          background: var(--orange); color: #fff; border: none;
+          border-radius: 8px; cursor: pointer;
+          font-family: 'Sora', sans-serif; font-size: 13px; font-weight: 700;
+          letter-spacing: 0.05em;
+          box-shadow: 0 4px 18px rgba(249,115,22,0.28);
+          transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+        }
+        .ct-submit-btn:hover:not(:disabled) {
+          background: var(--orange-light);
+          transform: translateY(-1px);
+          box-shadow: 0 6px 24px rgba(249,115,22,0.36);
+        }
+        .ct-submit-loading {
+          background: #ccc !important; cursor: not-allowed !important;
+          box-shadow: none !important; transform: none !important;
+        }
+
+        @media (max-width: 640px) {
+          .ct-form-grid { grid-template-columns: 1fr; }
+        }
 
         /* ══ CONTACT ITEMS ══ */
         .ct-items { display: flex; flex-direction: column; gap: 12px; margin-bottom: 36px; }
@@ -374,8 +628,11 @@ export default function Contact() {
         {/* ══ MAIN CONTENT ══ */}
         <div className="ct-main">
 
-          {/* LEFT — Contact Details + Hours + Tags */}
+          {/* LEFT — Booking Form + Contact Details + Hours + Tags */}
           <div>
+            {/* ── INLINE BOOKING FORM (new) ── */}
+            <InlineBookingForm />
+
             <Reveal>
               <div className="ct-section-label">
                 Contact Details <div className="ct-section-line" />
@@ -492,8 +749,8 @@ export default function Contact() {
               Book a free counseling session. We'll analyse your rank, shortlist the best colleges, and guide you through every round.
             </p>
             <div className="ct-cta-btns">
-              <a href="tel:+917337267648" className="ct-btn-primary">Call Us Now</a>
-              <a href="https://wa.me/917337267648" target="_blank" rel="noopener noreferrer" className="ct-btn-outline">WhatsApp Us</a>
+              <a href="tel:+919566228499" className="ct-btn-primary">Call Us Now</a>
+              <a href="https://wa.me/919566228499" target="_blank" rel="noopener noreferrer" className="ct-btn-outline">WhatsApp Us</a>
             </div>
           </Reveal>
         </section>
