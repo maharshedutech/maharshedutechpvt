@@ -136,6 +136,56 @@ function InlineBookingForm() {
     setLoading(false);
   };
 
+  // ── Input restriction handlers ──────────────────────────────────────────────
+
+  // Name: allow only letters and spaces
+  const handleNameChange = (e) => {
+    const value = e.target.value.replace(/[^a-zA-Z\s]/g, "");
+    setFormData({ ...formData, name: value });
+  };
+
+  // Mobile: allow only digits, max 10
+  const handleMobileChange = (e) => {
+    const value = e.target.value.replace(/[^0-9]/g, "").slice(0, 10);
+    setFormData({ ...formData, mobile: value });
+  };
+
+  // Keydown guard for name field
+  const handleNameKeyDown = (e) => {
+    const allowedKeys = [
+      "Backspace", "Delete", "ArrowLeft", "ArrowRight",
+      "ArrowUp", "ArrowDown", "Tab", "Home", "End",
+    ];
+    if (allowedKeys.includes(e.key)) return;
+    if (!/^[a-zA-Z\s]$/.test(e.key)) e.preventDefault();
+  };
+
+  // Keydown guard for mobile field
+  const handleMobileKeyDown = (e) => {
+    const allowedKeys = [
+      "Backspace", "Delete", "ArrowLeft", "ArrowRight",
+      "ArrowUp", "ArrowDown", "Tab", "Home", "End",
+    ];
+    if (allowedKeys.includes(e.key)) return;
+    if (!/^[0-9]$/.test(e.key)) e.preventDefault();
+  };
+
+  // ── Paste guards ────────────────────────────────────────────────────────────
+
+  const handleNamePaste = (e) => {
+    e.preventDefault();
+    const pasted = e.clipboardData.getData("text").replace(/[^a-zA-Z\s]/g, "");
+    setFormData({ ...formData, name: formData.name + pasted });
+  };
+
+  const handleMobilePaste = (e) => {
+    e.preventDefault();
+    const pasted = e.clipboardData.getData("text").replace(/[^0-9]/g, "").slice(0, 10);
+    setFormData({ ...formData, mobile: pasted });
+  };
+
+  // ───────────────────────────────────────────────────────────────────────────
+
   return (
     <Reveal>
       <div className="ct-section-label">
@@ -161,7 +211,10 @@ function InlineBookingForm() {
                 placeholder="e.g. Rahul Sharma"
                 required
                 value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                onChange={handleNameChange}
+                onKeyDown={handleNameKeyDown}
+                onPaste={handleNamePaste}
+                inputMode="text"
               />
             </div>
 
@@ -174,8 +227,12 @@ function InlineBookingForm() {
                 placeholder="10-digit mobile number"
                 required
                 pattern="[0-9]{10}"
+                maxLength={10}
                 value={formData.mobile}
-                onChange={(e) => setFormData({ ...formData, mobile: e.target.value })}
+                onChange={handleMobileChange}
+                onKeyDown={handleMobileKeyDown}
+                onPaste={handleMobilePaste}
+                inputMode="numeric"
               />
             </div>
 
@@ -630,7 +687,7 @@ export default function Contact() {
 
           {/* LEFT — Booking Form + Contact Details + Hours + Tags */}
           <div>
-            {/* ── INLINE BOOKING FORM (new) ── */}
+            {/* ── INLINE BOOKING FORM ── */}
             <InlineBookingForm />
 
             <Reveal>

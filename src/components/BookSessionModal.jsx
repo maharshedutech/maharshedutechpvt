@@ -56,10 +56,60 @@ export default function BookSessionModal({ isOpen, onClose }) {
     setLoading(false);
   };
 
+  // ── Input restriction handlers ──────────────────────────────────────────────
+
+  // Name: allow only letters and spaces
+  const handleNameChange = (e) => {
+    const value = e.target.value.replace(/[^a-zA-Z\s]/g, "");
+    setFormData({ ...formData, name: value });
+  };
+
+  // Mobile: allow only digits, max 10
+  const handleMobileChange = (e) => {
+    const value = e.target.value.replace(/[^0-9]/g, "").slice(0, 10);
+    setFormData({ ...formData, mobile: value });
+  };
+
+  // Keydown guard for name field — block non-letter / non-space keys early
+  const handleNameKeyDown = (e) => {
+    const allowedKeys = [
+      "Backspace", "Delete", "ArrowLeft", "ArrowRight",
+      "ArrowUp", "ArrowDown", "Tab", "Home", "End",
+    ];
+    if (allowedKeys.includes(e.key)) return;
+    if (!/^[a-zA-Z\s]$/.test(e.key)) e.preventDefault();
+  };
+
+  // Keydown guard for mobile field — block non-digit keys early
+  const handleMobileKeyDown = (e) => {
+    const allowedKeys = [
+      "Backspace", "Delete", "ArrowLeft", "ArrowRight",
+      "ArrowUp", "ArrowDown", "Tab", "Home", "End",
+    ];
+    if (allowedKeys.includes(e.key)) return;
+    if (!/^[0-9]$/.test(e.key)) e.preventDefault();
+  };
+
+  // ── Paste guards ────────────────────────────────────────────────────────────
+
+  const handleNamePaste = (e) => {
+    e.preventDefault();
+    const pasted = e.clipboardData.getData("text").replace(/[^a-zA-Z\s]/g, "");
+    setFormData({ ...formData, name: formData.name + pasted });
+  };
+
+  const handleMobilePaste = (e) => {
+    e.preventDefault();
+    const pasted = e.clipboardData.getData("text").replace(/[^0-9]/g, "").slice(0, 10);
+    setFormData({ ...formData, mobile: pasted });
+  };
+
+  // ───────────────────────────────────────────────────────────────────────────
+
   const inputStyle = {
     width: "100%",
-    padding: "12px",
-    marginBottom: "15px",
+    padding: "10px 12px",
+    marginBottom: "12px",
     border: "1px solid #ddd",
     borderRadius: "8px",
     fontSize: "14px",
@@ -67,6 +117,14 @@ export default function BookSessionModal({ isOpen, onClose }) {
     boxSizing: "border-box",
     fontFamily: "inherit",
     color: "#333",
+  };
+
+  const labelStyle = {
+    display: "block",
+    fontSize: "12px",
+    fontWeight: "600",
+    color: "#444",
+    marginBottom: "4px",
   };
 
   const courses = [
@@ -100,10 +158,9 @@ export default function BookSessionModal({ isOpen, onClose }) {
           borderRadius: "16px",
           width: "100%",
           maxWidth: "500px",
-          padding: "32px 30px 28px",
+          padding: "28px 30px 24px",
           position: "relative",
-          maxHeight: "90vh",
-          overflowY: "auto",
+          /* No overflowY / maxHeight — form fits without scroll */
         }}
       >
         {/* Close Button */}
@@ -125,7 +182,7 @@ export default function BookSessionModal({ isOpen, onClose }) {
         </button>
 
         {/* Header */}
-        <div style={{ textAlign: "center", marginBottom: "24px" }}>
+        <div style={{ textAlign: "center", marginBottom: "18px" }}>
           <h2
             style={{
               fontSize: "22px",
@@ -144,7 +201,7 @@ export default function BookSessionModal({ isOpen, onClose }) {
         <form onSubmit={handleSubmit}>
 
           {/* Name */}
-          <label style={{ display: "block", fontSize: "12px", fontWeight: "600", color: "#444", marginBottom: "5px" }}>
+          <label style={labelStyle}>
             Full Name <span style={{ color: "red" }}>*</span>
           </label>
           <input
@@ -152,12 +209,15 @@ export default function BookSessionModal({ isOpen, onClose }) {
             placeholder="e.g. Rahul Sharma"
             required
             value={formData.name}
-            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+            onChange={handleNameChange}
+            onKeyDown={handleNameKeyDown}
+            onPaste={handleNamePaste}
+            inputMode="text"
             style={inputStyle}
           />
 
           {/* Mobile */}
-          <label style={{ display: "block", fontSize: "12px", fontWeight: "600", color: "#444", marginBottom: "5px" }}>
+          <label style={labelStyle}>
             Mobile Number <span style={{ color: "red" }}>*</span>
           </label>
           <input
@@ -165,13 +225,17 @@ export default function BookSessionModal({ isOpen, onClose }) {
             placeholder="10-digit mobile number"
             required
             pattern="[0-9]{10}"
+            maxLength={10}
             value={formData.mobile}
-            onChange={(e) => setFormData({ ...formData, mobile: e.target.value })}
+            onChange={handleMobileChange}
+            onKeyDown={handleMobileKeyDown}
+            onPaste={handleMobilePaste}
+            inputMode="numeric"
             style={inputStyle}
           />
 
           {/* Location */}
-          <label style={{ display: "block", fontSize: "12px", fontWeight: "600", color: "#444", marginBottom: "5px" }}>
+          <label style={labelStyle}>
             Location <span style={{ color: "red" }}>*</span>
           </label>
           <input
@@ -184,7 +248,7 @@ export default function BookSessionModal({ isOpen, onClose }) {
           />
 
           {/* Interested Course */}
-          <label style={{ display: "block", fontSize: "12px", fontWeight: "600", color: "#444", marginBottom: "5px" }}>
+          <label style={labelStyle}>
             Interested Course <span style={{ color: "red" }}>*</span>
           </label>
           <select
@@ -209,9 +273,9 @@ export default function BookSessionModal({ isOpen, onClose }) {
             style={{
               display: "flex",
               gap: "10px",
-              fontSize: "12px",
-              lineHeight: "18px",
-              marginBottom: "20px",
+              fontSize: "11px",
+              lineHeight: "17px",
+              marginBottom: "16px",
               alignItems: "flex-start",
               cursor: "pointer",
             }}
@@ -225,12 +289,9 @@ export default function BookSessionModal({ isOpen, onClose }) {
               style={{ marginTop: "2px", flexShrink: 0, accentColor: "#1a56db" }}
             />
             <span style={{ color: "#666" }}>
-              By submitting the above information, I consent to receive
-              promotional communications from Maharsh Edutech Private Limited
-              via RCS, SMS, Voice, WhatsApp, and Email.
-              <br />
-              <br />
-              By submitting, you also agree to our{" "}
+              By submitting, I consent to receive promotional communications from
+              Maharsh Edutech Private Limited via RCS, SMS, Voice, WhatsApp, and
+              Email. I also agree to the{" "}
               <a href="/terms" target="_blank" style={{ color: "#1a56db" }}>
                 Terms &amp; Conditions
               </a>{" "}
